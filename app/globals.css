@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+:root {
+  --background: #07070d;
+  --foreground: #f0ece3;
+  --gold: #d4a843;
+  --gold-bright: #e8c547;
+  --muted: #6b6a5a;
+  --r-card: 24px;
+  --r-lg: 28px;
+  --r-sm: 16px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-gold: var(--gold);
+  --font-display: var(--font-playfair);
+  --font-ui: var(--font-syne);
+}
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+html { scroll-behavior: smooth; }
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-syne), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: #07070d; }
+::-webkit-scrollbar-thumb { background: rgba(212,168,67,0.25); border-radius: 2px; }
+
+/* ═══════════════════════════════════════
+   GLASSMORPHISM SYSTEM
+═══════════════════════════════════════ */
+
+/* Light glass — elements on top of dark bg / blobs */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Dark glass — content overlays on images/videos */
+.glass-dark {
+  background: rgba(5, 5, 10, 0.60);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Gold-tinted glass — accent cards, stats */
+.glass-gold {
+  background: rgba(212, 168, 67, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(212, 168, 67, 0.16);
+}
+
+/* Floating shadows */
+.float-shadow {
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
+}
+.float-shadow-lg {
+  box-shadow:
+    0 8px 48px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+.float-shadow-gold {
+  box-shadow:
+    0 6px 32px rgba(212, 168, 67, 0.12),
+    0 1px 0 rgba(212, 168, 67, 0.08) inset;
+}
+
+/* ═══════════════════════════════════════
+   GRADIENT TEXT
+═══════════════════════════════════════ */
+.text-gradient {
+  background: linear-gradient(135deg, #f0ece3 0%, #d4a843 45%, #e8c547 65%, #f0ece3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-gold {
+  background: linear-gradient(135deg, #c9a84c 0%, #e8c547 50%, #c9a84c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+═══════════════════════════════════════ */
+
+/* Pill nav hover */
+.nav-pill {
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: var(--font-syne);
+  font-weight: 500;
+  color: #7a7060;
+  transition: color 0.25s, background 0.25s;
+}
+.nav-pill:hover {
+  color: #050505;
+  background: linear-gradient(135deg, #d4a843, #e8c547);
+}
+
+/* Marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+/* Accordion panel */
+.panel-item {
+  transition: flex 0.78s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Entrance */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 1s ease-out forwards; }
+
+/* Gold shimmer */
+@keyframes shimmer {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+.gold-shimmer { animation: shimmer 3.5s ease-in-out infinite; }
+
+/* Play button pulse */
+@keyframes pulseRing {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.pulse-ring       { animation: pulseRing 2.5s ease-out infinite; }
+.pulse-ring-delay { animation: pulseRing 2.5s ease-out 0.9s infinite; }
+
+/* Scroll indicator bounce */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%       { transform: translateY(7px); opacity: 0.9; }
+}
+.scroll-bounce { animation: scrollBounce 2s ease-in-out infinite; }
+
+/* Card hover lift */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+/* Underline hover */
+.hover-line { position: relative; }
+.hover-line::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: #d4a843;
+  transition: width 0.35s ease;
+}
+.hover-line:hover::after { width: 100%; }
+
+/* Section spacing helper */
+.section-pad { padding: 5rem 1.5rem; }
+@media (min-width: 768px) { .section-pad { padding: 7rem 4rem; } }
+
+/* Custom Leaflet tooltip */
+.nepal-tooltip {
+  background: rgba(7, 7, 13, 0.92) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 14px !important;
+  padding: 10px 14px !important;
+  color: #f0ece3 !important;
+  font-family: var(--font-syne) !important;
+  font-size: 11px !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6) !important;
+  white-space: normal !important;
+  max-width: 230px !important;
+  min-width: 160px !important;
+  pointer-events: none !important;
+}
+.nepal-tooltip::before { display: none !important; }
+.leaflet-tooltip-top.nepal-tooltip { margin-top: -8px !important; }
+
+/* Map marker pulse ring */
+@keyframes mapPulse {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* Leaflet overrides — match dark theme */
+.leaflet-container,
+.leaflet-container *,
+.leaflet-pane,
+.leaflet-tile-pane,
+.leaflet-map-pane { background: transparent !important; }
+.leaflet-container { background: #07070d !important; }
+.leaflet-tile { background: #07070d !important; filter: brightness(0.95); }
+.leaflet-control-zoom a {
+  background: rgba(255,255,255,0.05) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  color: #f0ece3 !important;
+  border-radius: 10px !important;
+  margin-bottom: 4px !important;
+}
+.leaflet-control-zoom a:hover {
+  background: rgba(212,168,67,0.15) !important;
+  color: #d4a843 !important;
+}
+.leaflet-control-zoom { border: none !important; }
+.leaflet-control-attribution {
+  background: rgba(7,7,13,0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  color: #3a3830 !important;
+  font-size: 9px !important;
+  border-radius: 8px 0 0 0 !important;
+}
+.leaflet-control-attribution a { color: #5a5848 !important; }
