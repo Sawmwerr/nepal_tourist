@@ -153,7 +153,7 @@ export default function NepalMap() {
         const icon = L.divIcon({ className: "", html: markerHtml(color, active), iconSize: [s, s], iconAnchor: [s / 2, s / 2] });
 
         const marker = L.marker([attr.lat, attr.lng], { icon }).addTo(map);
-        marker._attr = attr;
+        (marker as any)._attr = attr;
 
         /* Tooltip on hover — name + short description + elevation */
         const shortDesc = attr.description.length > 72

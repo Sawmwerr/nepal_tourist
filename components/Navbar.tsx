@@ -11,7 +11,7 @@ type NavCol = {
   comingSoon?: boolean;
   items: { name: string; tag: string; icon: string }[];
 };
-type NavItem = { label: string; href: string; columns: NavCol[] };
+type NavItem = { label: string; href?: string; columns: NavCol[] };
 
 const NAV: NavItem[] = [
   {
@@ -189,7 +189,7 @@ export default function Navbar() {
   const [openMenu,       setOpenMenu]       = useState<string | null>(null);
   const [mobileOpen,     setMobileOpen]     = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout>>();
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
