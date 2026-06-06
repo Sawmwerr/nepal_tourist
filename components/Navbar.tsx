@@ -269,6 +269,18 @@ export default function Navbar() {
                 </svg>
               </button>
             ))}
+            <Link
+              href="/community"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-full text-[11px] tracking-[0.15em] uppercase font-semibold transition-all duration-200 whitespace-nowrap"
+              style={{
+                fontFamily: "var(--font-syne)",
+                color: "rgba(240,236,227,0.6)",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.07)",
+              }}
+            >
+              Community
+            </Link>
           </nav>
 
           {/* Right side */}
@@ -532,8 +544,21 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Bottom: Book Now + socials */}
+        {/* Bottom: Community + Book Now + socials */}
         <div className="mt-auto px-6 py-8 flex flex-col gap-4">
+          <Link
+            href="/community"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center justify-center gap-2 rounded-full py-4 text-[11px] tracking-[0.35em] uppercase font-bold"
+            style={{
+              fontFamily: "var(--font-syne)",
+              background: "rgba(212,168,67,0.08)",
+              border: "1px solid rgba(212,168,67,0.2)",
+              color: "#d4a843",
+            }}
+          >
+            🌏 Community
+          </Link>
           <a
             href="#"
             className="flex items-center justify-center rounded-full py-4 text-[11px] tracking-[0.35em] uppercase font-bold"

@@ -1,5 +1,6 @@
 "use client";
 
+import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 type Attraction = {
@@ -119,15 +120,10 @@ export default function NepalMap() {
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
-    if (!document.getElementById("leaflet-css")) {
-      const link = document.createElement("link");
-      link.id = "leaflet-css";
-      link.rel = "stylesheet";
-      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-      document.head.appendChild(link);
-    }
+    let cancelled = false;
 
     import("leaflet").then((mod) => {
+      if (cancelled || !containerRef.current || mapRef.current) return;
       const L = mod.default ?? mod;
 
       const map = L.map(containerRef.current!, {
@@ -190,6 +186,7 @@ export default function NepalMap() {
     });
 
     return () => {
+      cancelled = true;
       if (mapRef.current) { mapRef.current.remove(); mapRef.current = null; }
       markersRef.current = [];
     };
