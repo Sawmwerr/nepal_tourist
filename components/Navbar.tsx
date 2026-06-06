@@ -9,7 +9,7 @@ import Link from "next/link";
 type NavCol = {
   title: string;
   comingSoon?: boolean;
-  items: { name: string; tag: string; icon: string }[];
+  items: { name: string; tag: string; icon: string; href?: string }[];
 };
 type NavItem = { label: string; href?: string; columns: NavCol[] };
 
@@ -21,23 +21,23 @@ const NAV: NavItem[] = [
       {
         title: "Cities & Valleys",
         items: [
-          { name: "Kathmandu",        tag: "Capital City",            icon: "🏛️" },
-          { name: "Pokhara",          tag: "Adventure Hub",           icon: "🏔️" },
-          { name: "Bhaktapur",        tag: "Medieval City",           icon: "🏯" },
-          { name: "Lumbini",          tag: "Birthplace of Buddha",    icon: "☸️" },
-          { name: "Chitwan",          tag: "Jungle Gateway",          icon: "🌿" },
-          { name: "Janakpur",         tag: "Cultural Capital",        icon: "🛕" },
+          { name: "Kathmandu",        tag: "Capital City",            icon: "🏛️", href: "/destinations/kathmandu" },
+          { name: "Pokhara",          tag: "Adventure Hub",           icon: "🏔️", href: "/destinations/pokhara" },
+          { name: "Bhaktapur",        tag: "Medieval City",           icon: "🏯", href: "/destinations/bhaktapur" },
+          { name: "Lumbini",          tag: "Birthplace of Buddha",    icon: "☸️", href: "/destinations" },
+          { name: "Chitwan",          tag: "Jungle Gateway",          icon: "🌿", href: "/destinations/chitwan" },
+          { name: "Janakpur",         tag: "Cultural Capital",        icon: "🛕", href: "/destinations" },
         ],
       },
       {
         title: "Regions & Valleys",
         items: [
-          { name: "Khumbu Region",    tag: "Everest Heartland",       icon: "⛰️" },
-          { name: "Gandaki Province", tag: "Annapurna Region",        icon: "🗻" },
-          { name: "Upper Mustang",    tag: "The Forbidden Kingdom",   icon: "🏜️" },
-          { name: "Langtang Valley",  tag: "Valley of Glaciers",      icon: "❄️" },
-          { name: "Karnali Province", tag: "Wild Remote West",        icon: "💧" },
-          { name: "Rara Region",      tag: "Hidden Lake Country",     icon: "🏞️" },
+          { name: "Khumbu Region",    tag: "Everest Heartland",       icon: "⛰️", href: "/destinations" },
+          { name: "Gandaki Province", tag: "Annapurna Region",        icon: "🗻", href: "/destinations" },
+          { name: "Upper Mustang",    tag: "The Forbidden Kingdom",   icon: "🏜️", href: "/destinations/upper-mustang" },
+          { name: "Langtang Valley",  tag: "Valley of Glaciers",      icon: "❄️", href: "/destinations/langtang-valley" },
+          { name: "Karnali Province", tag: "Wild Remote West",        icon: "💧", href: "/destinations" },
+          { name: "Rara Region",      tag: "Hidden Lake Country",     icon: "🏞️", href: "/destinations/rara-lake" },
         ],
       },
     ],
@@ -49,36 +49,36 @@ const NAV: NavItem[] = [
       {
         title: "8,000 m Peaks",
         items: [
-          { name: "Everest",          tag: "8,848 m · Highest",       icon: "🏔️" },
-          { name: "Annapurna I",      tag: "8,091 m · Most Deadly",   icon: "⛰️" },
-          { name: "Manaslu",          tag: "8,163 m · Circuit",       icon: "🗻" },
-          { name: "Dhaulagiri I",     tag: "8,167 m · White Mountain",icon: "❄️" },
-          { name: "Makalu",           tag: "8,485 m · Barun Valley",  icon: "🏔️" },
-          { name: "Cho Oyu",          tag: "8,188 m · Tibet Border",  icon: "⛰️" },
+          { name: "Everest",          tag: "8,848 m · Highest",       icon: "🏔️", href: "/mountains" },
+          { name: "Annapurna I",      tag: "8,091 m · Most Deadly",   icon: "⛰️", href: "/mountains" },
+          { name: "Manaslu",          tag: "8,163 m · Circuit",       icon: "🗻", href: "/mountains" },
+          { name: "Dhaulagiri I",     tag: "8,167 m · White Mountain",icon: "❄️", href: "/mountains" },
+          { name: "Makalu",           tag: "8,485 m · Barun Valley",  icon: "🏔️", href: "/mountains" },
+          { name: "Cho Oyu",          tag: "8,188 m · Tibet Border",  icon: "⛰️", href: "/mountains" },
         ],
       },
       {
         title: "Trekking Routes",
         items: [
-          { name: "Everest Base Camp",    tag: "14–18 days · Classic",    icon: "🎒" },
-          { name: "Annapurna Circuit",    tag: "15–20 days · Epic Loop",  icon: "🔄" },
-          { name: "Langtang Trek",        tag: "7–10 days · Near KTM",    icon: "🌿" },
-          { name: "Manaslu Circuit",      tag: "14–16 days · Remote",     icon: "🗺️" },
-          { name: "Poon Hill Trek",       tag: "4–5 days · Best Sunrise", icon: "🌄" },
-          { name: "Three Passes Trek",    tag: "20+ days · Advanced",     icon: "🚩" },
-          { name: "Gosaikunda Trek",      tag: "4–5 days · Sacred Lake",  icon: "🙏" },
-          { name: "Upper Mustang Trek",   tag: "10–14 days · Restricted", icon: "🏜️" },
+          { name: "Everest Base Camp",    tag: "14–18 days · Classic",    icon: "🎒", href: "/destinations/everest-base-camp" },
+          { name: "Annapurna Circuit",    tag: "15–20 days · Epic Loop",  icon: "🔄", href: "/mountains" },
+          { name: "Langtang Trek",        tag: "7–10 days · Near KTM",    icon: "🌿", href: "/destinations/langtang-valley" },
+          { name: "Manaslu Circuit",      tag: "14–16 days · Remote",     icon: "🗺️", href: "/mountains" },
+          { name: "Poon Hill Trek",       tag: "4–5 days · Best Sunrise", icon: "🌄", href: "/destinations/poon-hill" },
+          { name: "Three Passes Trek",    tag: "20+ days · Advanced",     icon: "🚩", href: "/mountains" },
+          { name: "Gosaikunda Trek",      tag: "4–5 days · Sacred Lake",  icon: "🙏", href: "/mountains" },
+          { name: "Upper Mustang Trek",   tag: "10–14 days · Restricted", icon: "🏜️", href: "/destinations/upper-mustang" },
         ],
       },
       {
         title: "Basecamps & Viewpoints",
         items: [
-          { name: "Everest Base Camp",  tag: "5,364 m",   icon: "⛺" },
-          { name: "Annapurna BC",       tag: "4,130 m",   icon: "⛺" },
-          { name: "Kala Patthar",       tag: "5,644 m",   icon: "👁️" },
-          { name: "Gokyo Ri",           tag: "5,357 m",   icon: "🏞️" },
-          { name: "Thorong La Pass",    tag: "5,416 m",   icon: "🚩" },
-          { name: "Gorak Shep",         tag: "5,140 m",   icon: "🏕️" },
+          { name: "Everest Base Camp",  tag: "5,364 m",   icon: "⛺", href: "/destinations/everest-base-camp" },
+          { name: "Annapurna BC",       tag: "4,130 m",   icon: "⛺", href: "/destinations/annapurna-base-camp" },
+          { name: "Kala Patthar",       tag: "5,644 m",   icon: "👁️", href: "/mountains" },
+          { name: "Gokyo Ri",           tag: "5,357 m",   icon: "🏞️", href: "/mountains" },
+          { name: "Thorong La Pass",    tag: "5,416 m",   icon: "🚩", href: "/mountains" },
+          { name: "Gorak Shep",         tag: "5,140 m",   icon: "🏕️", href: "/mountains" },
         ],
       },
     ],
@@ -89,45 +89,45 @@ const NAV: NavItem[] = [
       {
         title: "Culture",
         items: [
-          { name: "Dashain & Tihar",    tag: "Nepal's Biggest Festivals",   icon: "🎉" },
-          { name: "Boudhanath Stupa",   tag: "Buddhist Pilgrimage",         icon: "☸️" },
-          { name: "Pashupatinath",      tag: "Sacred Hindu Temple",         icon: "🛕" },
-          { name: "Newari Heritage",    tag: "Living Civilisation",         icon: "🏛️" },
-          { name: "Sherpa Culture",     tag: "High Altitude Life",          icon: "⛰️" },
-          { name: "Tharu Villages",     tag: "Terai Indigenous Life",       icon: "🌾" },
+          { name: "Dashain & Tihar",    tag: "Nepal's Biggest Festivals",   icon: "🎉", href: "/community" },
+          { name: "Boudhanath Stupa",   tag: "Buddhist Pilgrimage",         icon: "☸️", href: "/destinations/boudhanath-stupa" },
+          { name: "Pashupatinath",      tag: "Sacred Hindu Temple",         icon: "🛕", href: "/destinations/pashupatinath" },
+          { name: "Newari Heritage",    tag: "Living Civilisation",         icon: "🏛️", href: "/destinations" },
+          { name: "Sherpa Culture",     tag: "High Altitude Life",          icon: "⛰️", href: "/community" },
+          { name: "Tharu Villages",     tag: "Terai Indigenous Life",       icon: "🌾", href: "/destinations" },
         ],
       },
       {
         title: "Food & Cuisine",
         items: [
-          { name: "Dal Bhat",           tag: "National Dish · Twice Daily", icon: "🍛" },
-          { name: "Momos",              tag: "Nepal's Favourite Dumplings", icon: "🥟" },
-          { name: "Thukpa",             tag: "Himalayan Noodle Soup",       icon: "🍜" },
-          { name: "Sherpa Stew",        tag: "Mountain Comfort Food",       icon: "🍲" },
-          { name: "Juju Dhau",          tag: "Bhaktapur King Curd",         icon: "🥣" },
-          { name: "Sel Roti",           tag: "Festival Sweet Bread",        icon: "🍩" },
+          { name: "Dal Bhat",           tag: "National Dish · Twice Daily", icon: "🍛", href: "/community" },
+          { name: "Momos",              tag: "Nepal's Favourite Dumplings", icon: "🥟", href: "/community" },
+          { name: "Thukpa",             tag: "Himalayan Noodle Soup",       icon: "🍜", href: "/community" },
+          { name: "Sherpa Stew",        tag: "Mountain Comfort Food",       icon: "🍲", href: "/community" },
+          { name: "Juju Dhau",          tag: "Bhaktapur King Curd",         icon: "🥣", href: "/community" },
+          { name: "Sel Roti",           tag: "Festival Sweet Bread",        icon: "🍩", href: "/community" },
         ],
       },
       {
         title: "Adventure Sports",
         items: [
-          { name: "Paragliding",        tag: "Pokhara · 30 min flight",     icon: "🪂" },
-          { name: "White Water Rafting",tag: "Trishuli & Seti Rivers",      icon: "🚣" },
-          { name: "Bungee Jumping",     tag: "160 m · Bhote Koshi",        icon: "🎯" },
-          { name: "Mountain Biking",    tag: "World-Class Trails",          icon: "🚵" },
-          { name: "Zip-lining",         tag: "World's Steepest · Pokhara", icon: "🎢" },
-          { name: "Rock Climbing",      tag: "Nagarjun & Hattiban",        icon: "🧗" },
+          { name: "Paragliding",        tag: "Pokhara · 30 min flight",     icon: "🪂", href: "/destinations/pokhara" },
+          { name: "White Water Rafting",tag: "Trishuli & Seti Rivers",      icon: "🚣", href: "/destinations" },
+          { name: "Bungee Jumping",     tag: "160 m · Bhote Koshi",        icon: "🎯", href: "/destinations" },
+          { name: "Mountain Biking",    tag: "World-Class Trails",          icon: "🚵", href: "/destinations" },
+          { name: "Zip-lining",         tag: "World's Steepest · Pokhara", icon: "🎢", href: "/destinations/pokhara" },
+          { name: "Rock Climbing",      tag: "Nagarjun & Hattiban",        icon: "🧗", href: "/destinations" },
         ],
       },
       {
         title: "National Parks",
         items: [
-          { name: "Chitwan NP",         tag: "Rhino & Tiger Safari",        icon: "🐅" },
-          { name: "Bardia NP",          tag: "Wild & Remote Jungle",        icon: "🌿" },
-          { name: "Sagarmatha NP",      tag: "Everest & Snow Leopard",      icon: "🐆" },
-          { name: "Langtang NP",        tag: "Glaciers & Red Pandas",       icon: "🐼" },
-          { name: "Shivapuri NP",       tag: "Near Kathmandu",              icon: "🦅" },
-          { name: "Koshi Tappu",        tag: "Wetland & Bird Reserve",      icon: "🦜" },
+          { name: "Chitwan NP",         tag: "Rhino & Tiger Safari",        icon: "🐅", href: "/destinations/chitwan" },
+          { name: "Bardia NP",          tag: "Wild & Remote Jungle",        icon: "🌿", href: "/destinations" },
+          { name: "Sagarmatha NP",      tag: "Everest & Snow Leopard",      icon: "🐆", href: "/destinations/everest-base-camp" },
+          { name: "Langtang NP",        tag: "Glaciers & Red Pandas",       icon: "🐼", href: "/destinations/langtang-valley" },
+          { name: "Shivapuri NP",       tag: "Near Kathmandu",              icon: "🦅", href: "/destinations" },
+          { name: "Koshi Tappu",        tag: "Wetland & Bird Reserve",      icon: "🦜", href: "/destinations" },
         ],
       },
     ],
@@ -138,12 +138,12 @@ const NAV: NavItem[] = [
       {
         title: "Getting Started",
         items: [
-          { name: "Best Time to Visit", tag: "Oct–Nov & Mar–Apr ideal",  icon: "📅" },
-          { name: "Getting to Nepal",   tag: "Flights · Kathmandu TIA",  icon: "✈️" },
-          { name: "Visa Information",   tag: "On Arrival for most",      icon: "🛂" },
-          { name: "Packing Guide",      tag: "Trek & City Essentials",   icon: "🎒" },
-          { name: "Travel Insurance",   tag: "Essential for trekking",   icon: "🛡️" },
-          { name: "Permits & Fees",     tag: "TIMS · National Park",     icon: "📋" },
+          { name: "Best Time to Visit", tag: "Oct–Nov & Mar–Apr ideal",  icon: "📅", href: "/community" },
+          { name: "Getting to Nepal",   tag: "Flights · Kathmandu TIA",  icon: "✈️", href: "/community" },
+          { name: "Visa Information",   tag: "On Arrival for most",      icon: "🛂", href: "/community" },
+          { name: "Packing Guide",      tag: "Trek & City Essentials",   icon: "🎒", href: "/community" },
+          { name: "Travel Insurance",   tag: "Essential for trekking",   icon: "🛡️", href: "/community" },
+          { name: "Permits & Fees",     tag: "TIMS · National Park",     icon: "📋", href: "/community" },
         ],
       },
       {
@@ -285,18 +285,6 @@ export default function Navbar() {
 
           {/* Right side */}
           <div className="flex items-center gap-3 shrink-0">
-            <a
-              href="#"
-              className="hidden lg:inline-flex items-center text-[11px] tracking-[0.2em] uppercase font-bold rounded-full px-5 py-2.5 transition-all duration-300 hover:opacity-90 active:scale-95"
-              style={{
-                fontFamily: "var(--font-syne)",
-                background: "linear-gradient(135deg, #d4a843, #e8c547)",
-                color: "#07070d",
-                boxShadow: "0 4px 16px rgba(212,168,67,0.3)",
-              }}
-            >
-              Book Now
-            </a>
 
             {/* Mobile burger */}
             <button
@@ -379,7 +367,7 @@ export default function Navbar() {
                       {col.items.map((item) => (
                         <li key={item.name}>
                           <a
-                            href="#"
+                            href={item.href ?? "#"}
                             className="flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 group"
                             style={{
                               opacity: col.comingSoon ? 0.4 : 1,
@@ -508,7 +496,7 @@ export default function Navbar() {
                         {col.items.map((item) => (
                           <a
                             key={item.name}
-                            href="#"
+                            href={item.href ?? "#"}
                             onClick={() => setMobileOpen(false)}
                             className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-200"
                             style={{
@@ -559,17 +547,6 @@ export default function Navbar() {
           >
             🌏 Community
           </Link>
-          <a
-            href="#"
-            className="flex items-center justify-center rounded-full py-4 text-[11px] tracking-[0.35em] uppercase font-bold"
-            style={{
-              fontFamily: "var(--font-syne)",
-              background: "linear-gradient(135deg, #d4a843, #e8c547)",
-              color: "#07070d",
-            }}
-          >
-            Book Now
-          </a>
           <div className="flex items-center justify-center gap-8">
             {["Instagram", "YouTube", "X (Twitter)"].map((s) => (
               <a key={s} href="#"

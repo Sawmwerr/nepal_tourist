@@ -257,7 +257,21 @@ export const TOP_CONTRIBUTORS: TopContributor[] = [
   },
 ];
 
-export const DESTINATION_LIST = [
+export interface Destination {
+  slug: string;
+  name: string;
+  region: string;
+  type: string;
+  elevation: string;
+  image: string;
+  duration: string;
+  difficulty: string;
+  bestSeason: string;
+  description: string;
+  stories: number;
+}
+
+export const DESTINATION_LIST: Destination[] = [
   { slug: 'everest-base-camp', name: 'Everest Base Camp', region: 'Khumbu', type: 'Trek', elevation: '5,364 m', image: '/everest-base-camp.jpg', duration: '14–18 days', difficulty: 'Challenging', bestSeason: 'Oct–Nov, Mar–Apr', description: 'The iconic trek to the foot of the world\'s tallest peak through Sherpa villages and glacial valleys.', stories: 284 },
   { slug: 'annapurna-base-camp', name: 'Annapurna Base Camp', region: 'Gandaki', type: 'Trek', elevation: '4,130 m', image: '/Annapurna Base Camp.jpg', duration: '7–10 days', difficulty: 'Moderate', bestSeason: 'Oct–Nov, Mar–Apr', description: 'A natural amphitheatre of 360° Himalayan giants — one of the most dramatic landscapes on Earth.', stories: 218 },
   { slug: 'kathmandu', name: 'Kathmandu', region: 'Bagmati', type: 'City', elevation: '1,400 m', image: '/Kathmandu.jpg', duration: '3–5 days', difficulty: 'Easy', bestSeason: 'Year-round', description: 'Ancient temples, living goddesses, and seven UNESCO World Heritage Sites in one extraordinary valley.', stories: 341 },
@@ -270,4 +284,58 @@ export const DESTINATION_LIST = [
   { slug: 'boudhanath-stupa', name: 'Boudhanath Stupa', region: 'Kathmandu', type: 'Spiritual', elevation: '1,400 m', image: '/Boudhanath Stupa.jpg', duration: 'Half day', difficulty: 'Easy', bestSeason: 'Year-round', description: 'One of the world\'s largest stupas, encircled by Tibetan monasteries and prayer wheels.', stories: 201 },
   { slug: 'pashupatinath', name: 'Pashupatinath Temple', region: 'Kathmandu', type: 'Spiritual', elevation: '1,300 m', image: '/Pashupatinath Temple.jpg', duration: 'Half day', difficulty: 'Easy', bestSeason: 'Year-round', description: 'Nepal\'s most sacred Hindu temple on the Bagmati river, with burning ghats and ancient ritual.', stories: 168 },
   { slug: 'chitwan', name: 'Chitwan National Park', region: 'Bagmati', type: 'Wildlife', elevation: '150 m', image: '/Chitwan National Park.jpg', duration: '2–3 days', difficulty: 'Easy', bestSeason: 'Oct–Mar', description: 'Home to Bengal tigers, one-horned rhinos, and elephant safaris through dense jungle.', stories: 234 },
+];
+
+// ── Mountains & Treks ──────────────────────────────────────────────────────
+
+export interface MountainPeak {
+  name: string;
+  elevation: string;
+  note: string;
+  icon: string;
+}
+
+export interface TrekRoute {
+  name: string;
+  duration: string;
+  note: string;
+  icon: string;
+  href: string;
+}
+
+export interface Viewpoint {
+  name: string;
+  elevation: string;
+  note: string;
+  icon: string;
+  href: string;
+}
+
+export const MOUNTAIN_PEAKS: MountainPeak[] = [
+  { name: "Everest",      elevation: "8,848 m", note: "World's Highest",  icon: "🏔️" },
+  { name: "Annapurna I",  elevation: "8,091 m", note: "Most Deadly",      icon: "⛰️" },
+  { name: "Manaslu",      elevation: "8,163 m", note: "Circuit Trek",     icon: "🗻" },
+  { name: "Dhaulagiri I", elevation: "8,167 m", note: "White Mountain",   icon: "❄️" },
+  { name: "Makalu",       elevation: "8,485 m", note: "Barun Valley",     icon: "🏔️" },
+  { name: "Cho Oyu",      elevation: "8,188 m", note: "Tibet Border",     icon: "⛰️" },
+];
+
+export const TREK_ROUTES: TrekRoute[] = [
+  { name: "Everest Base Camp",  duration: "14–18 days", note: "Classic",      icon: "🎒", href: "/destinations/everest-base-camp" },
+  { name: "Annapurna Circuit",  duration: "15–20 days", note: "Epic Loop",    icon: "🔄", href: "/mountains" },
+  { name: "Langtang Trek",      duration: "7–10 days",  note: "Near KTM",     icon: "🌿", href: "/destinations/langtang-valley" },
+  { name: "Manaslu Circuit",    duration: "14–16 days", note: "Remote",       icon: "🗺️", href: "/mountains" },
+  { name: "Poon Hill Trek",     duration: "4–5 days",   note: "Best Sunrise", icon: "🌄", href: "/destinations/poon-hill" },
+  { name: "Three Passes Trek",  duration: "20+ days",   note: "Advanced",     icon: "🚩", href: "/mountains" },
+  { name: "Gosaikunda Trek",    duration: "4–5 days",   note: "Sacred Lake",  icon: "🙏", href: "/mountains" },
+  { name: "Upper Mustang Trek", duration: "10–14 days", note: "Restricted",   icon: "🏜️", href: "/destinations/upper-mustang" },
+];
+
+export const VIEWPOINTS: Viewpoint[] = [
+  { name: "Kala Patthar",      elevation: "5,644 m", note: "Best Everest view",     icon: "👁️", href: "/mountains" },
+  { name: "Gokyo Ri",          elevation: "5,357 m", note: "Four 8,000ers visible", icon: "🏞️", href: "/mountains" },
+  { name: "Everest Base Camp", elevation: "5,364 m", note: "Khumbu Glacier",        icon: "⛺", href: "/destinations/everest-base-camp" },
+  { name: "Annapurna BC",      elevation: "4,130 m", note: "360° amphitheatre",     icon: "⛺", href: "/destinations/annapurna-base-camp" },
+  { name: "Thorong La Pass",   elevation: "5,416 m", note: "Annapurna Circuit",     icon: "🚩", href: "/mountains" },
+  { name: "Gorak Shep",        elevation: "5,140 m", note: "Last stop before EBC",  icon: "🏕️", href: "/mountains" },
 ];

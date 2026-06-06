@@ -1,5 +1,5 @@
-import type { CommunityPost, PostCategory } from "@/lib/data";
 import Link from "next/link";
+import type { CommunityPost, PostCategory } from "@/lib/data";
 
 const CATEGORY: Record<PostCategory, { label: string; bg: string; border: string; text: string; icon: string }> = {
   'trek-report':    { label: 'Trek Report',    bg: 'rgba(26,74,122,0.2)',    border: 'rgba(91,155,213,0.3)',  text: '#5b9bd5', icon: '🎒' },
@@ -18,6 +18,7 @@ export default function PostCard({ post, size = 'normal' }: { post: CommunityPos
   const isLarge = size === 'large';
 
   return (
+    <Link href={`/community/${post.slug}`} className="block">
     <article
       className="glass float-shadow card-lift flex flex-col overflow-hidden group"
       style={{ borderRadius: 20 }}
@@ -159,5 +160,6 @@ export default function PostCard({ post, size = 'normal' }: { post: CommunityPos
         </div>
       </div>
     </article>
+    </Link>
   );
 }

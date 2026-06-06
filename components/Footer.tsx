@@ -1,9 +1,26 @@
 "use client";
 
-const footerLinks = {
-  Explore:     ["Himalayas", "Kathmandu", "Pokhara", "Chitwan"],
-  Experiences: ["Trekking", "Culture Tours", "Food Trails", "Adventure Sports"],
-  Plan:        ["Best Time to Visit", "Getting There", "Travel Tips", "Contact"],
+import Link from "next/link";
+
+const footerLinks: Record<string, { name: string; href: string }[]> = {
+  Explore: [
+    { name: "Himalayas",    href: "/mountains" },
+    { name: "Kathmandu",   href: "/destinations/kathmandu" },
+    { name: "Pokhara",     href: "/destinations/pokhara" },
+    { name: "Chitwan",     href: "/destinations/chitwan" },
+  ],
+  Experiences: [
+    { name: "Trekking",         href: "/mountains" },
+    { name: "Culture Tours",    href: "/community" },
+    { name: "Food Trails",      href: "/community" },
+    { name: "Adventure Sports", href: "/destinations" },
+  ],
+  Plan: [
+    { name: "Best Time to Visit", href: "/community" },
+    { name: "Getting There",      href: "/community" },
+    { name: "Travel Tips",        href: "/community" },
+    { name: "Contact",            href: "#" },
+  ],
 };
 
 export default function Footer() {
@@ -113,14 +130,14 @@ export default function Footer() {
                 </p>
                 <ul className="flex flex-col gap-3.5">
                   {links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
                         className="text-sm text-[#5a5848] hover:text-[#f0ece3] transition-colors duration-300 hover-line"
                         style={{ fontFamily: "var(--font-syne)" }}
                       >
-                        {link}
-                      </a>
+                        {link.name}
+                      </Link>
                     </li>
                   ))}
                 </ul>
