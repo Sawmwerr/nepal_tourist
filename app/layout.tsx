@@ -26,7 +26,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${syne.variable} h-full antialiased`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${playfair.variable} ${syne.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#07070d] text-[#f0ece3]">
 
         {/* ── Fixed ambient blobs — give glass something to blur against ── */}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useActiveSection } from "./ScrollStoryContext";
 
 /* ─────────────────────────────────────────
    Navigation data — add / edit links here
@@ -11,12 +12,13 @@ type NavCol = {
   comingSoon?: boolean;
   items: { name: string; tag: string; icon: string; href?: string }[];
 };
-type NavItem = { label: string; href?: string; columns: NavCol[] };
+type NavItem = { label: string; href?: string; scrollId?: string; columns: NavCol[] };
 
 const NAV: NavItem[] = [
   {
     label: "Destinations",
     href: "/destinations",
+    scrollId: "destinations",
     columns: [
       {
         title: "Cities & Valleys",
@@ -45,6 +47,7 @@ const NAV: NavItem[] = [
   {
     label: "Mountains & Treks",
     href: "/mountains",
+    scrollId: "mountains",
     columns: [
       {
         title: "8,000 m Peaks",
@@ -85,6 +88,7 @@ const NAV: NavItem[] = [
   },
   {
     label: "Experiences",
+    scrollId: "experiences",
     columns: [
       {
         title: "Culture",
@@ -134,6 +138,7 @@ const NAV: NavItem[] = [
   },
   {
     label: "Plan a Trip",
+    scrollId: "plan",
     columns: [
       {
         title: "Getting Started",
@@ -185,6 +190,7 @@ const NAV: NavItem[] = [
    Component
 ───────────────────────────────────────── */
 export default function Navbar() {
+  const { activeSection } = useActiveSection();
   const [scrolled,       setScrolled]       = useState(false);
   const [openMenu,       setOpenMenu]       = useState<string | null>(null);
   const [mobileOpen,     setMobileOpen]     = useState(false);
@@ -243,44 +249,48 @@ export default function Navbar() {
 
           {/* Desktop mega-menu triggers */}
           <nav className="hidden lg:flex items-center gap-1">
-            {NAV.map((nav) => (
-              <button
-                key={nav.label}
-                onMouseEnter={() => openDropdown(nav.label)}
-                onMouseLeave={scheduleClose}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-full text-[11px] tracking-[0.15em] uppercase font-semibold transition-all duration-200 whitespace-nowrap"
-                style={{
-                  fontFamily: "var(--font-syne)",
-                  color: openMenu === nav.label ? "#d4a843" : "rgba(240,236,227,0.6)",
-                  background: openMenu === nav.label ? "rgba(212,168,67,0.1)" : "rgba(255,255,255,0.04)",
-                  border: `1px solid ${openMenu === nav.label ? "rgba(212,168,67,0.3)" : "rgba(255,255,255,0.07)"}`,
-                }}
-              >
-                {nav.label}
-                <svg
-                  width="10" height="6" viewBox="0 0 10 6" fill="none"
+            {NAV.map((nav) => {
+              const isActive = openMenu === nav.label || activeSection === nav.scrollId;
+              return (
+                <a
+                  key={nav.label}
+                  href={nav.scrollId ? `/#${nav.scrollId}` : (nav.href ?? "#")}
+                  onMouseEnter={() => openDropdown(nav.label)}
+                  onMouseLeave={scheduleClose}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-full text-[11px] tracking-[0.15em] uppercase font-semibold transition-all duration-200 whitespace-nowrap"
                   style={{
-                    transform: openMenu === nav.label ? "rotate(180deg)" : "",
-                    transition: "transform 0.25s ease",
-                    opacity: 0.5,
+                    fontFamily: "var(--font-syne)",
+                    color: isActive ? "#d4a843" : "rgba(240,236,227,0.6)",
+                    background: isActive ? "rgba(212,168,67,0.1)" : "rgba(255,255,255,0.04)",
+                    border: `1px solid ${isActive ? "rgba(212,168,67,0.3)" : "rgba(255,255,255,0.07)"}`,
                   }}
                 >
-                  <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-              </button>
-            ))}
-            <Link
-              href="/community"
+                  {nav.label}
+                  <svg
+                    width="10" height="6" viewBox="0 0 10 6" fill="none"
+                    style={{
+                      transform: openMenu === nav.label ? "rotate(180deg)" : "",
+                      transition: "transform 0.25s ease",
+                      opacity: 0.5,
+                    }}
+                  >
+                    <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </a>
+              );
+            })}
+            <a
+              href="/#community"
               className="flex items-center gap-1.5 px-4 py-2.5 rounded-full text-[11px] tracking-[0.15em] uppercase font-semibold transition-all duration-200 whitespace-nowrap"
               style={{
                 fontFamily: "var(--font-syne)",
-                color: "rgba(240,236,227,0.6)",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                color: activeSection === "community" ? "#d4a843" : "rgba(240,236,227,0.6)",
+                background: activeSection === "community" ? "rgba(212,168,67,0.1)" : "rgba(255,255,255,0.04)",
+                border: `1px solid ${activeSection === "community" ? "rgba(212,168,67,0.3)" : "rgba(255,255,255,0.07)"}`,
               }}
             >
               Community
-            </Link>
+            </a>
           </nav>
 
           {/* Right side */}
@@ -534,8 +544,8 @@ export default function Navbar() {
 
         {/* Bottom: Community + Book Now + socials */}
         <div className="mt-auto px-6 py-8 flex flex-col gap-4">
-          <Link
-            href="/community"
+          <a
+            href="/#community"
             onClick={() => setMobileOpen(false)}
             className="flex items-center justify-center gap-2 rounded-full py-4 text-[11px] tracking-[0.35em] uppercase font-bold"
             style={{
@@ -546,7 +556,7 @@ export default function Navbar() {
             }}
           >
             🌏 Community
-          </Link>
+          </a>
           <div className="flex items-center justify-center gap-8">
             {["Instagram", "YouTube", "X (Twitter)"].map((s) => (
               <a key={s} href="#"
