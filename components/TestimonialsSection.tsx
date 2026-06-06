@@ -33,7 +33,7 @@ export default function TestimonialsSection() {
           </p>
           <h2
             className="text-4xl md:text-5xl text-[#f0ece3] leading-tight"
-            style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+            style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
           >
             Stories told,{" "}
             <em className="text-gradient-gold">journeys remembered</em>
@@ -52,7 +52,7 @@ export default function TestimonialsSection() {
             {/* Decorative quote */}
             <span
               className="text-[5rem] leading-[0.7] text-[rgba(212,168,67,0.12)] select-none"
-              style={{ fontFamily: "var(--font-playfair)" }}
+              style={{ fontFamily: "var(--font-display)" }}
               aria-hidden
             >
               &ldquo;

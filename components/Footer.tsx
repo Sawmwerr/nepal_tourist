@@ -42,7 +42,7 @@ export default function Footer() {
               </p>
               <h3
                 className="text-3xl text-[#f0ece3] leading-tight mb-2"
-                style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+                style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
               >
                 Stay in the journey
               </h3>

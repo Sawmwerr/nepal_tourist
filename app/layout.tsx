@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Syne } from "next/font/google";
+import localFont from "next/font/local";
+import { Syne } from "next/font/google";
 import "./globals.css";
+import IntroLoader from "@/components/IntroLoader";
+import LenisProvider from "@/components/LenisProvider";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+// Clash Display — self-hosted from app/fonts/ (ITF Free Font License via Fontshare).
+// Variable font covers 200–700 in one file; Medium + Bold kept as explicit fallbacks.
+const clashDisplay = localFont({
+  src: [
+    { path: "./fonts/ClashDisplay-Variable.woff2", weight: "200 700", style: "normal" },
+    { path: "./fonts/ClashDisplay-Medium.woff2",   weight: "500",      style: "normal" },
+    { path: "./fonts/ClashDisplay-Bold.woff2",     weight: "700",      style: "normal" },
+  ],
+  variable: "--font-clash",
   display: "swap",
 });
 
@@ -26,8 +34,20 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${playfair.variable} ${syne.variable} h-full antialiased`}>
+    <html lang="en" className={`${clashDisplay.variable} ${syne.variable} h-full antialiased`}>
+      {/*
+        Runs synchronously before first paint.
+        Adds `intro-skip` to <html> for returning visitors and reduced-motion users
+        so CSS hides #intro-overlay before React can even hydrate — zero flash.
+      */}
+      <head>
+        <script dangerouslySetInnerHTML={{ __html:
+          `try{if(sessionStorage.getItem('introSeen')||window.matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('intro-skip')}catch(e){}`
+        }} />
+      </head>
       <body className="min-h-full flex flex-col bg-[#07070d] text-[#f0ece3]">
+        <LenisProvider />
+        <IntroLoader />
 
         {/* ── Fixed ambient blobs — give glass something to blur against ── */}
         <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden>

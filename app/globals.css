@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  /* ── Brand colours ── */
   --background: #07070d;
   --foreground: #f0ece3;
   --gold: #d4a843;
@@ -9,18 +10,51 @@
   --r-card: 24px;
   --r-lg: 28px;
   --r-sm: 16px;
+
+  /* ── Motion tokens (Part B) ──
+     One shared rhythm for every transition on the site.
+     --ease-out   : fast-in, smooth deceleration — use for entrances / reveals
+     --ease-inout : balanced — use for state changes (hover, open/close)
+     --ease-bounce: slight spring overshoot — use for stamps / pop-in moments  */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:    150ms;
+  --dur-base:    300ms;
+  --dur-slow:    600ms;
+  --dur-xslow:   1000ms;
+
+  /* ── Cinematic colour grade (Part C) ──
+     Tune all three values here; they apply via the .graded utility class.
+     Lower saturate → moodier / desaturated look.
+     Higher contrast → punchy shadow/highlight separation.
+     Lower brightness → slightly underexposed, cinematic feel.       */
+  --grade-saturate:   0.82;
+  --grade-contrast:   1.12;
+  --grade-brightness: 0.92;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-gold: var(--gold);
-  --font-display: var(--font-playfair);
+  /* --font-clash is set by next/font/local on <html>; --font-display is the
+     single control point for all headline/display text across the site. */
+  --font-display: var(--font-clash);
   --font-ui: var(--font-syne);
 }
 
+/* Clash Display: tighten tracking site-wide for the modern cinematic look.
+   Inline letterSpacing on specific elements (e.g. the NEPAL wordmark) overrides
+   this naturally — CSS attribute selectors lose to inline specificity. */
+[style*="--font-display"] {
+  letter-spacing: -0.02em;
+}
+
 * { box-sizing: border-box; padding: 0; margin: 0; }
-html { scroll-behavior: smooth; }
+/* scroll-behavior: auto — Lenis owns all smooth scrolling; native smooth-scroll
+   would fight Lenis and cause double-smoothing on wheel/hash navigation. */
+html { scroll-behavior: auto; }
 html, body {
   max-width: 100vw;
   overflow-x: hidden;
@@ -242,3 +276,32 @@ html, body {
   border-radius: 8px 0 0 0 !important;
 }
 .leaflet-control-attribution a { color: #5a5848 !important; }
+
+/* ═══════════════════════════════════════
+   CINEMATIC COLOUR GRADE
+   Applied to scenery/content images only.
+   Variables are tunable from :root above.
+═══════════════════════════════════════ */
+.graded {
+  filter:
+    saturate(var(--grade-saturate))
+    contrast(var(--grade-contrast))
+    brightness(var(--grade-brightness));
+  /* GPU-promoted once — no per-scroll recalc */
+  will-change: filter;
+}
+
+/* ═══════════════════════════════════════
+   INTRO LOADER
+═══════════════════════════════════════ */
+
+/* Hide overlay instantly for returning visitors — toggled by inline head script before paint */
+html.intro-skip #intro-overlay { display: none !important; }
+
+/* Logo stamp-in: scale from 0.82 → slight overshoot 1.05 → settle at 1 */
+@keyframes intro-stamp {
+  0%   { opacity: 0; transform: scale(0.82) translateY(10px); }
+  65%  { opacity: 1; transform: scale(1.05) translateY(-3px); }
+  82%  { transform: scale(0.97) translateY(1px); }
+  100% { opacity: 1; transform: scale(1)    translateY(0); }
+}

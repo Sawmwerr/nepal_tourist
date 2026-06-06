@@ -65,7 +65,7 @@ export default function SectionWatermark() {
               right: "-3%",
               fontSize: "clamp(6rem, 18vw, 20rem)",
               lineHeight: 1,
-              fontFamily: "var(--font-playfair)",
+              fontFamily: "var(--font-display)",
               fontWeight: 700,
               color: "#d4a843",
               opacity: isActive ? 0.038 : 0,

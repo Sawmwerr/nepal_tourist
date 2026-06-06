@@ -1,6 +1,7 @@
+import Reveal from "./Reveal";
+
 export default function VideoTeaser() {
   return (
-    /* Floating rounded section — mx so it doesn't go edge-to-edge */
     <section className="px-3 md:px-6 pb-6">
       <div
         className="relative overflow-hidden float-shadow-lg flex items-center justify-center"
@@ -42,20 +43,15 @@ export default function VideoTeaser() {
           />
         ))}
 
-        {/* Content */}
-        <div className="relative z-10 flex flex-col items-center text-center px-8 py-20">
-
+        {/* Content — reveal as a unit */}
+        <Reveal className="relative z-10 flex flex-col items-center text-center px-8 py-20">
           {/* ── Glass play button ── */}
           <div className="relative mb-14 cursor-pointer group">
-            {/* Pulse rings */}
             <div className="absolute inset-[-18px] rounded-full border border-[rgba(212,168,67,0.2)] pulse-ring" />
             <div className="absolute inset-[-9px] rounded-full border border-[rgba(212,168,67,0.15)] pulse-ring-delay" />
-
-            {/* Outer glass ring */}
             <div
               className="glass float-shadow w-24 h-24 rounded-full flex items-center justify-center transition-all duration-400 group-hover:scale-105 group-hover:border-[rgba(212,168,67,0.4)]"
             >
-              {/* Gold inner circle */}
               <div
                 className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-400 group-hover:scale-105"
                 style={{ background: "linear-gradient(135deg, #d4a843, #e8c547)" }}
@@ -78,7 +74,7 @@ export default function VideoTeaser() {
           {/* Title */}
           <h2
             className="text-5xl md:text-7xl text-[#f0ece3] leading-[0.92] mb-5"
-            style={{ fontFamily: "var(--font-playfair)", fontWeight: 700 }}
+            style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
           >
             Nepal in{" "}
             <em className="text-gradient">Motion</em>
@@ -105,7 +101,16 @@ export default function VideoTeaser() {
               4 min film · Coming soon
             </span>
           </div>
-        </div>
+
+          {/* View all link */}
+          <a
+            href="/destinations"
+            className="mt-8 inline-flex items-center gap-2 text-[10px] tracking-[0.28em] uppercase text-[#d4a843] hover:text-[#f0ece3] transition-colors duration-300 hover-line"
+            style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
+          >
+            Explore all destinations →
+          </a>
+        </Reveal>
       </div>
     </section>
   );

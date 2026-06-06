@@ -173,7 +173,7 @@ export default function CommunityGrid({
           >
             <p
               className="text-[13px] font-semibold text-[#f0ece3]"
-              style={{ fontFamily: 'var(--font-playfair)' }}
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               Share your Nepal story
             </p>

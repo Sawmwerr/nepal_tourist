@@ -232,7 +232,7 @@ export default function NepalMap() {
             Interactive Map
           </p>
           <h2 className="text-4xl md:text-6xl text-[#f0ece3] leading-tight"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}>
+              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
             Discover <em className="text-gradient">Nepal</em>
           </h2>
           <p className="text-sm text-[#6b6a5a] mt-3"
@@ -308,7 +308,7 @@ export default function NepalMap() {
                 key={selected.id}
                 src={imgSrc}
                 alt={selected.name}
-                className="w-full h-full object-cover transition-all duration-500"
+                className="w-full h-full object-cover transition-all duration-500 graded"
                 onError={() => {
                   if (imgSrc === selected.photo && selected.photoBk) {
                     setImgSrc(selected.photoBk); // try Unsplash
@@ -344,7 +344,7 @@ export default function NepalMap() {
                 {selected.region}
               </p>
               <h3 className="text-xl text-[#f0ece3] leading-tight"
-                  style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}>
+                  style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
                 {selected.name}
               </h3>
             </div>

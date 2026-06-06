@@ -78,7 +78,7 @@ export default function CreatorProfile() {
               <img
                 src={PROFILE.photo}
                 alt={PROFILE.name}
-                className="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover"
+                className="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover graded"
                 style={{ border: "3px solid #07070d" }}
               />
               {/* Online dot */}
@@ -112,7 +112,7 @@ export default function CreatorProfile() {
 
             {/* Name + handle */}
             <h2 className="text-3xl md:text-4xl text-[#f0ece3] leading-tight mb-1"
-                style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}>
+                style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
               {PROFILE.name}
             </h2>
             <p className="text-[13px] text-[#d4a843] mb-4 font-medium"

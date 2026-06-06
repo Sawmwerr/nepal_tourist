@@ -32,14 +32,14 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
         <video
           src={panel.videoSrc}
           autoPlay muted loop playsInline
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 graded"
           style={{ transform: isActive ? "scale(1.06)" : "scale(1)" }}
         />
       ) : panel.imageSrc ? (
         <img
           src={panel.imageSrc}
           alt={panel.title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 graded"
           style={{ transform: isActive ? "scale(1.06)" : "scale(1)" }}
         />
       ) : (
@@ -113,7 +113,7 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
           {/* Title */}
           <h3
             className="text-2xl md:text-3xl text-[#f0ece3] leading-tight mb-1.5"
-            style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+            style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
           >
             {panel.title}
           </h3>

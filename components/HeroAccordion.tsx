@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import PanelItem, { Panel } from "./PanelItem";
+
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 const panels: Panel[] = [
   {
@@ -53,18 +56,48 @@ const panels: Panel[] = [
 
 export default function HeroAccordion() {
   const [activeId, setActiveId] = useState<string | null>("himalayas");
+  const reduceMotion = useReducedMotion();
+
+  // Fire when IntroLoader finishes — same signal used by LenisProvider
+  const [introDone, setIntroDone] = useState(() => {
+    if (typeof window === "undefined") return false;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
+    return document.documentElement.dataset.introComplete === "1";
+  });
+
+  useEffect(() => {
+    if (reduceMotion || document.documentElement.dataset.introComplete === "1") {
+      setIntroDone(true);
+      return;
+    }
+    const handler = () => setIntroDone(true);
+    window.addEventListener("intro:done", handler, { once: true });
+    const failsafe = setTimeout(() => setIntroDone(true), 3500);
+    return () => {
+      window.removeEventListener("intro:done", handler);
+      clearTimeout(failsafe);
+    };
+  }, [reduceMotion]);
 
   return (
     <section className="relative w-full h-screen flex flex-col overflow-hidden">
 
       {/* ── Floating glass heading card ── */}
-      <div className="flex justify-center pt-28 pb-4 px-4 z-10 fade-up">
-        <div
+      <div className="flex justify-center pt-28 pb-4 px-4 z-10">
+        <motion.div
           className="glass float-shadow flex flex-col items-center px-12 py-10 w-full"
           style={{ borderRadius: 28, maxWidth: 640 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={(reduceMotion || introDone) ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.7, ease: EASE_OUT }}
         >
           {/* Eyebrow */}
-          <div className="flex items-center gap-3 mb-6">
+          <motion.div
+            className="flex items-center gap-3 mb-6"
+            initial={{ opacity: 0, y: 12 }}
+            animate={(reduceMotion || introDone) ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.15 }}
+          >
             <div className="h-px w-8 bg-[rgba(212,168,67,0.35)]" />
             <span
               className="text-[10px] tracking-[0.55em] uppercase text-[#d4a843] gold-shimmer"
@@ -73,29 +106,35 @@ export default function HeroAccordion() {
               A journey beyond imagination
             </span>
             <div className="h-px w-8 bg-[rgba(212,168,67,0.35)]" />
-          </div>
+          </motion.div>
 
           {/* Title */}
-          <h1
+          <motion.h1
             className="text-gradient text-[5rem] md:text-[7.5rem] text-center tracking-[-0.01em] select-none"
             style={{
-              fontFamily: "var(--font-playfair)",
+              fontFamily: "var(--font-display)",
               fontWeight: 700,
               lineHeight: 1.15,
-              paddingBottom: "0.15em",   /* room for descenders like p, y, g */
+              paddingBottom: "0.15em",
             }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={(reduceMotion || introDone) ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            transition={{ duration: 0.75, ease: EASE_OUT, delay: 0.25 }}
           >
             Nepal
-          </h1>
+          </motion.h1>
 
           {/* Sub */}
-          <p
+          <motion.p
             className="text-[10px] tracking-[0.38em] uppercase text-[#6b6a5a] mt-6"
             style={{ fontFamily: "var(--font-syne)" }}
+            initial={{ opacity: 0 }}
+            animate={(reduceMotion || introDone) ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.45 }}
           >
             Hover a panel · explore the journey
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
 
       {/* ── Accordion — rounded glass container ── */}

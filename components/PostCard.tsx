@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { CommunityPost, PostCategory } from "@/lib/data";
+import ParallaxImage from "./ParallaxImage";
+import ImageReveal from "./ImageReveal";
 
 const CATEGORY: Record<PostCategory, { label: string; bg: string; border: string; text: string; icon: string }> = {
   'trek-report':    { label: 'Trek Report',    bg: 'rgba(26,74,122,0.2)',    border: 'rgba(91,155,213,0.3)',  text: '#5b9bd5', icon: '🎒' },
@@ -28,13 +30,13 @@ export default function PostCard({ post, size = 'normal' }: { post: CommunityPos
         className="relative overflow-hidden shrink-0"
         style={{ height: isLarge ? 280 : 200 }}
       >
-        <img
-          src={post.image}
-          alt={post.title}
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+        <ImageReveal>
+          <ParallaxImage
+            src={post.image}
+            alt={post.title}
+            imgClassName="w-full h-full object-cover graded"
+          />
+        </ImageReveal>
         {/* Gradient overlay */}
         <div
           className="absolute inset-0"
@@ -94,7 +96,7 @@ export default function PostCard({ post, size = 'normal' }: { post: CommunityPos
         {/* Title */}
         <h3
           className={`text-[#f0ece3] leading-snug font-semibold transition-colors duration-200 group-hover:text-[#d4a843] ${isLarge ? 'text-[17px]' : 'text-[14px]'}`}
-          style={{ fontFamily: 'var(--font-playfair)' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           {post.title}
         </h3>

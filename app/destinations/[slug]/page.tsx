@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ImageReveal from "@/components/ImageReveal";
 import { DESTINATION_LIST } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -58,11 +59,13 @@ export default async function DestinationPage({
 
         {/* ── Hero image ── */}
         <div className="relative h-[55vh] min-h-[360px] overflow-hidden">
-          <img
-            src={dest.image}
-            alt={dest.name}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          <ImageReveal>
+            <img
+              src={dest.image}
+              alt={dest.name}
+              className="w-full h-full object-cover graded"
+            />
+          </ImageReveal>
           <div className="absolute inset-0 bg-gradient-to-t from-[#07070d] via-black/40 to-black/20" />
 
           {/* Back link */}
@@ -95,7 +98,7 @@ export default async function DestinationPage({
             </span>
             <h1
               className="text-5xl md:text-7xl text-[#f0ece3] leading-none"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
             >
               {dest.name}
             </h1>

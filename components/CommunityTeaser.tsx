@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { COMMUNITY_POSTS, COMMUNITY_STATS } from "@/lib/data";
 import PostCard from "./PostCard";
+import Reveal from "./Reveal";
 
 export default function CommunityTeaser() {
   const featured = COMMUNITY_POSTS.filter(p => p.featured).slice(0, 3);
@@ -10,7 +11,7 @@ export default function CommunityTeaser() {
       <div className="max-w-[1400px] mx-auto">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
             <p
               className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-3"
@@ -20,7 +21,7 @@ export default function CommunityTeaser() {
             </p>
             <h2
               className="text-4xl md:text-5xl text-[#f0ece3] leading-tight"
-              style={{ fontFamily: 'var(--font-playfair)', fontWeight: 600 }}
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 600 }}
             >
               Stories from{' '}
               <em className="text-gradient-gold">real travelers</em>
@@ -44,7 +45,7 @@ export default function CommunityTeaser() {
               <div key={s.label} className="flex flex-col items-center gap-1">
                 <span
                   className="text-2xl font-bold text-gradient-gold"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
+                  style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {s.value}
                 </span>
@@ -57,17 +58,19 @@ export default function CommunityTeaser() {
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
 
-        {/* Posts grid */}
+        {/* Posts grid — stagger */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-          {featured.map(post => (
-            <PostCard key={post.id} post={post} />
+          {featured.map((post, i) => (
+            <Reveal key={post.id} delay={i * 0.08}>
+              <PostCard post={post} />
+            </Reveal>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="flex items-center justify-center gap-4">
+        <Reveal className="flex items-center justify-center gap-4">
           <Link
             href="/community"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:opacity-90 active:scale-95"
@@ -95,7 +98,7 @@ export default function CommunityTeaser() {
           >
             Join the community
           </Link>
-        </div>
+        </Reveal>
 
       </div>
     </section>

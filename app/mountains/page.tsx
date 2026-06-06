@@ -26,7 +26,7 @@ export default function MountainsPage() {
           </p>
           <h1
             className="text-5xl md:text-7xl leading-none mb-5 fade-up"
-            style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, animationDelay: "80ms" }}
+            style={{ fontFamily: "var(--font-display)", fontWeight: 600, animationDelay: "80ms" }}
           >
             The highest place{" "}
             <em className="text-gradient-gold">on Earth</em>
@@ -54,7 +54,7 @@ export default function MountainsPage() {
             </p>
             <h2
               className="text-3xl md:text-4xl text-[#f0ece3] mb-8"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
             >
               Nepal&apos;s giants
             </h2>
@@ -67,7 +67,7 @@ export default function MountainsPage() {
                   <span className="text-3xl mb-3">{peak.icon}</span>
                   <p
                     className="text-[13px] font-semibold text-[#f0ece3] mb-1"
-                    style={{ fontFamily: "var(--font-playfair)" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {peak.name}
                   </p>
@@ -98,7 +98,7 @@ export default function MountainsPage() {
             </p>
             <h2
               className="text-3xl md:text-4xl text-[#f0ece3] mb-8"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
             >
               Classic trails
             </h2>
@@ -113,7 +113,7 @@ export default function MountainsPage() {
                   <div>
                     <p
                       className="text-[13px] font-semibold text-[#f0ece3] group-hover:text-[#d4a843] transition-colors mb-1"
-                      style={{ fontFamily: "var(--font-playfair)" }}
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
                       {route.name}
                     </p>
@@ -145,7 +145,7 @@ export default function MountainsPage() {
             </p>
             <h2
               className="text-3xl md:text-4xl text-[#f0ece3] mb-8"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
             >
               High-altitude landmarks
             </h2>
@@ -160,7 +160,7 @@ export default function MountainsPage() {
                   <div className="min-w-0">
                     <p
                       className="text-[13px] font-semibold text-[#f0ece3] group-hover:text-[#d4a843] transition-colors truncate"
-                      style={{ fontFamily: "var(--font-playfair)" }}
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
                       {vp.name}
                     </p>

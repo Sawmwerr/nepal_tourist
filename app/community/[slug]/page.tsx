@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ImageReveal from "@/components/ImageReveal";
 import { COMMUNITY_POSTS } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -53,11 +54,13 @@ export default async function StoryPage({
 
         {/* ── Hero image ── */}
         <div className="relative h-[50vh] min-h-[320px] overflow-hidden">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          <ImageReveal>
+            <img
+              src={post.image}
+              alt={post.title}
+              className="w-full h-full object-cover graded"
+            />
+          </ImageReveal>
           <div className="absolute inset-0 bg-gradient-to-t from-[#07070d] via-black/50 to-black/20" />
 
           {/* Back link */}
@@ -90,7 +93,7 @@ export default async function StoryPage({
             </span>
             <h1
               className="text-4xl md:text-6xl text-[#f0ece3] leading-tight max-w-3xl"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
             >
               {post.title}
             </h1>
