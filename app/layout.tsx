@@ -4,6 +4,7 @@ import { Syne } from "next/font/google";
 import "./globals.css";
 import IntroLoader from "@/components/IntroLoader";
 import LenisProvider from "@/components/LenisProvider";
+import PageTransition from "@/components/PageTransition";
 
 // Clash Display — self-hosted from app/fonts/ (ITF Free Font License via Fontshare).
 // Variable font covers 200–700 in one file; Medium + Bold kept as explicit fallbacks.
@@ -48,6 +49,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#07070d] text-[#f0ece3]">
         <LenisProvider />
         <IntroLoader />
+        <PageTransition />
 
         {/* ── Fixed ambient blobs — give glass something to blur against ── */}
         <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden>
