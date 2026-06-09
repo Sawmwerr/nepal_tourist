@@ -27,6 +27,20 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  // When coming back from /nepal-booking.html via browser back button,
+  // the page is restored from bfcache with mobileOpen still true (the
+  // setMobileOpen(false) call never processed before navigation). Reset it.
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        setMobileOpen(false);
+        document.body.style.overflow = "";
+      }
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, []);
+
   return (
     <>
       {/* ══════════════════════════════════
