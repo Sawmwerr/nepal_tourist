@@ -81,6 +81,23 @@ export default function Navbar() {
             })}
           </nav>
 
+          {/* Book CTA */}
+          <a
+            href="/booking"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] tracking-[0.15em] uppercase font-semibold transition-all duration-200"
+            style={{
+              fontFamily: "var(--font-syne)",
+              background: "linear-gradient(135deg, #d4a843, #e8c547)",
+              color: "#07070d",
+              boxShadow: "0 2px 12px rgba(212,168,67,0.25)",
+            }}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Book
+          </a>
+
           {/* Mobile burger */}
           <button
             onClick={() => setMobileOpen((v) => !v)}
@@ -142,6 +159,22 @@ export default function Navbar() {
               </a>
             );
           })}
+        </div>
+
+        {/* Book CTA — mobile */}
+        <div className="px-6 mt-2">
+          <a
+            href="/booking"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center justify-center gap-2 py-4 rounded-2xl font-semibold text-[14px]"
+            style={{
+              background: "linear-gradient(135deg, #d4a843, #e8c547)",
+              color: "#07070d",
+              fontFamily: "var(--font-display)",
+            }}
+          >
+            Book your stay in Nepal →
+          </a>
         </div>
 
         {/* Social links */}
