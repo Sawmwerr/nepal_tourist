@@ -84,7 +84,7 @@ export default function Navbar() {
           {/* Book CTA */}
           <a
             href="/booking"
-            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] tracking-[0.15em] uppercase font-semibold transition-all duration-200"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] tracking-[0.15em] uppercase font-semibold transition-all duration-200"
             style={{
               fontFamily: "var(--font-syne)",
               background: "linear-gradient(135deg, #d4a843, #e8c547)",
