@@ -84,18 +84,18 @@ export default function Navbar() {
           {/* Book CTA */}
           <a
             href="/nepal-booking.html"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] tracking-[0.15em] uppercase font-semibold transition-all duration-200"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] tracking-[0.12em] uppercase font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg shrink-0"
             style={{
               fontFamily: "var(--font-syne)",
               background: "linear-gradient(135deg, #d4a843, #e8c547)",
               color: "#07070d",
-              boxShadow: "0 2px 12px rgba(212,168,67,0.25)",
+              boxShadow: "0 4px 20px rgba(212,168,67,0.45)",
             }}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
             </svg>
-            Book
+            Book Now
           </a>
 
           {/* Mobile burger */}
