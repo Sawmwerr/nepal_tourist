@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Syne } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import IntroLoader from "@/components/IntroLoader";
 import LenisProvider from "@/components/LenisProvider";
@@ -36,17 +37,19 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${clashDisplay.variable} ${syne.variable} h-full antialiased`}>
-      {/*
-        Runs synchronously before first paint.
-        Adds `intro-skip` to <html> for returning visitors and reduced-motion users
-        so CSS hides #intro-overlay before React can even hydrate — zero flash.
-      */}
-      <head>
-        <script dangerouslySetInnerHTML={{ __html:
-          `try{if(sessionStorage.getItem('introSeen')||window.matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('intro-skip')}catch(e){}`
-        }} />
-      </head>
       <body className="min-h-full flex flex-col bg-[#07070d] text-[#f0ece3]">
+        {/*
+          Runs before hydration — adds `intro-skip` to <html> for returning visitors
+          and reduced-motion users so CSS hides #intro-overlay with zero flash.
+          beforeInteractive injects this into the server-rendered HTML head.
+        */}
+        <Script
+          id="intro-skip-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html:
+            `try{if(sessionStorage.getItem('introSeen')||window.matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('intro-skip')}catch(e){}`
+          }}
+        />
         <LenisProvider />
         <IntroLoader />
         <PageTransition />
