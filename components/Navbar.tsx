@@ -97,7 +97,7 @@ export default function Navbar() {
 
           {/* Book CTA */}
           <a
-            href="/nepal-booking.html"
+            href="/booking"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] tracking-[0.12em] uppercase font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg shrink-0"
             style={{
               fontFamily: "var(--font-syne)",
@@ -178,7 +178,7 @@ export default function Navbar() {
         {/* Book CTA — mobile */}
         <div className="px-6 mt-2">
           <a
-            href="/nepal-booking.html"
+            href="/booking"
             onClick={() => setMobileOpen(false)}
             className="flex items-center justify-center gap-2 py-4 rounded-2xl font-semibold text-[14px]"
             style={{
