@@ -15,6 +15,7 @@ const panels: Panel[] = [
     category: "Himalayas",
     gradient: "linear-gradient(160deg, #0a1520 0%, #142d48 45%, #0c2238 70%, #070f1a 100%)",
     videoSrc: "/himilaya.mp4",
+    poster: "/posters/himilaya.jpg",
   },
   {
     id: "culture",
@@ -24,6 +25,7 @@ const panels: Panel[] = [
     category: "Culture",
     gradient: "linear-gradient(160deg, #180c04 0%, #4a2209 45%, #6e3a12 70%, #2e1204 100%)",
     videoSrc: "/heritage.mp4",
+    poster: "/posters/heritage.jpg",
   },
   {
     id: "traditions",
@@ -42,6 +44,7 @@ const panels: Panel[] = [
     category: "Food",
     gradient: "linear-gradient(160deg, #160c04 0%, #4a2e08 45%, #6e4514 70%, #2e1804 100%)",
     videoSrc: "/landescape.mp4",
+    poster: "/posters/landescape.jpg",
   },
   {
     id: "adventure",
@@ -51,6 +54,7 @@ const panels: Panel[] = [
     category: "Adventure",
     gradient: "linear-gradient(160deg, #041508 0%, #0c4824 45%, #156836 70%, #06301a 100%)",
     videoSrc: "/advanture.mp4",
+    poster: "/posters/advanture.jpg",
   },
 ];
 

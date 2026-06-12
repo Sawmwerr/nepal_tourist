@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export interface Panel {
   id: string;
   title: string;
@@ -8,6 +10,7 @@ export interface Panel {
   gradient: string;
   number: string;
   videoSrc?: string;
+  poster?: string;
   imageSrc?: string;
 }
 
@@ -31,15 +34,19 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
       {panel.videoSrc ? (
         <video
           src={panel.videoSrc}
+          poster={panel.poster}
           autoPlay muted loop playsInline
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 graded"
           style={{ transform: isActive ? "scale(1.06)" : "scale(1)" }}
         />
       ) : panel.imageSrc ? (
-        <img
+        <Image
           src={panel.imageSrc}
           alt={panel.title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 graded"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover transition-transform duration-700 graded"
           style={{ transform: isActive ? "scale(1.06)" : "scale(1)" }}
         />
       ) : (

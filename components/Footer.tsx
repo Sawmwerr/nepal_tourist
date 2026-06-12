@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks: Record<string, { name: string; href: string }[]> = {
   Explore: [
@@ -85,9 +86,11 @@ export default function Footer() {
             {/* Brand */}
             <div>
               <div className="flex items-center gap-2.5 mb-5">
-                <img
+                <Image
                   src="/nepalflag.jpg"
                   alt="Nepal Flag"
+                  width={36}
+                  height={28}
                   className="object-contain"
                   style={{ height: 28, width: "auto" }}
                 />

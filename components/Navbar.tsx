@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useActiveSection } from "./ScrollStoryContext";
 
 const NAV = [
@@ -59,9 +60,11 @@ export default function Navbar() {
 
           {/* Logo */}
           <a href="/" className="flex items-center gap-2.5 shrink-0 group">
-            <img
+            <Image
               src="/nepalflag.jpg"
               alt="Nepal Flag"
+              width={40}
+              height={32}
               className="shrink-0 transition-transform duration-300 group-hover:scale-110 object-contain"
               style={{ height: 32, width: "auto" }}
             />

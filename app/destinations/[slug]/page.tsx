@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ImageReveal from "@/components/ImageReveal";
@@ -60,10 +61,13 @@ export default async function DestinationPage({
         {/* ── Hero image ── */}
         <div className="relative h-[55vh] min-h-[360px] overflow-hidden">
           <ImageReveal>
-            <img
+            <Image
               src={dest.image}
               alt={dest.name}
-              className="w-full h-full object-cover graded"
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover graded"
             />
           </ImageReveal>
           <div className="absolute inset-0 bg-gradient-to-t from-[#07070d] via-black/40 to-black/20" />

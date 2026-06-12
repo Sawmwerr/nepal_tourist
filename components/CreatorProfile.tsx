@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /* ─────────────────────────────────────────────
    Edit the values below to update your profile
 ───────────────────────────────────────────── */
@@ -75,9 +77,11 @@ export default function CreatorProfile() {
                    style={{ background: "linear-gradient(135deg, #d4a843, #e8c547, #d4a843)" }} />
               <div className="absolute -inset-[5px] rounded-full opacity-30"
                    style={{ background: "linear-gradient(135deg, #d4a843, transparent)" }} />
-              <img
+              <Image
                 src={PROFILE.photo}
                 alt={PROFILE.name}
+                width={160}
+                height={160}
                 className="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover graded"
                 style={{ border: "3px solid #07070d" }}
               />

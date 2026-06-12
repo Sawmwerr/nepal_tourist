@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ImageReveal from "@/components/ImageReveal";
@@ -55,10 +56,13 @@ export default async function StoryPage({
         {/* ── Hero image ── */}
         <div className="relative h-[50vh] min-h-[320px] overflow-hidden">
           <ImageReveal>
-            <img
+            <Image
               src={post.image}
               alt={post.title}
-              className="w-full h-full object-cover graded"
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover graded"
             />
           </ImageReveal>
           <div className="absolute inset-0 bg-gradient-to-t from-[#07070d] via-black/50 to-black/20" />

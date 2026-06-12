@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 
 // Drop-in for absolutely-positioned images inside overflow:hidden containers.
@@ -25,19 +26,16 @@ export default function ParallaxImage({ src, alt = "", imgClassName = "" }: Prop
   if (reduceMotion) {
     return (
       <div className="absolute inset-0">
-        <img src={src} alt={alt} className={imgClassName} />
+        <Image src={src} alt={alt} fill className={`object-cover ${imgClassName}`} />
       </div>
     );
   }
 
   return (
     <div ref={ref} className="absolute inset-0 overflow-hidden">
-      <motion.img
-        src={src}
-        alt={alt}
-        className={imgClassName}
-        style={{ y, scale: 1.12 }}
-      />
+      <motion.div className="absolute inset-0" style={{ y, scale: 1.12 }}>
+        <Image src={src} alt={alt} fill className={`object-cover ${imgClassName}`} />
+      </motion.div>
     </div>
   );
 }

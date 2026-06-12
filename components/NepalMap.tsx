@@ -2,6 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 
 type Attraction = {
   id: number;
@@ -304,11 +305,13 @@ export default function NepalMap() {
           {/* Photo — local first → Unsplash fallback → gradient */}
           <div className="relative h-48 shrink-0 overflow-hidden" style={{ borderRadius: "24px 24px 0 0" }}>
             {!imgFailed ? (
-              <img
+              <Image
                 key={selected.id}
                 src={imgSrc}
                 alt={selected.name}
-                className="w-full h-full object-cover transition-all duration-500 graded"
+                fill
+                sizes="340px"
+                className="object-cover transition-all duration-500 graded"
                 onError={() => {
                   if (imgSrc === selected.photo && selected.photoBk) {
                     setImgSrc(selected.photoBk); // try Unsplash
