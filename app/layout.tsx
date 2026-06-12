@@ -12,8 +12,6 @@ import PageTransition from "@/components/PageTransition";
 const clashDisplay = localFont({
   src: [
     { path: "./fonts/ClashDisplay-Variable.woff2", weight: "200 700", style: "normal" },
-    { path: "./fonts/ClashDisplay-Medium.woff2",   weight: "500",      style: "normal" },
-    { path: "./fonts/ClashDisplay-Bold.woff2",     weight: "700",      style: "normal" },
   ],
   variable: "--font-clash",
   display: "swap",
@@ -24,6 +22,7 @@ const syne = Syne({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {

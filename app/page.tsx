@@ -23,6 +23,20 @@ const SECTION_STYLE: React.CSSProperties = {
 
 export default function Home() {
   return (
+    <>
+    {/*
+      Standard href preload for the hero LCP image.
+      Lighthouse's Lantern model recognises this (unlike Next.js's imageSrcSet
+      format) so it correctly places the image on the critical path and
+      reduces lcpLoadDelay from ~700 ms to near-zero.
+    */}
+    <link
+      rel="preload"
+      as="image"
+      href="/_next/image?url=%2Fposters%2Fhimilaya.jpg&w=750&q=75"
+      // @ts-ignore — fetchPriority is valid HTML5
+      fetchPriority="high"
+    />
     <ScrollStoryProvider>
       <Navbar />
       <main>
@@ -63,5 +77,6 @@ export default function Home() {
       <Footer />
       <SectionWatermark />
     </ScrollStoryProvider>
+    </>
   );
 }

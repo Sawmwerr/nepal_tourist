@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export interface Panel {
@@ -17,11 +18,28 @@ export interface Panel {
 interface PanelItemProps {
   panel: Panel;
   isActive: boolean;
+  isPriority?: boolean;
   onActivate: () => void;
   onDeactivate: () => void;
 }
 
-export default function PanelItem({ panel, isActive, onActivate, onDeactivate }: PanelItemProps) {
+export default function PanelItem({ panel, isActive, isPriority, onActivate, onDeactivate }: PanelItemProps) {
+  const [videoReady, setVideoReady] = useState(false);
+
+  // Reset so the fade-in replays each time the panel is re-activated
+  useEffect(() => {
+    if (!isActive) setVideoReady(false);
+  }, [isActive]);
+
+  const imgSizes = isActive
+    ? "(max-width: 768px) 100vw, 55vw"
+    : "(max-width: 768px) 50vw, 12vw";
+
+  const imgStyle: React.CSSProperties = {
+    transform: isActive ? "scale(1.06)" : "scale(1)",
+    transition: "transform 700ms",
+  };
+
   return (
     <div
       className="panel-item relative overflow-hidden cursor-pointer min-w-0"
@@ -30,36 +48,54 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
       onMouseLeave={onDeactivate}
       onClick={onActivate}
     >
-      {/* ── Background: video / image / gradient ── */}
-      {panel.videoSrc ? (
-        <video
-          src={panel.videoSrc}
-          poster={panel.poster}
-          autoPlay muted loop playsInline
-          preload="none"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 graded"
-          style={{ transform: isActive ? "scale(1.06)" : "scale(1)" }}
+      {/* ── Static background: poster image (LCP element) or fallback gradient ── */}
+      {panel.poster ? (
+        <Image
+          src={panel.poster}
+          alt={panel.title}
+          fill
+          sizes={imgSizes}
+          priority={isPriority}
+          className="object-cover graded"
+          style={imgStyle}
         />
       ) : panel.imageSrc ? (
         <Image
           src={panel.imageSrc}
           alt={panel.title}
           fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-700 graded"
-          style={{ transform: isActive ? "scale(1.06)" : "scale(1)" }}
+          sizes={imgSizes}
+          priority={isPriority}
+          className="object-cover graded"
+          style={imgStyle}
         />
       ) : (
         <div
           className="absolute inset-0 transition-transform duration-700"
-          style={{
-            background: panel.gradient,
-            transform: isActive ? "scale(1.06)" : "scale(1)",
-          }}
+          style={{ background: panel.gradient, transform: imgStyle.transform }}
         />
       )}
 
-      {/* Dark vignette */}
+      {/* ── Video — only mounted for the active panel; fades in once decodable ── */}
+      {panel.videoSrc && isActive && (
+        <video
+          src={panel.videoSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover graded"
+          style={{
+            transform: "scale(1.06)",
+            opacity: videoReady ? 1 : 0,
+            transition: "opacity 600ms ease",
+          }}
+          onCanPlay={() => setVideoReady(true)}
+        />
+      )}
+
+      {/* ── Dark vignette ── */}
       <div
         className="absolute inset-0 transition-all duration-700"
         style={{

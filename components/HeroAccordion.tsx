@@ -76,7 +76,7 @@ export default function HeroAccordion() {
     }
     const handler = () => setIntroDone(true);
     window.addEventListener("intro:done", handler, { once: true });
-    const failsafe = setTimeout(() => setIntroDone(true), 3500);
+    const failsafe = setTimeout(() => setIntroDone(true), 1800);
     return () => {
       window.removeEventListener("intro:done", handler);
       clearTimeout(failsafe);
@@ -146,11 +146,12 @@ export default function HeroAccordion() {
         className="flex flex-1 min-h-0 mx-3 mb-3 overflow-hidden float-shadow-lg"
         style={{ gap: "2px", borderRadius: 24 }}
       >
-        {panels.map((panel) => (
+        {panels.map((panel, i) => (
           <PanelItem
             key={panel.id}
             panel={panel}
             isActive={activeId === panel.id}
+            isPriority={i === 0}
             onActivate={() => setActiveId(panel.id)}
             onDeactivate={() => setActiveId(null)}
           />
