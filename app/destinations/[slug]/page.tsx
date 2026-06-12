@@ -11,6 +11,8 @@ export function generateStaticParams() {
   return DESTINATION_LIST.map((d) => ({ slug: d.slug }));
 }
 
+const BASE = "https://project-hlg8a.vercel.app";
+
 export async function generateMetadata({
   params,
 }: {
@@ -19,9 +21,27 @@ export async function generateMetadata({
   const { slug } = await params;
   const dest = DESTINATION_LIST.find((d) => d.slug === slug);
   if (!dest) return { title: "Not Found" };
+
+  const url = `${BASE}/destinations/${slug}`;
+  const imageUrl = `${BASE}${dest.image}`;
+
   return {
-    title: `${dest.name} — Nepal`,
+    title: dest.name,
     description: dest.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: dest.name,
+      description: dest.description,
+      url,
+      type: "website",
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: dest.name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: dest.name,
+      description: dest.description,
+      images: [imageUrl],
+    },
   };
 }
 
@@ -50,11 +70,29 @@ export default async function DestinationPage({
   const dest = DESTINATION_LIST.find((d) => d.slug === slug);
   if (!dest) notFound();
 
-  const type   = TYPE_STYLE[dest.type] ?? TYPE_STYLE.Trek;
+  const type      = TYPE_STYLE[dest.type] ?? TYPE_STYLE.Trek;
   const diffColor = DIFFICULTY_COLOR[dest.difficulty] ?? "#d4a843";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristDestination",
+    name: dest.name,
+    description: dest.description,
+    url: `${BASE}/destinations/${dest.slug}`,
+    image: `${BASE}${dest.image}`,
+    touristType: dest.type,
+    containedInPlace: {
+      "@type": "Country",
+      name: "Nepal",
+    },
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <main className="pt-20">
 

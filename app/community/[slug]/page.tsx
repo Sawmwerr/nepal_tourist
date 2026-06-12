@@ -11,6 +11,8 @@ export function generateStaticParams() {
   return COMMUNITY_POSTS.map((p) => ({ slug: p.slug }));
 }
 
+const BASE = "https://project-hlg8a.vercel.app";
+
 export async function generateMetadata({
   params,
 }: {
@@ -19,9 +21,30 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = COMMUNITY_POSTS.find((p) => p.slug === slug);
   if (!post) return { title: "Not Found" };
+
+  const url = `${BASE}/community/${slug}`;
+  const imageUrl = `${BASE}${post.image}`;
+
   return {
-    title: `${post.title} — Nepal Community`,
+    title: post.title,
     description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url,
+      type: "article",
+      publishedTime: post.date,
+      authors: [post.author.name],
+      tags: post.tags,
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [imageUrl],
+    },
   };
 }
 
@@ -48,8 +71,32 @@ export default async function StoryPage({
 
   const cat = CATEGORY_STYLE[post.category];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    url: `${BASE}/community/${post.slug}`,
+    image: `${BASE}${post.image}`,
+    datePublished: post.date,
+    author: {
+      "@type": "Person",
+      name: post.author.name,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Nepal Community",
+      url: BASE,
+    },
+    keywords: post.tags.join(", "),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <main className="pt-20">
 

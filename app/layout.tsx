@@ -25,10 +25,34 @@ const syne = Syne({
   preload: false,
 });
 
+const SITE_URL = "https://project-hlg8a.vercel.app";
+const DESCRIPTION =
+  "Experience the Himalayas, ancient culture, sacred traditions, and raw adventure. Nepal awaits.";
+
 export const metadata: Metadata = {
-  title: "Nepal — Discover the Roof of the World",
-  description:
-    "Experience the Himalayas, ancient culture, sacred traditions, and raw adventure. Nepal awaits.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Nepal — Discover the Roof of the World",
+    template: "%s · Nepal",
+  },
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: "Nepal",
+    locale: "en_US",
+    title: {
+      default: "Nepal — Discover the Roof of the World",
+      template: "%s · Nepal",
+    },
+    description: DESCRIPTION,
+    url: SITE_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
 };
 
 export default function RootLayout({
