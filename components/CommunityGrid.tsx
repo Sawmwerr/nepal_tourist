@@ -65,7 +65,7 @@ export default function CommunityGrid({
         <div className="flex-1 min-w-0">
           {filtered.length === 0 ? (
             <div className="glass rounded-3xl p-16 text-center">
-              <p className="text-[14px] text-[#6b6a5a]" style={{ fontFamily: 'var(--font-syne)' }}>
+              <p className="text-[14px] text-[#8a8978]" style={{ fontFamily: 'var(--font-syne)' }}>
                 No stories yet in this category.
               </p>
             </div>
@@ -86,7 +86,7 @@ export default function CommunityGrid({
 
           {/* Count */}
           <p
-            className="mt-8 text-center text-[11px] text-[#6b6a5a]"
+            className="mt-8 text-center text-[11px] text-[#8a8978]"
             style={{ fontFamily: 'var(--font-syne)' }}
           >
             Showing {filtered.length} of {posts.length} stories
@@ -107,7 +107,7 @@ export default function CommunityGrid({
             {contributors.map((c, i) => (
               <div key={c.name} className="flex items-center gap-3">
                 <span
-                  className="text-[10px] text-[#6b6a5a] w-4 shrink-0"
+                  className="text-[10px] text-[#8a8978] w-4 shrink-0"
                   style={{ fontFamily: 'var(--font-syne)' }}
                 >
                   {i + 1}
@@ -126,7 +126,7 @@ export default function CommunityGrid({
                     {c.name} <span className="opacity-60">{c.flag}</span>
                   </p>
                   <p
-                    className="text-[9px] text-[#6b6a5a]"
+                    className="text-[9px] text-[#8a8978]"
                     style={{ fontFamily: 'var(--font-syne)' }}
                   >
                     {c.posts} stories · {(c.likes / 1000).toFixed(1)}k likes

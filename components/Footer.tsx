@@ -48,7 +48,7 @@ export default function Footer() {
                 Stay in the journey
               </h3>
               <p
-                className="text-sm text-[#6b6a5a] leading-relaxed"
+                className="text-sm text-[#8a8978] leading-relaxed"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 Travel stories, seasonal guides, and insider routes — monthly.
@@ -102,7 +102,7 @@ export default function Footer() {
                 </span>
               </div>
               <p
-                className="text-sm text-[#6b6a5a] leading-relaxed max-w-[180px] mb-7"
+                className="text-sm text-[#8a8978] leading-relaxed max-w-[180px] mb-7"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 The roof of the world, and the warmth at its heart.
@@ -113,7 +113,7 @@ export default function Footer() {
                   <a
                     key={s}
                     href="#"
-                    className="w-8 h-8 rounded-xl glass flex items-center justify-center text-[10px] font-semibold text-[#6b6a5a] hover:text-[#d4a843] hover:border-[rgba(212,168,67,0.3)] transition-all duration-300"
+                    className="w-8 h-8 rounded-xl glass flex items-center justify-center text-[10px] font-semibold text-[#8a8978] hover:text-[#d4a843] hover:border-[rgba(212,168,67,0.3)] transition-all duration-300"
                     style={{ fontFamily: "var(--font-syne)" }}
                   >
                     {s}

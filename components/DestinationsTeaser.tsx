@@ -47,7 +47,7 @@ function DestCard({ d, tall, num }: { d: Destination; tall?: boolean; num: strin
         <div className="absolute bottom-4 left-4 right-4">
           <div className="glass-dark float-shadow p-5" style={{ borderRadius: 18 }}>
             <p
-              className="text-[9px] tracking-[0.3em] uppercase text-[#6b6a5a] mb-1.5"
+              className="text-[9px] tracking-[0.3em] uppercase text-[#8a8978] mb-1.5"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               {d.region}

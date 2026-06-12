@@ -166,7 +166,7 @@ export default async function OgImage({
                 <div
                   style={{
                     fontSize: 10,
-                    color: "#6b6a5a",
+                    color: "#8a8978",
                     letterSpacing: "0.35em",
                     textTransform: "uppercase",
                   }}

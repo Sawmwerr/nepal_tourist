@@ -88,7 +88,7 @@ export default function TestimonialsSection() {
                   {t.author}
                 </p>
                 <p
-                  className="text-[10px] tracking-[0.15em] uppercase text-[#6b6a5a] truncate"
+                  className="text-[10px] tracking-[0.15em] uppercase text-[#8a8978] truncate"
                   style={{ fontFamily: "var(--font-syne)" }}
                 >
                   {t.role}

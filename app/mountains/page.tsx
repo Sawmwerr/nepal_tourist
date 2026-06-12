@@ -78,7 +78,7 @@ export default function MountainsPage() {
                     {peak.elevation}
                   </p>
                   <p
-                    className="text-[9px] tracking-wide text-[#6b6a5a]"
+                    className="text-[9px] tracking-wide text-[#8a8978]"
                     style={{ fontFamily: "var(--font-syne)" }}
                   >
                     {peak.note}
@@ -125,7 +125,7 @@ export default function MountainsPage() {
                     </p>
                   </div>
                   <p
-                    className="text-[10px] text-[#6b6a5a]"
+                    className="text-[10px] text-[#8a8978]"
                     style={{ fontFamily: "var(--font-syne)" }}
                   >
                     {route.note}
@@ -171,7 +171,7 @@ export default function MountainsPage() {
                       {vp.elevation}
                     </p>
                     <p
-                      className="text-[10px] text-[#6b6a5a]"
+                      className="text-[10px] text-[#8a8978]"
                       style={{ fontFamily: "var(--font-syne)" }}
                     >
                       {vp.note}

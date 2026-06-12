@@ -6,7 +6,7 @@
   --foreground: #f0ece3;
   --gold: #d4a843;
   --gold-bright: #e8c547;
-  --muted: #6b6a5a;
+  --muted: #8a8978; /* lifted from #6b6a5a for WCAG AA (≥4.5:1 on #07070d) */
   --r-card: 24px;
   --r-lg: 28px;
   --r-sm: 16px;
@@ -305,3 +305,48 @@ html.intro-skip #intro-overlay { display: none !important; }
   82%  { transform: scale(0.97) translateY(1px); }
   100% { opacity: 1; transform: scale(1)    translateY(0); }
 }
+
+/* ═══════════════════════════════════════
+   PREFERS-REDUCED-MOTION
+   Pause / disable all decorative motion.
+   Parallax (ParallaxImage), scroll reveals (Reveal, ImageReveal),
+   and Lenis already gate on useReducedMotion(). These CSS rules
+   cover the remaining CSS-only animations.
+═══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  /* Pause marquee ticker — static display, still readable */
+  .marquee-track { animation-play-state: paused; }
+
+  /* Stop shimmer / pulse / bounce decorative loops */
+  .gold-shimmer   { animation: none; opacity: 0.85; }
+  .pulse-ring,
+  .pulse-ring-delay { animation: none; opacity: 0; }
+  .scroll-bounce  { animation: none; }
+
+  /* Accordion: instant flex transition instead of 780 ms ease */
+  .panel-item { transition: none !important; }
+
+  /* Card hover lift — keep cursor affordance, lose movement */
+  .card-lift:hover { transform: none; }
+
+  /* Underline hover — keep but instant */
+  .hover-line::after { transition: none; }
+
+  /* Intro stamp — render fully visible, no overshoot */
+  @keyframes intro-stamp {
+    from, to { opacity: 1; transform: none; }
+  }
+}
+
+/* ═══════════════════════════════════════
+   FOCUS RINGS
+   Visible keyboard-focus outline on all interactive elements.
+   Uses the gold brand colour to match the dark theme.
+═══════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid #d4a843;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* Suppress pointer-driven focus ring (mouse clicks) */
+:focus:not(:focus-visible) { outline: none; }

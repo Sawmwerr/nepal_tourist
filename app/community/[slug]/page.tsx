@@ -174,7 +174,7 @@ export default async function StoryPage({
                   {post.author.name} {post.author.flag}
                 </p>
                 <p
-                  className="text-[10px] text-[#6b6a5a]"
+                  className="text-[10px] text-[#8a8978]"
                   style={{ fontFamily: "var(--font-syne)" }}
                 >
                   {post.author.badge} · {post.date}
@@ -182,7 +182,7 @@ export default async function StoryPage({
               </div>
             </div>
             <span
-              className="text-[11px] text-[#6b6a5a] shrink-0"
+              className="text-[11px] text-[#8a8978] shrink-0"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               {post.readTime} read
@@ -230,7 +230,7 @@ export default async function StoryPage({
             ].map((s) => (
               <div
                 key={s.label}
-                className="flex items-center gap-2 text-[#6b6a5a]"
+                className="flex items-center gap-2 text-[#8a8978]"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 <span>{s.icon}</span>

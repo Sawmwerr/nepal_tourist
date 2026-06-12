@@ -47,7 +47,7 @@ export default function MountainsTeaser() {
           {/* Left — 8,000 m peaks — stagger */}
           <div>
             <p
-              className="text-[9px] tracking-[0.45em] uppercase text-[#6b6a5a] mb-4 font-semibold"
+              className="text-[9px] tracking-[0.45em] uppercase text-[#8a8978] mb-4 font-semibold"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               Nepal&apos;s 8,000 m peaks
@@ -74,7 +74,7 @@ export default function MountainsTeaser() {
                         {peak.elevation}
                       </p>
                       <p
-                        className="text-[10px] text-[#6b6a5a] mt-0.5"
+                        className="text-[10px] text-[#8a8978] mt-0.5"
                         style={{ fontFamily: "var(--font-syne)" }}
                       >
                         {peak.note}
@@ -89,7 +89,7 @@ export default function MountainsTeaser() {
           {/* Right — Trek routes — stagger */}
           <div>
             <p
-              className="text-[9px] tracking-[0.45em] uppercase text-[#6b6a5a] mb-4 font-semibold"
+              className="text-[9px] tracking-[0.45em] uppercase text-[#8a8978] mb-4 font-semibold"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               Classic trekking routes
@@ -111,7 +111,7 @@ export default function MountainsTeaser() {
                         {route.name}
                       </p>
                       <p
-                        className="text-[10px] text-[#6b6a5a]"
+                        className="text-[10px] text-[#8a8978]"
                         style={{ fontFamily: "var(--font-syne)" }}
                       >
                         {route.note}
@@ -133,7 +133,7 @@ export default function MountainsTeaser() {
         {/* ── Viewpoints strip — stagger ── */}
         <div>
           <p
-            className="text-[9px] tracking-[0.45em] uppercase text-[#6b6a5a] mb-4 font-semibold"
+            className="text-[9px] tracking-[0.45em] uppercase text-[#8a8978] mb-4 font-semibold"
             style={{ fontFamily: "var(--font-syne)" }}
           >
             High-altitude viewpoints
@@ -160,7 +160,7 @@ export default function MountainsTeaser() {
                     {vp.elevation}
                   </p>
                   <p
-                    className="text-[9px] text-[#6b6a5a] leading-tight"
+                    className="text-[9px] text-[#8a8978] leading-tight"
                     style={{ fontFamily: "var(--font-syne)" }}
                   >
                     {vp.note}

@@ -82,7 +82,7 @@ export default function VideoTeaser() {
 
           {/* Body */}
           <p
-            className="text-sm text-[#6b6a5a] max-w-md leading-relaxed mb-10"
+            className="text-sm text-[#8a8978] max-w-md leading-relaxed mb-10"
             style={{ fontFamily: "var(--font-syne)" }}
           >
             A cinematic journey through ancient peaks, sacred temples, and the warmth of a people who live closest to the sky.
@@ -95,7 +95,7 @@ export default function VideoTeaser() {
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#d4a843] gold-shimmer" />
             <span
-              className="text-[10px] tracking-[0.3em] uppercase text-[#6b6a5a]"
+              className="text-[10px] tracking-[0.3em] uppercase text-[#8a8978]"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               4 min film · Coming soon

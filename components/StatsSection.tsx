@@ -52,7 +52,7 @@ export default function StatsSection() {
                 {s.label}
               </p>
               <p
-                className="text-[11px] text-[#6b6a5a]"
+                className="text-[11px] text-[#8a8978]"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 {s.sub}

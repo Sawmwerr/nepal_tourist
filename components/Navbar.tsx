@@ -201,7 +201,7 @@ export default function Navbar() {
               <a
                 key={s}
                 href="#"
-                className="text-[10px] tracking-[0.3em] uppercase text-[#6b6a5a] hover:text-[#d4a843] transition-colors"
+                className="text-[10px] tracking-[0.3em] uppercase text-[#8a8978] hover:text-[#d4a843] transition-colors"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 {s}

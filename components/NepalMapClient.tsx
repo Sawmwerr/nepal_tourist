@@ -15,7 +15,7 @@ const NepalMapDynamic = dynamic(() => import("./NepalMap"), {
             className="w-10 h-10 rounded-full border-2 border-[#d4a843] border-t-transparent animate-spin"
           />
           <p
-            className="text-[11px] tracking-[0.3em] uppercase text-[#6b6a5a]"
+            className="text-[11px] tracking-[0.3em] uppercase text-[#8a8978]"
             style={{ fontFamily: "var(--font-syne)" }}
           >
             Loading map…

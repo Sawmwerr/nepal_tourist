@@ -80,7 +80,7 @@ export default function CommunityPage() {
                       {s.value}
                     </p>
                     <p
-                      className="text-[9px] tracking-[0.3em] uppercase text-[#6b6a5a]"
+                      className="text-[9px] tracking-[0.3em] uppercase text-[#8a8978]"
                       style={{ fontFamily: 'var(--font-syne)' }}
                     >
                       {s.label}

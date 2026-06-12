@@ -64,7 +64,7 @@ export default function QuoteBlock() {
             ].map((item) => (
               <span
                 key={item}
-                className="glass text-[10px] tracking-[0.22em] uppercase text-[#6b6a5a] px-5 py-2.5"
+                className="glass text-[10px] tracking-[0.22em] uppercase text-[#8a8978] px-5 py-2.5"
                 style={{ borderRadius: 100, fontFamily: "var(--font-syne)" }}
               >
                 {item}

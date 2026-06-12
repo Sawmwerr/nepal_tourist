@@ -79,14 +79,14 @@ export default function PostCard({ post, size = 'normal' }: { post: CommunityPos
               <span className="ml-1.5 opacity-60">{post.author.flag}</span>
             </p>
             <p
-              className="text-[9px] tracking-wide text-[#6b6a5a] truncate"
+              className="text-[9px] tracking-wide text-[#8a8978] truncate"
               style={{ fontFamily: 'var(--font-syne)' }}
             >
               {post.author.badge}
             </p>
           </div>
           <span
-            className="text-[9px] text-[#6b6a5a] shrink-0"
+            className="text-[9px] text-[#8a8978] shrink-0"
             style={{ fontFamily: 'var(--font-syne)' }}
           >
             {post.readTime}
@@ -133,19 +133,19 @@ export default function PostCard({ post, size = 'normal' }: { post: CommunityPos
           style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
         >
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1 text-[10px] text-[#6b6a5a]" style={{ fontFamily: 'var(--font-syne)' }}>
+            <span className="flex items-center gap-1 text-[10px] text-[#8a8978]" style={{ fontFamily: 'var(--font-syne)' }}>
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
               {formatCount(post.likes)}
             </span>
-            <span className="flex items-center gap-1 text-[10px] text-[#6b6a5a]" style={{ fontFamily: 'var(--font-syne)' }}>
+            <span className="flex items-center gap-1 text-[10px] text-[#8a8978]" style={{ fontFamily: 'var(--font-syne)' }}>
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
               {formatCount(post.comments)}
             </span>
-            <span className="flex items-center gap-1 text-[10px] text-[#6b6a5a]" style={{ fontFamily: 'var(--font-syne)' }}>
+            <span className="flex items-center gap-1 text-[10px] text-[#8a8978]" style={{ fontFamily: 'var(--font-syne)' }}>
               <svg width="11" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                 <circle cx="12" cy="12" r="3"/>
@@ -154,7 +154,7 @@ export default function PostCard({ post, size = 'normal' }: { post: CommunityPos
             </span>
           </div>
           <span
-            className="text-[9px] text-[#6b6a5a]"
+            className="text-[9px] text-[#8a8978]"
             style={{ fontFamily: 'var(--font-syne)' }}
           >
             {post.date}

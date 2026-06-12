@@ -236,7 +236,7 @@ export default function NepalMap() {
               style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
             Discover <em className="text-gradient">Nepal</em>
           </h2>
-          <p className="text-sm text-[#6b6a5a] mt-3"
+          <p className="text-sm text-[#8a8978] mt-3"
              style={{ fontFamily: "var(--font-syne)" }}>
             {attractions.length} attractions · Click any marker to explore
           </p>
@@ -249,7 +249,7 @@ export default function NepalMap() {
             style={{ fontFamily: "var(--font-syne)",
               background: !filter ? "rgba(240,236,227,0.1)" : "rgba(255,255,255,0.04)",
               border: !filter ? "1px solid rgba(240,236,227,0.18)" : "1px solid rgba(255,255,255,0.06)",
-              color: !filter ? "#f0ece3" : "#6b6a5a" }}>
+              color: !filter ? "#f0ece3" : "#8a8978" }}>
             All
           </button>
           {TYPES.map((type) => {
@@ -261,7 +261,7 @@ export default function NepalMap() {
                 style={{ fontFamily: "var(--font-syne)",
                   background: active ? `${color}20` : "rgba(255,255,255,0.04)",
                   border: `1px solid ${active ? color + "50" : "rgba(255,255,255,0.06)"}`,
-                  color: active ? color : "#6b6a5a" }}>
+                  color: active ? color : "#8a8978" }}>
                 <span>{icon}</span>{type}
               </button>
             );
@@ -367,7 +367,7 @@ export default function NepalMap() {
               {[{ label: "Duration", value: selected.duration },
                 { label: "Elevation", value: selected.elevation }].map((s) => (
                 <div key={s.label} className="glass-dark rounded-2xl p-3.5">
-                  <p className="text-[9px] tracking-[0.35em] uppercase text-[#6b6a5a] mb-1"
+                  <p className="text-[9px] tracking-[0.35em] uppercase text-[#8a8978] mb-1"
                      style={{ fontFamily: "var(--font-syne)" }}>
                     {s.label}
                   </p>
@@ -381,7 +381,7 @@ export default function NepalMap() {
 
             {/* Coordinates */}
             <div className="glass-dark rounded-2xl px-4 py-3 flex items-center justify-between">
-              <span className="text-[9px] tracking-[0.3em] uppercase text-[#6b6a5a]"
+              <span className="text-[9px] tracking-[0.3em] uppercase text-[#8a8978]"
                     style={{ fontFamily: "var(--font-syne)" }}>
                 Coordinates
               </span>
@@ -395,7 +395,7 @@ export default function NepalMap() {
           {/* ── Scrollable attraction list ── */}
           <div className="border-t px-3 py-3 overflow-y-auto shrink-0"
                style={{ borderColor: "rgba(255,255,255,0.05)", maxHeight: 200 }}>
-            <p className="text-[9px] tracking-[0.4em] uppercase text-[#6b6a5a] px-2 pb-2"
+            <p className="text-[9px] tracking-[0.4em] uppercase text-[#8a8978] px-2 pb-2"
                style={{ fontFamily: "var(--font-syne)" }}>
               All attractions
             </p>
@@ -445,6 +445,36 @@ export default function NepalMap() {
           </div>
         </div>
       </div>
+
+      {/* Screen-reader / keyboard fallback for the Leaflet map */}
+      <details className="mt-6" style={{ fontFamily: "var(--font-syne)" }}>
+        <summary
+          className="cursor-pointer text-[11px] tracking-[0.25em] uppercase text-[#8a8978] hover:text-[#d4a843] transition-colors duration-200 select-none"
+        >
+          View all {attractions.length} attractions as text list
+        </summary>
+        <ul
+          className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2"
+          style={{ listStyle: "none" }}
+        >
+          {attractions.map((a) => (
+            <li
+              key={a.id}
+              className="glass-dark rounded-xl px-4 py-3 flex flex-col gap-0.5"
+            >
+              <span className="text-[13px] font-semibold text-[#f0ece3]">
+                {TYPE_META[a.type]?.icon} {a.name}
+              </span>
+              <span className="text-[11px] text-[#8a8978]">
+                {a.type} · {a.region} · {a.elevation}
+              </span>
+              <span className="text-[11px] text-[rgba(240,236,227,0.5)] leading-relaxed mt-0.5">
+                {a.description}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </details>
     </section>
   );
 }

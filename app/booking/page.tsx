@@ -348,7 +348,13 @@ function Field({
         <label>{f.label}</label>
         <div className="chips">
           {f.options?.map(o => (
-            <span key={o} className={`chip${arr.includes(o) ? " sel" : ""}`} onClick={() => toggle(o)}>{o}</span>
+            <button
+              key={o}
+              type="button"
+              className={`chip${arr.includes(o) ? " sel" : ""}`}
+              aria-pressed={arr.includes(o)}
+              onClick={() => toggle(o)}
+            >{o}</button>
           ))}
         </div>
       </div>
@@ -398,7 +404,9 @@ export default function BookingPage() {
   const [sfTtype,  setSfTtype]  = useState("");
   const [sfDream,  setSfDream]  = useState("");
 
-  const occRef = useRef<HTMLDivElement>(null);
+  const occRef    = useRef<HTMLDivElement>(null);
+  const sheetRef  = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<Element | null>(null);
   const today = new Date().toISOString().slice(0, 10);
 
   // Override body styles for the light booking theme
@@ -423,9 +431,33 @@ export default function BookingPage() {
     return () => document.removeEventListener("keydown", h);
   }, [wizard]);
 
+  // Focus trap + initial focus when wizard is open
+  useEffect(() => {
+    if (!wizard || !sheetRef.current) return;
+    const el = sheetRef.current;
+    const FOCUSABLE = 'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const nodes = () => Array.from(el.querySelectorAll<HTMLElement>(FOCUSABLE));
+    // focus first focusable element on open / step change
+    nodes()[0]?.focus();
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const all = nodes();
+      if (!all.length) return;
+      const first = all[0], last = all[all.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    el.addEventListener("keydown", trap);
+    return () => el.removeEventListener("keydown", trap);
+  }, [wizard]);
+
   // ── Wizard ────────────────────────────────────────────────────────────────
 
   function openWizard(id: string, prefill: Record<string, unknown> = {}) {
+    triggerRef.current = document.activeElement;
     const cat = CATS.find(c => c.id === id);
     if (!cat) return;
     const steps = cat.pricing
@@ -443,6 +475,10 @@ export default function BookingPage() {
     setWizard(null);
     document.body.style.overflow = "";
     document.body.style.background = "#ffffff";
+    requestAnimationFrame(() => {
+      (triggerRef.current as HTMLElement | null)?.focus();
+      triggerRef.current = null;
+    });
   }
 
   function setVal(label: string, v: unknown) {
@@ -776,9 +812,17 @@ export default function BookingPage() {
             {CATS.map(c => {
               const fp = startPrice(c);
               return (
-                <div key={c.id} className="card" onClick={() => openWizard(c.id)}>
+                <div
+                  key={c.id}
+                  className="card"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${c.label} — ${c.desc}`}
+                  onClick={() => openWizard(c.id)}
+                  onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openWizard(c.id); } }}
+                >
                   <div className="top" style={{ background: GRADS[c.id] }}>
-                    <span className="e">{c.icon}</span>{MT}
+                    <span className="e" aria-hidden="true">{c.icon}</span>{MT}
                   </div>
                   <div className="info">
                     <h3>{c.label}</h3>
@@ -801,9 +845,17 @@ export default function BookingPage() {
           <p className="sec-sub">These places should be on your list</p>
           <div className="dgrid">
             {DESTS.map(d => (
-              <div key={d.name} className="dcard" onClick={() => openWizard("hotels", d.opt ? { Destination: d.opt } : {})}>
+              <div
+                key={d.name}
+                className="dcard"
+                role="button"
+                tabIndex={0}
+                aria-label={`${d.name} — ${d.sub}`}
+                onClick={() => openWizard("hotels", d.opt ? { Destination: d.opt } : {})}
+                onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openWizard("hotels", d.opt ? { Destination: d.opt } : {}); } }}
+              >
                 <div className="bg" style={{ background: d.grad }}>{MT}</div>
-                <span className="e">{d.e}</span>
+                <span className="e" aria-hidden="true">{d.e}</span>
                 <div className="dlbl"><h3>{d.name}</h3><span>{d.sub}</span></div>
               </div>
             ))}
@@ -857,13 +909,13 @@ export default function BookingPage() {
       {/* ── Wizard ── */}
       {wizard && (
         <div className="overlay" onClick={e => { if (e.target === e.currentTarget) closeWizard(); }}>
-          <div className="sheet" role="dialog" aria-modal="true">
+          <div className="sheet" role="dialog" aria-modal="true" aria-labelledby="wizard-title" ref={sheetRef}>
             <div className="sheet-head">
               <div className="cat">
-                <span className="e">{wizard.cat.icon}</span>
-                <div><h2>{wizard.cat.label}</h2><small>{wizard.cat.desc}</small></div>
+                <span className="e" aria-hidden="true">{wizard.cat.icon}</span>
+                <div><h2 id="wizard-title">{wizard.cat.label}</h2><small>{wizard.cat.desc}</small></div>
               </div>
-              <button className="x" onClick={closeWizard}>✕</button>
+              <button className="x" onClick={closeWizard} aria-label="Close dialog">✕</button>
             </div>
 
             {(() => {

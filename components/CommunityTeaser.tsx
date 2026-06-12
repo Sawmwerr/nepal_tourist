@@ -50,7 +50,7 @@ export default function CommunityTeaser() {
                   {s.value}
                 </span>
                 <span
-                  className="text-[9px] tracking-[0.35em] uppercase text-[#6b6a5a]"
+                  className="text-[9px] tracking-[0.35em] uppercase text-[#8a8978]"
                   style={{ fontFamily: 'var(--font-syne)' }}
                 >
                   {s.label}

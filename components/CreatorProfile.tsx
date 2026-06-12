@@ -104,7 +104,7 @@ export default function CreatorProfile() {
             {/* Email button */}
             <a href={`mailto:${PROFILE.email}`}
                className="flex items-center gap-2 px-7 py-2.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-medium transition-all duration-300 hover:border-[rgba(212,168,67,0.4)] hover:text-[#f0ece3]"
-               style={{ fontFamily: "var(--font-syne)", color: "#6b6a5a",
+               style={{ fontFamily: "var(--font-syne)", color: "#8a8978",
                  border: "1px solid rgba(255,255,255,0.07)" }}>
               <EmailIcon />
               Email me
@@ -143,7 +143,7 @@ export default function CreatorProfile() {
                         style={{ fontFamily: "var(--font-syne)" }}>
                     {s.value}
                   </span>
-                  <span className="text-[10px] tracking-[0.3em] uppercase text-[#6b6a5a]"
+                  <span className="text-[10px] tracking-[0.3em] uppercase text-[#8a8978]"
                         style={{ fontFamily: "var(--font-syne)" }}>
                     {s.label}
                   </span>

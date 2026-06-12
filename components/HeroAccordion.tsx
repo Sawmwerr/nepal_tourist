@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import PanelItem, { Panel } from "./PanelItem";
 
@@ -61,6 +61,7 @@ const panels: Panel[] = [
 export default function HeroAccordion() {
   const [activeId, setActiveId] = useState<string | null>("himalayas");
   const reduceMotion = useReducedMotion();
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Fire when IntroLoader finishes — same signal used by LenisProvider
   const [introDone, setIntroDone] = useState(() => {
@@ -130,7 +131,7 @@ export default function HeroAccordion() {
 
           {/* Sub */}
           <motion.p
-            className="text-[10px] tracking-[0.38em] uppercase text-[#6b6a5a] mt-6"
+            className="text-[10px] tracking-[0.38em] uppercase text-[#8a8978] mt-6"
             style={{ fontFamily: "var(--font-syne)" }}
             initial={{ opacity: 0 }}
             animate={(reduceMotion || introDone) ? { opacity: 1 } : { opacity: 0 }}
@@ -145,10 +146,33 @@ export default function HeroAccordion() {
       <div
         className="flex flex-1 min-h-0 mx-3 mb-3 overflow-hidden float-shadow-lg"
         style={{ gap: "2px", borderRadius: 24 }}
+        role="group"
+        aria-label="Nepal highlights — use arrow keys to navigate between panels"
+        onKeyDown={(e) => {
+          const idx = panelRefs.current.findIndex((r) => r === document.activeElement);
+          if (idx === -1) return;
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+            e.preventDefault();
+            const next = (idx + 1) % panels.length;
+            panelRefs.current[next]?.focus();
+            setActiveId(panels[next].id);
+          } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            e.preventDefault();
+            const prev = (idx - 1 + panels.length) % panels.length;
+            panelRefs.current[prev]?.focus();
+            setActiveId(panels[prev].id);
+          }
+        }}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+            setActiveId(null);
+          }
+        }}
       >
         {panels.map((panel, i) => (
           <PanelItem
             key={panel.id}
+            ref={(el: HTMLDivElement | null) => { panelRefs.current[i] = el; }}
             panel={panel}
             isActive={activeId === panel.id}
             isPriority={i === 0}

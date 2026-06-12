@@ -167,7 +167,7 @@ export default async function DestinationPage({
               </p>
 
               <div
-                className="flex items-center gap-2 text-[12px] text-[#6b6a5a]"
+                className="flex items-center gap-2 text-[12px] text-[#8a8978]"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -190,7 +190,7 @@ export default async function DestinationPage({
                   className="glass float-shadow rounded-2xl px-5 py-4"
                 >
                   <p
-                    className="text-[9px] tracking-[0.4em] uppercase text-[#6b6a5a] mb-1"
+                    className="text-[9px] tracking-[0.4em] uppercase text-[#8a8978] mb-1"
                     style={{ fontFamily: "var(--font-syne)" }}
                   >
                     {s.label}

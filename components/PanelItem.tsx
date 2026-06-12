@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import Image from "next/image";
+import { useReducedMotion } from "motion/react";
 
 export interface Panel {
   id: string;
@@ -23,8 +24,12 @@ interface PanelItemProps {
   onDeactivate: () => void;
 }
 
-export default function PanelItem({ panel, isActive, isPriority, onActivate, onDeactivate }: PanelItemProps) {
+const PanelItem = forwardRef<HTMLDivElement, PanelItemProps>(function PanelItem(
+  { panel, isActive, isPriority, onActivate, onDeactivate },
+  ref,
+) {
   const [videoReady, setVideoReady] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   // Reset so the fade-in replays each time the panel is re-activated
   useEffect(() => {
@@ -42,11 +47,21 @@ export default function PanelItem({ panel, isActive, isPriority, onActivate, onD
 
   return (
     <div
+      ref={ref}
       className="panel-item relative overflow-hidden cursor-pointer min-w-0"
       style={{ flex: isActive ? "5 1 0%" : "1 1 0%" }}
+      /* Interaction: mouse + keyboard */
+      tabIndex={0}
+      role="button"
+      aria-pressed={isActive}
+      aria-label={`${panel.title} — ${panel.category}`}
       onMouseEnter={onActivate}
       onMouseLeave={onDeactivate}
+      onFocus={onActivate}
       onClick={onActivate}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onActivate(); }
+      }}
     >
       {/* ── Static background: poster image (LCP element) or fallback gradient ── */}
       {panel.poster ? (
@@ -76,8 +91,8 @@ export default function PanelItem({ panel, isActive, isPriority, onActivate, onD
         />
       )}
 
-      {/* ── Video — only mounted for the active panel; fades in once decodable ── */}
-      {panel.videoSrc && isActive && (
+      {/* ── Video — only mounted for active panel; respects prefers-reduced-motion ── */}
+      {panel.videoSrc && isActive && !reduceMotion && (
         <video
           src={panel.videoSrc}
           autoPlay
@@ -105,10 +120,11 @@ export default function PanelItem({ panel, isActive, isPriority, onActivate, onD
         }}
       />
 
-      {/* ── Collapsed: number + rotated label ── */}
+      {/* ── Collapsed: number + rotated label (hidden from AT when active) ── */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center gap-5 pointer-events-none transition-opacity duration-400"
         style={{ opacity: isActive ? 0 : 1 }}
+        aria-hidden="true"
       >
         <span
           className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.3)]"
@@ -131,6 +147,7 @@ export default function PanelItem({ panel, isActive, isPriority, onActivate, onD
           opacity: isActive ? 1 : 0,
           transform: isActive ? "translateY(0)" : "translateY(20px)",
         }}
+        aria-hidden={!isActive}
       >
         <div
           className="glass-dark float-shadow p-5 md:p-6"
@@ -170,7 +187,7 @@ export default function PanelItem({ panel, isActive, isPriority, onActivate, onD
           </p>
 
           {/* CTA */}
-          <div className="inline-flex items-center gap-2 group">
+          <div className="inline-flex items-center gap-2">
             <div className="h-px w-5 bg-[#d4a843]" />
             <span
               className="text-[10px] tracking-[0.3em] uppercase text-[#d4a843] font-semibold"
@@ -183,4 +200,6 @@ export default function PanelItem({ panel, isActive, isPriority, onActivate, onD
       </div>
     </div>
   );
-}
+});
+
+export default PanelItem;

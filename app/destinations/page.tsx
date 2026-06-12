@@ -164,7 +164,7 @@ export default function DestinationsPage() {
                       </div>
 
                       <p
-                        className="text-[10px] text-[#6b6a5a]"
+                        className="text-[10px] text-[#8a8978]"
                         style={{ fontFamily: 'var(--font-syne)' }}
                       >
                         {dest.region}
@@ -182,7 +182,7 @@ export default function DestinationsPage() {
                         <div className="flex items-center gap-3">
                           {dest.duration && (
                             <span
-                              className="text-[9px] text-[#6b6a5a]"
+                              className="text-[9px] text-[#8a8978]"
                               style={{ fontFamily: 'var(--font-syne)' }}
                             >
                               {dest.duration}
@@ -198,7 +198,7 @@ export default function DestinationsPage() {
                           )}
                         </div>
                         <span
-                          className="flex items-center gap-1 text-[9px] text-[#6b6a5a]"
+                          className="flex items-center gap-1 text-[9px] text-[#8a8978]"
                           style={{ fontFamily: 'var(--font-syne)' }}
                         >
                           <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

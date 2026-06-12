@@ -174,12 +174,12 @@ export default async function OgImage({
               >
                 {post?.author.name} {post?.author.flag}
               </div>
-              <div style={{ fontSize: 12, color: "#6b6a5a" }}>
+              <div style={{ fontSize: 12, color: "#8a8978" }}>
                 {post?.author.badge} · {post?.date}
               </div>
             </div>
           </div>
-          <div style={{ fontSize: 14, color: "#6b6a5a" }}>
+          <div style={{ fontSize: 14, color: "#8a8978" }}>
             {post?.readTime} read
           </div>
         </div>
