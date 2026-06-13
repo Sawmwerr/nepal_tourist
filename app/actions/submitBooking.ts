@@ -25,6 +25,11 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
   const cat = CATEGORIES.find(c => c.id === categoryId)!;
 
   // ── 2. Category-specific field validation ─────────────────────────────────
+  const FORM_ERROR = { ok: false as const, errors: { _form: "Something went wrong — please try again." } };
+
+  // Cap selections size before iterating to prevent oversized payloads
+  if (Object.keys(selections).length > 30) return FORM_ERROR;
+
   const fieldErrors: Record<string, string> = {};
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -38,6 +43,14 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
       continue;
     }
     if (missing) continue; // optional field — skip further checks
+
+    if (field.type === "text" || field.type === "textarea") {
+      if (typeof raw !== "string") {
+        fieldErrors[field.label] = `${field.label} must be text`;
+      } else if (raw.length > 1000) {
+        fieldErrors[field.label] = `${field.label} must be 1000 characters or fewer`;
+      }
+    }
 
     if (field.type === "date" && typeof raw === "string") {
       const d = new Date(raw);
@@ -96,7 +109,8 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
       console.warn("[submitBooking] Supabase env vars not set — returning simulated reference");
       return { ok: true, reference };
     }
-    throw new Error("Database not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.");
+    console.error("[submitBooking] Database not configured in production");
+    return FORM_ERROR;
   }
 
   const db = createServerClient();
@@ -123,7 +137,10 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
       .select("id")
       .single();
 
-    if (custErr) throw custErr;
+    if (custErr) {
+      console.error("[submitBooking] Customer upsert error:", custErr);
+      return FORM_ERROR;
+    }
 
     // Insert booking — idempotency_key has a UNIQUE constraint so a race
     // between the SELECT above and this INSERT is caught as a 23505 error.
@@ -150,12 +167,13 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
           .single();
         if (retry?.reference) return { ok: true, reference: retry.reference };
       }
-      throw bookErr;
+      console.error("[submitBooking] Booking insert error:", bookErr);
+      return FORM_ERROR;
     }
 
     return { ok: true, reference };
   } catch (err) {
-    console.error("[submitBooking] DB error:", err);
-    throw err;
+    console.error("[submitBooking] Unexpected error:", err);
+    return FORM_ERROR;
   }
 }

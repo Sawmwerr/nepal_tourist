@@ -405,6 +405,11 @@ export default function BookingPage() {
     if (stepName === "Your details") return (
       <>
         <p style={{ color: "var(--bk-muted)", fontSize: ".9rem", marginBottom: 13 }}>We&apos;ll send your confirmation here.</p>
+        {serverErrors._form && (
+          <div style={{ background: "#fff0f0", border: "1px solid #f5c6c6", borderRadius: 10, padding: "12px 16px", marginBottom: 16, fontSize: ".85rem", color: "#c0392b" }}>
+            {serverErrors._form}
+          </div>
+        )}
         {/* Passport / biometric PII excluded — encryption + retention TBD */}
         {["Full name","Email","Phone / WhatsApp"].map(lbl => {
           const v = (wizard.values[lbl] as string) ?? "";
