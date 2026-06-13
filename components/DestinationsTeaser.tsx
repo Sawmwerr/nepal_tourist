@@ -75,7 +75,7 @@ function DestCard({ d, tall, num }: { d: Destination; tall?: boolean; num: strin
                 </span>
               </div>
               <span
-                className="text-[9px] text-[rgba(107,106,90,0.5)]"
+                className="text-[9px] text-[#8a8978]"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 {d.duration}

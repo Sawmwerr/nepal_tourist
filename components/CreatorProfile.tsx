@@ -160,7 +160,7 @@ export default function CreatorProfile() {
                  style={{ fontFamily: "var(--font-syne)",
                    background: "rgba(225,48,108,0.1)",
                    border: "1px solid rgba(225,48,108,0.2)",
-                   color: "#e1306c" }}>
+                   color: "#ff6b9d" }}>
                 <IgIcon />
                 Instagram
               </a>
@@ -204,7 +204,7 @@ export default function CreatorProfile() {
         {/* ── Bottom CTA banner ── */}
         <div className="border-t px-8 md:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-4"
              style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-          <p className="text-sm text-[rgba(240,236,227,0.45)] text-center md:text-left"
+          <p className="text-sm text-[rgba(240,236,227,0.65)] text-center md:text-left"
              style={{ fontFamily: "var(--font-syne)" }}>
             Follow for trekking routes, camp guides & hidden Nepal spots you won&apos;t find elsewhere.
           </p>

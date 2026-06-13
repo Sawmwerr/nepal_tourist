@@ -53,8 +53,8 @@ const PanelItem = forwardRef<HTMLDivElement, PanelItemProps>(function PanelItem(
       /* Interaction: mouse + keyboard */
       tabIndex={0}
       role="button"
-      aria-pressed={isActive}
-      aria-label={`${panel.title} — ${panel.category}`}
+      aria-expanded={isActive}
+      aria-label={`${panel.number} ${panel.title} — ${panel.category}: ${panel.tagline}. Explore →`}
       onMouseEnter={onActivate}
       onMouseLeave={onDeactivate}
       onFocus={onActivate}
@@ -123,11 +123,11 @@ const PanelItem = forwardRef<HTMLDivElement, PanelItemProps>(function PanelItem(
       {/* ── Collapsed: number + rotated label (hidden from AT when active) ── */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center gap-5 pointer-events-none transition-opacity duration-400"
-        style={{ opacity: isActive ? 0 : 1 }}
+        style={{ opacity: isActive ? 0 : 1, visibility: isActive ? "hidden" : "visible" }}
         aria-hidden="true"
       >
         <span
-          className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.3)]"
+          className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.5)]"
           style={{ fontFamily: "var(--font-syne)" }}
         >
           {panel.number}
@@ -146,8 +146,9 @@ const PanelItem = forwardRef<HTMLDivElement, PanelItemProps>(function PanelItem(
         style={{
           opacity: isActive ? 1 : 0,
           transform: isActive ? "translateY(0)" : "translateY(20px)",
+          visibility: isActive ? "visible" : "hidden",
         }}
-        aria-hidden={!isActive}
+        aria-hidden="true"
       >
         <div
           className="glass-dark float-shadow p-5 md:p-6"
@@ -156,7 +157,7 @@ const PanelItem = forwardRef<HTMLDivElement, PanelItemProps>(function PanelItem(
           {/* Number + category row */}
           <div className="flex items-center gap-2 mb-3">
             <span
-              className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.35)]"
+              className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.5)]"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               {panel.number}
@@ -170,13 +171,13 @@ const PanelItem = forwardRef<HTMLDivElement, PanelItemProps>(function PanelItem(
             </span>
           </div>
 
-          {/* Title */}
-          <h3
+          {/* Title — p not h3: lives inside role=button, aria-label already names it */}
+          <p
             className="text-2xl md:text-3xl text-[#f0ece3] leading-tight mb-1.5"
             style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
           >
             {panel.title}
-          </h3>
+          </p>
 
           {/* Tagline */}
           <p

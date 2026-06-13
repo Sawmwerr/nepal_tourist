@@ -8,7 +8,7 @@ export default function MarqueeStrip() {
   const content = items.map((item, i) => (
     <span key={i} className="flex items-center gap-7 shrink-0">
       <span
-        className="text-[11px] tracking-[0.42em] uppercase text-[#5a5848] hover:text-[#d4a843] transition-colors duration-300 cursor-default whitespace-nowrap"
+        className="text-[11px] tracking-[0.42em] uppercase text-[#8a8978] hover:text-[#d4a843] transition-colors duration-300 cursor-default whitespace-nowrap"
         style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
       >
         {item}

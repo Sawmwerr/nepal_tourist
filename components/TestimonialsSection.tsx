@@ -95,7 +95,7 @@ export default function TestimonialsSection() {
                 </p>
               </div>
               <span
-                className="text-[10px] text-[rgba(212,168,67,0.3)] shrink-0"
+                className="text-[10px] text-[rgba(212,168,67,0.7)] shrink-0"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 {t.year}

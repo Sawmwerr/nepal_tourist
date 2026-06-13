@@ -657,6 +657,8 @@ export default function BookingPage() {
         </div>
       </div>
 
+      <main>
+
       {/* ── Hero ── */}
       <div className="hero">
         <svg className="mts" viewBox="0 0 1440 240" preserveAspectRatio="none">
@@ -679,21 +681,21 @@ export default function BookingPage() {
           <div className="searchbar">
             {tab === "stays" && (<>
               <div className="sf">
-                <span className="si">📍</span>
-                <select value={sfDest} onChange={e => setSfDest(e.target.value)}>
+                <span className="si" aria-hidden="true">📍</span>
+                <select aria-label="Destination" value={sfDest} onChange={e => setSfDest(e.target.value)}>
                   <option value="" disabled>Where in Nepal?</option>
                   {["Kathmandu","Pokhara","Chitwan","Bhaktapur","Lumbini"].map(o => <option key={o}>{o}</option>)}
                 </select>
               </div>
               <div className="sf stacked">
-                <span className="si">📅</span>
-                <div className="lbl">Check-in</div>
-                <input type="date" min={today} value={sfIn} onChange={e => setSfIn(e.target.value)} />
+                <span className="si" aria-hidden="true">📅</span>
+                <div className="lbl" aria-hidden="true">Check-in</div>
+                <input type="date" aria-label="Check-in date" min={today} value={sfIn} onChange={e => setSfIn(e.target.value)} />
               </div>
               <div className="sf stacked">
-                <span className="si">📅</span>
-                <div className="lbl">Check-out</div>
-                <input type="date" min={today} value={sfOut} onChange={e => setSfOut(e.target.value)} />
+                <span className="si" aria-hidden="true">📅</span>
+                <div className="lbl" aria-hidden="true">Check-out</div>
+                <input type="date" aria-label="Check-out date" min={today} value={sfOut} onChange={e => setSfOut(e.target.value)} />
               </div>
               <div className="sf occ-field" ref={occRef} onClick={() => setOccOpen(v => !v)}>
                 <span className="si">👤</span>
@@ -718,61 +720,61 @@ export default function BookingPage() {
 
             {tab === "treks" && (<>
               <div className="sf">
-                <span className="si">🎒</span>
-                <select value={sfRoute} onChange={e => setSfRoute(e.target.value)}>
+                <span className="si" aria-hidden="true">🎒</span>
+                <select aria-label="Trek route" value={sfRoute} onChange={e => setSfRoute(e.target.value)}>
                   <option value="" disabled>Which trek?</option>
                   {["Poon Hill","Langtang","Annapurna Base Camp","Everest Base Camp","Annapurna Circuit","Manaslu Circuit"].map(o => <option key={o}>{o}</option>)}
                 </select>
               </div>
               <div className="sf">
-                <span className="si">📅</span>
-                <input type="date" min={today} value={sfIn} onChange={e => setSfIn(e.target.value)} />
+                <span className="si" aria-hidden="true">📅</span>
+                <input type="date" aria-label="Start date" min={today} value={sfIn} onChange={e => setSfIn(e.target.value)} />
               </div>
               <div className="sf">
-                <span className="si">👥</span>
-                <input type="number" min={1} value={sfGroup} onChange={e => setSfGroup(e.target.value)} />
+                <span className="si" aria-hidden="true">👥</span>
+                <input type="number" aria-label="Group size" min={1} value={sfGroup} onChange={e => setSfGroup(e.target.value)} />
               </div>
               <button className="btn-search" type="button" onClick={() => doSearch("trekking")}>Search</button>
             </>)}
 
             {tab === "adventure" && (<>
               <div className="sf">
-                <span className="si">🪂</span>
-                <select value={sfAct} onChange={e => setSfAct(e.target.value)}>
+                <span className="si" aria-hidden="true">🪂</span>
+                <select aria-label="Activity" value={sfAct} onChange={e => setSfAct(e.target.value)}>
                   <option value="" disabled>Pick an activity</option>
                   {["Paragliding","Zip-lining","White Water Rafting","Bungee Jumping","Jungle Safari"].map(o => <option key={o}>{o}</option>)}
                 </select>
               </div>
               <div className="sf">
-                <span className="si">📅</span>
-                <input type="date" min={today} value={sfIn} onChange={e => setSfIn(e.target.value)} />
+                <span className="si" aria-hidden="true">📅</span>
+                <input type="date" aria-label="Date" min={today} value={sfIn} onChange={e => setSfIn(e.target.value)} />
               </div>
               <div className="sf">
-                <span className="si">👥</span>
-                <input type="number" min={1} value={sfGroup} onChange={e => setSfGroup(e.target.value)} />
+                <span className="si" aria-hidden="true">👥</span>
+                <input type="number" aria-label="Group size" min={1} value={sfGroup} onChange={e => setSfGroup(e.target.value)} />
               </div>
               <button className="btn-search" type="button" onClick={() => doSearch("__act")}>Search</button>
             </>)}
 
             {tab === "transport" && (<>
               <div className="sf">
-                <span className="si">🚌</span>
-                <select value={sfTtype} onChange={e => setSfTtype(e.target.value)}>
+                <span className="si" aria-hidden="true">🚌</span>
+                <select aria-label="Transport type" value={sfTtype} onChange={e => setSfTtype(e.target.value)}>
                   <option value="" disabled>How will you travel?</option>
                   {["Bus","Taxi / Private Car","Motorbike Rental"].map(o => <option key={o}>{o}</option>)}
                 </select>
               </div>
               <div className="sf">
-                <span className="si">📅</span>
-                <input type="date" min={today} value={sfIn} onChange={e => setSfIn(e.target.value)} />
+                <span className="si" aria-hidden="true">📅</span>
+                <input type="date" aria-label="Travel date" min={today} value={sfIn} onChange={e => setSfIn(e.target.value)} />
               </div>
               <button className="btn-search" type="button" onClick={() => doSearch("__transport")}>Search</button>
             </>)}
 
             {tab === "custom" && (<>
               <div className="sf">
-                <span className="si">✨</span>
-                <input type="text" value={sfDream} placeholder="Tell us your dream Nepal trip…" onChange={e => setSfDream(e.target.value)} />
+                <span className="si" aria-hidden="true">✨</span>
+                <input type="text" aria-label="Describe your dream trip" value={sfDream} placeholder="Tell us your dream Nepal trip…" onChange={e => setSfDream(e.target.value)} />
               </div>
               <button className="btn-search" type="button" onClick={() => doSearch("custom")}>Plan my trip</button>
             </>)}
@@ -817,14 +819,14 @@ export default function BookingPage() {
                   className="card"
                   role="button"
                   tabIndex={0}
-                  aria-label={`${c.label} — ${c.desc}`}
+                  aria-label={`${c.label}: ${fp != null ? `from ${fmt(fp, cur)}` : "free quote"}. ${c.pricing ? "Book →" : "Enquire →"}`}
                   onClick={() => openWizard(c.id)}
                   onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openWizard(c.id); } }}
                 >
                   <div className="top" style={{ background: GRADS[c.id] }}>
                     <span className="e" aria-hidden="true">{c.icon}</span>{MT}
                   </div>
-                  <div className="info">
+                  <div className="info" aria-hidden="true">
                     <h3>{c.label}</h3>
                     <div className="row">
                       <span className="from">{fp != null ? <>from <b>{fmt(fp, cur)}</b></> : <b>Free quote</b>}</span>
@@ -856,7 +858,7 @@ export default function BookingPage() {
               >
                 <div className="bg" style={{ background: d.grad }}>{MT}</div>
                 <span className="e" aria-hidden="true">{d.e}</span>
-                <div className="dlbl"><h3>{d.name}</h3><span>{d.sub}</span></div>
+                <div className="dlbl" aria-hidden="true"><h3>{d.name}</h3><span>{d.sub}</span></div>
               </div>
             ))}
           </div>
@@ -874,13 +876,15 @@ export default function BookingPage() {
               { ti: "💬", h: "24/7 WhatsApp support",    p: "Real humans, anytime you need" },
             ].map(t => (
               <div key={t.h} className="tr">
-                <div className="ti">{t.ti}</div>
-                <div><h4>{t.h}</h4><p>{t.p}</p></div>
+                <div className="ti" aria-hidden="true">{t.ti}</div>
+                <div><h3>{t.h}</h3><p>{t.p}</p></div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      </main>
 
       {/* ── Footer ── */}
       <footer>
@@ -890,9 +894,9 @@ export default function BookingPage() {
               <div className="logo"><span className="m" style={{ color: "var(--blue)" }}>▲</span>Nepal</div>
               <p>Your one stop to book stays, treks, adventures and transport across Nepal.</p>
             </div>
-            <div className="foot-col"><h5>Explore</h5><a href="#">Stays</a><a href="#">Treks</a><a href="#">Adventure</a><a href="#">Transport</a></div>
-            <div className="foot-col"><h5>Destinations</h5><a href="#">Kathmandu</a><a href="#">Pokhara</a><a href="#">Chitwan</a><a href="#">Everest region</a></div>
-            <div className="foot-col"><h5>Support</h5><a href="#">Help center</a><a href="#">Cancellation</a><a href="#">Contact us</a><a href="#">List your business</a></div>
+            <div className="foot-col"><h4>Explore</h4><a href="#">Stays</a><a href="#">Treks</a><a href="#">Adventure</a><a href="#">Transport</a></div>
+            <div className="foot-col"><h4>Destinations</h4><a href="#">Kathmandu</a><a href="#">Pokhara</a><a href="#">Chitwan</a><a href="#">Everest region</a></div>
+            <div className="foot-col"><h4>Support</h4><a href="#">Help center</a><a href="#">Cancellation</a><a href="#">Contact us</a><a href="#">List your business</a></div>
           </div>
         </div>
         <div className="foot-bottom"><span>© 2026 · Nepal — booking</span><span>नमस्ते · Namaste</span></div>

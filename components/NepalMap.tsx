@@ -149,8 +149,9 @@ export default function NepalMap() {
         const s = active ? 26 : 18;
         const icon = L.divIcon({ className: "", html: markerHtml(color, active), iconSize: [s, s], iconAnchor: [s / 2, s / 2] });
 
-        const marker = L.marker([attr.lat, attr.lng], { icon }).addTo(map);
+        const marker = L.marker([attr.lat, attr.lng], { icon, title: attr.name }).addTo(map);
         (marker as any)._attr = attr;
+        marker.getElement()?.setAttribute("aria-label", `${attr.name} — ${attr.type}, ${attr.elevation}`);
 
         /* Tooltip on hover — name + short description + elevation */
         const shortDesc = attr.description.length > 72
@@ -433,7 +434,7 @@ export default function NepalMap() {
                       </span>
                       <span className="text-[10px] truncate"
                             style={{ fontFamily: "var(--font-syne)",
-                              color: "rgba(107,106,90,0.7)",
+                              color: "rgba(160,158,140,0.9)",
                               lineHeight: 1.4 }}>
                         {attr.elevation} · {attr.region}
                       </span>
