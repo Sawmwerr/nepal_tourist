@@ -12,6 +12,7 @@ export interface BookingRow {
   currency: string;
   status: "pending" | "confirmed" | "cancelled";
   idempotency_key: string;
+  confirmation_sent: boolean;
   created_at?: string;
 }
 

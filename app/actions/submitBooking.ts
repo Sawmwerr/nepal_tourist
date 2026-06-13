@@ -4,6 +4,7 @@ import { CATEGORIES } from "@/lib/booking/catalog";
 import { computePrice } from "@/lib/booking/pricing";
 import { BookingPayloadSchema } from "@/lib/booking/schema";
 import { createServerClient } from "@/lib/booking/db";
+import { notifyBookingConfirmed, type BookingNotification } from "@/lib/notifications";
 
 export type SubmitResult =
   | { ok: true;  reference: string }
@@ -27,7 +28,6 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
   // ── 2. Category-specific field validation ─────────────────────────────────
   const FORM_ERROR = { ok: false as const, errors: { _form: "Something went wrong — please try again." } };
 
-  // Cap selections size before iterating to prevent oversized payloads
   if (Object.keys(selections).length > 30) return FORM_ERROR;
 
   const fieldErrors: Record<string, string> = {};
@@ -42,7 +42,7 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
       fieldErrors[field.label] = `${field.label} is required`;
       continue;
     }
-    if (missing) continue; // optional field — skip further checks
+    if (missing) continue;
 
     if (field.type === "text" || field.type === "textarea") {
       if (typeof raw !== "string") {
@@ -81,7 +81,6 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
     }
   }
 
-  // Contact validation (belt-and-suspenders — Zod already checked these)
   if (contact.name.trim().length < 2)              fieldErrors["contact.name"]  = "Full name is required";
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contact.email)) fieldErrors["contact.email"] = "Valid email address required";
   if (contact.phone.trim().length < 5)             fieldErrors["contact.phone"] = "Phone or WhatsApp number required";
@@ -103,10 +102,27 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
     if (allowedLabels.has(k)) safeSelections[k] = v;
   }
 
+  const notification: BookingNotification = {
+    reference,
+    categoryId,
+    categoryLabel: cat.label,
+    categoryIcon:  cat.icon,
+    selections:    safeSelections,
+    included:      cat.included,
+    price:         priceResult,
+    currency,
+    contact,
+  };
+
   // ── 6. Persist (with graceful dev fallback when DB not configured) ────────
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     if (process.env.NODE_ENV === "development") {
       console.warn("[submitBooking] Supabase env vars not set — returning simulated reference");
+      const { emailSent } = await notifyBookingConfirmed(notification).catch(err => {
+        console.warn("[submitBooking] Dev email failed:", err);
+        return { emailSent: false };
+      });
+      if (!emailSent) console.warn("[submitBooking] Email not sent — check RESEND_API_KEY and FROM_EMAIL");
       return { ok: true, reference };
     }
     console.error("[submitBooking] Database not configured in production");
@@ -155,11 +171,11 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
       currency,
       status:            "pending",
       idempotency_key:   idempotencyKey,
+      confirmation_sent: false,
     });
 
     if (bookErr) {
       if (bookErr.code === "23505") {
-        // Lost the race — fetch the winner's reference
         const { data: retry } = await db
           .from("bookings")
           .select("reference")
@@ -169,6 +185,20 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
       }
       console.error("[submitBooking] Booking insert error:", bookErr);
       return FORM_ERROR;
+    }
+
+    // ── 7. Notify — wrapped so email failure never fails the booking ──────
+    const { emailSent } = await notifyBookingConfirmed(notification).catch(err => {
+      console.error("[submitBooking] Notification dispatch error:", err);
+      return { emailSent: false };
+    });
+
+    if (emailSent) {
+      const { error: confErr } = await db
+        .from("bookings")
+        .update({ confirmation_sent: true })
+        .eq("reference", reference);
+      if (confErr) console.error("[submitBooking] Failed to update confirmation_sent:", confErr);
     }
 
     return { ok: true, reference };

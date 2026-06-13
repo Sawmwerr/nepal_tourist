@@ -9,6 +9,7 @@ import {
 } from "@/lib/booking/catalog";
 import { computePriceFromCat, startPrice, fmt, type PriceResult } from "@/lib/booking/pricing";
 import { submitBooking } from "@/app/actions/submitBooking";
+import { generateICS } from "@/lib/notifications/ics";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -454,12 +455,76 @@ export default function BookingPage() {
     );
 
     const isCustom = stepName === "Submitted";
+
+    const selRows = wizard.cat.fields.flatMap(f => {
+      const v = wizard.values[f.label];
+      if (v === undefined || v === "" || v === null || v === false) return [];
+      const val = Array.isArray(v) ? (v as string[]).join(", ") : String(v);
+      return [{ label: f.label, val }];
+    });
+
+    const confirmPrice = computePriceFromCat(wizard.cat, wizard.values);
+
+    const icsContent = !isCustom && wizard.ref
+      ? generateICS({ reference: wizard.ref, categoryId: wizard.cat.id, categoryLabel: wizard.cat.label, selections: wizard.values })
+      : "";
+
     return (
       <div className="done">
         <div className="check">✓</div>
         <h3>{isCustom ? "Request submitted!" : "Booking confirmed!"}</h3>
-        <p>{isCustom ? "Our local experts will reply within 24 hours with your custom itinerary and pricing." : "Your booking is confirmed. Check your email for the full itinerary and details."}</p>
         <div className="ref"><small>Reference</small>{wizard.ref}</div>
+
+        {isCustom ? (
+          <p>Our local experts will reply within 24 hours with your custom itinerary and pricing.</p>
+        ) : (
+          <>
+            {/* Selections summary */}
+            {selRows.length > 0 && (
+              <div style={{ width: "100%", marginTop: 18 }}>
+                {selRows.map(r => (
+                  <div key={r.label} className="sumrow">
+                    <span className="k">{r.label}</span>
+                    <span className="v">{r.val}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Price breakdown */}
+            {confirmPrice && <PriceRows price={confirmPrice} cur={cur} />}
+
+            {/* What's included */}
+            <div className="included" style={{ marginTop: 16, textAlign: "left" }}>
+              <div className="h">What&apos;s included</div>
+              {wizard.cat.included.map(i => (
+                <div key={i} className="it"><span className="c">✓</span><span>{i}</span></div>
+              ))}
+            </div>
+
+            {/* Support + calendar */}
+            <div className="confirm-footer">
+              <span>
+                Questions?{" "}
+                <a href="https://wa.me/9779851234567" className="wa-link">
+                  WhatsApp +977-9851234567
+                </a>
+              </span>
+              {icsContent && (
+                <a
+                  href={`data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`}
+                  download={`nepal-booking-${wizard.ref}.ics`}
+                  className="btn-cal"
+                >
+                  📅 Add to Calendar
+                </a>
+              )}
+            </div>
+            <p style={{ marginTop: 14, fontSize: ".84rem" }}>
+              A confirmation email with calendar invite has been sent to {wizard.values["Email"] as string}.
+            </p>
+          </>
+        )}
       </div>
     );
   };

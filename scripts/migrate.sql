@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   status            text         NOT NULL DEFAULT 'pending'
                                  CHECK (status IN ('pending', 'confirmed', 'cancelled')),
   idempotency_key   text         NOT NULL UNIQUE,   -- client UUID; prevents duplicate submissions
+  confirmation_sent boolean      NOT NULL DEFAULT false,
   created_at        timestamptz  NOT NULL DEFAULT now()
 );
 

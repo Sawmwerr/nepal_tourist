@@ -430,6 +430,19 @@
   display: block; font-weight: 600; font-size: .7rem; color: var(--bk-muted);
   letter-spacing: .08em; text-transform: uppercase; margin-bottom: 3px;
 }
+.booking-root .confirm-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px; margin-top: 14px; width: 100%;
+  font-size: .84rem; color: var(--bk-muted);
+}
+.booking-root .wa-link { color: var(--blue); font-weight: 700; }
+.booking-root .btn-cal {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--blue-50); color: var(--blue); border: 1.5px solid var(--blue);
+  font-weight: 700; font-size: .88rem; padding: 9px 16px; border-radius: 8px;
+  text-decoration: none; transition: .2s; flex-shrink: 0;
+}
+.booking-root .btn-cal:hover { background: var(--blue); color: #fff; }
 .booking-root .sheet-foot {
   padding: 16px 22px 22px; display: flex; align-items: center; justify-content: space-between;
   gap: 14px; border-top: 1px solid var(--line); margin-top: 10px;
