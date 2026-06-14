@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import PrayerFlagDivider from "./PrayerFlagDivider";
 
 const footerLinks: Record<string, { name: string; href: string }[]> = {
   Explore: [
@@ -148,11 +149,11 @@ export default function Footer() {
             ))}
           </div>
 
+          {/* Prayer-flag accent */}
+          <PrayerFlagDivider className="mb-6" opacity={0.4} />
+
           {/* Bottom bar */}
-          <div
-            className="flex flex-col md:flex-row items-center justify-between pt-8 gap-4"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
-          >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p
               className="text-[10px] tracking-[0.25em] text-[#8a8978] uppercase"
               style={{ fontFamily: "var(--font-syne)" }}
@@ -163,7 +164,7 @@ export default function Footer() {
               className="text-[10px] tracking-[0.2em] text-[#8a8978] uppercase"
               style={{ fontFamily: "var(--font-syne)" }}
             >
-              Crafted with care for Nepal
+              नेपाल — Crafted with care
             </p>
           </div>
         </div>

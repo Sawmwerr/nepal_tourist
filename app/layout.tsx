@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Syne } from "next/font/google";
+import { Syne, Noto_Sans_Devanagari } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import IntroLoader from "@/components/IntroLoader";
@@ -21,6 +21,14 @@ const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  preload: false,
+});
+
+const notoDevanagari = Noto_Sans_Devanagari({
+  variable: "--font-devanagari",
+  subsets: ["devanagari"],
+  weight: ["400", "500", "600"],
   display: "swap",
   preload: false,
 });
@@ -59,7 +67,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${clashDisplay.variable} ${syne.variable} h-full antialiased`}>
+    <html lang="en" className={`${clashDisplay.variable} ${syne.variable} ${notoDevanagari.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#07070d] text-[#f0ece3]">
         {/*
           Runs before hydration — adds `intro-skip` to <html> for returning visitors

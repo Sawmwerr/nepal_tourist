@@ -7,6 +7,15 @@
   --gold: #d4a843;
   --gold-bright: #e8c547;
   --muted: #8a8978; /* lifted from #6b6a5a for WCAG AA (≥4.5:1 on #07070d) */
+  --crimson: #9b1c3a;         /* Nepali identity — restrained earthy crimson */
+  --crimson-bright: #c41e3a;  /* accent highlight */
+  --earth: #7a4520;           /* warm terracotta earth tone */
+  /* Prayer-flag palette — blue/white/red/green/yellow */
+  --flag-blue:   #003893;
+  --flag-white:  #f0ece3;
+  --flag-red:    #c41e3a;
+  --flag-green:  #1a7a4d;
+  --flag-yellow: #d4a843;
   --r-card: 24px;
   --r-lg: 28px;
   --r-sm: 16px;
@@ -42,6 +51,7 @@
      single control point for all headline/display text across the site. */
   --font-display: var(--font-clash);
   --font-ui: var(--font-syne);
+  --font-deva: var(--font-devanagari);
 }
 
 /* Clash Display: tighten tracking site-wide for the modern cinematic look.
@@ -350,3 +360,42 @@ html.intro-skip #intro-overlay { display: none !important; }
 }
 /* Suppress pointer-driven focus ring (mouse clicks) */
 :focus:not(:focus-visible) { outline: none; }
+
+/* ═══════════════════════════════════════
+   NEPALI IDENTITY LAYER
+   Devanagari script + prayer-flag accent
+═══════════════════════════════════════ */
+
+/* Devanagari text — used for bilingual labels */
+.devanagari {
+  font-family: var(--font-devanagari), serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  font-size: 0.85em;
+  opacity: 0.72;
+  display: block;
+  line-height: 1.4;
+}
+
+/* Crimson accent text */
+.text-crimson { color: var(--crimson-bright); }
+
+/* Prayer-flag horizontal rule — five coloured bands */
+.prayer-flag-rule {
+  display: flex;
+  height: 3px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.prayer-flag-rule span {
+  flex: 1;
+  display: block;
+}
+.prayer-flag-rule span:nth-child(1) { background: var(--flag-blue);   }
+.prayer-flag-rule span:nth-child(2) { background: var(--flag-white);  opacity: 0.55; }
+.prayer-flag-rule span:nth-child(3) { background: var(--flag-red);    }
+.prayer-flag-rule span:nth-child(4) { background: var(--flag-green);  }
+.prayer-flag-rule span:nth-child(5) { background: var(--flag-yellow); }

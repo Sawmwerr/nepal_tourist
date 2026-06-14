@@ -202,6 +202,14 @@ export default function BookingPage() {
     return () => { document.body.style.background = prev.bg; document.body.style.color = prev.color; };
   }, []);
 
+  // Auto-open wizard if ?cat= is set in the URL (linked from destination/mountains pages).
+  // openWizard is intentionally omitted from deps — we only want this to run once on mount.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const catId = new URLSearchParams(window.location.search).get("cat");
+    if (catId) openWizard(catId);
+  }, []);
+
   // Close occupancy popover on outside click
   useEffect(() => {
     const h = (e: MouseEvent) => { if (occRef.current && !occRef.current.contains(e.target as Node)) setOccOpen(false); };
