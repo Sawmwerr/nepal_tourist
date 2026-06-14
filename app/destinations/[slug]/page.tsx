@@ -191,19 +191,25 @@ export default async function DestinationPage({
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
 
           {/* ── Overview + Stats ── */}
-          <section className="py-14 flex flex-col lg:flex-row gap-12 items-start">
+          <section className="py-16 flex flex-col lg:flex-row gap-12 items-start">
             <div className="flex-1 min-w-0">
               <p
-                className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-5"
+                className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-3"
                 style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
               >
                 Overview
               </p>
+              <h2
+                className="text-3xl text-[#f0ece3] mb-6"
+                style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
+              >
+                About {dest.name}
+              </h2>
               <div className="flex flex-col gap-5">
                 {dest.overview.map((para, i) => (
                   <p
                     key={i}
-                    className="text-[15px] leading-[1.8] text-[rgba(240,236,227,0.72)]"
+                    className="text-[15px] leading-[1.8] text-[rgba(240,236,227,0.78)]"
                     style={{ fontFamily: "var(--font-syne)", maxWidth: 680 }}
                   >
                     {para}
@@ -276,7 +282,7 @@ export default async function DestinationPage({
 
           {/* ── Highlights ── */}
           {dest.highlights.length > 0 && (
-            <section className="py-14">
+            <section className="py-16">
               <p
                 className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-3"
                 style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
@@ -284,11 +290,17 @@ export default async function DestinationPage({
                 Highlights
               </p>
               <h2
-                className="text-3xl md:text-4xl text-[#f0ece3] mb-8"
+                className="text-3xl md:text-4xl text-[#f0ece3] mb-3"
                 style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
               >
                 Why people come here
               </h2>
+              <p
+                className="text-[13px] text-[rgba(240,236,227,0.6)] mb-8 max-w-lg"
+                style={{ fontFamily: "var(--font-syne)" }}
+              >
+                What makes {dest.name} unforgettable — in six points.
+              </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {dest.highlights.map((h, i) => (
                   <div
@@ -327,13 +339,13 @@ export default async function DestinationPage({
                   <div
                     key={i}
                     className="relative shrink-0 rounded-2xl overflow-hidden"
-                    style={{ width: "clamp(260px, 36vw, 480px)", height: 280, scrollSnapAlign: "start" }}
+                    style={{ width: "clamp(240px, 34vw, 440px)", aspectRatio: "4/3", scrollSnapAlign: "start" }}
                   >
                     <Image
                       src={img}
-                      alt={`${dest.name} ${i + 1}`}
+                      alt={`${dest.name} photo ${i + 1}`}
                       fill
-                      sizes="(min-width:1024px) 36vw, 80vw"
+                      sizes="(min-width:1024px) 34vw, 80vw"
                       className="object-cover graded"
                     />
                   </div>
@@ -347,37 +359,49 @@ export default async function DestinationPage({
           {/* ── Getting there + Permits ── */}
           <section className="py-10">
             <p
-              className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-5"
+              className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-3"
               style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
             >
               Practical info
             </p>
+            <h2
+              className="text-2xl md:text-3xl text-[#f0ece3] mb-3"
+              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
+            >
+              Plan your visit
+            </h2>
+            <p
+              className="text-[13px] text-[rgba(240,236,227,0.6)] mb-6 max-w-lg"
+              style={{ fontFamily: "var(--font-syne)" }}
+            >
+              Everything you need to know before you go.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="glass float-shadow rounded-2xl p-6">
-                <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a8978] mb-3" style={{ fontFamily: "var(--font-syne)" }}>
+              <div className="glass rounded-2xl p-6">
+                <p className="text-[10px] tracking-[0.35em] uppercase text-[#8a8978] mb-3" style={{ fontFamily: "var(--font-syne)" }}>
                   Getting there
                 </p>
-                <p className="text-[14px] leading-relaxed text-[rgba(240,236,227,0.72)]" style={{ fontFamily: "var(--font-syne)" }}>
+                <p className="text-[13px] leading-relaxed text-[rgba(240,236,227,0.75)]" style={{ fontFamily: "var(--font-syne)" }}>
                   {dest.gettingThere}
                 </p>
               </div>
 
               {dest.permits && (
-                <div className="glass float-shadow rounded-2xl p-6">
-                  <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a8978] mb-3" style={{ fontFamily: "var(--font-syne)" }}>
+                <div className="glass rounded-2xl p-6">
+                  <p className="text-[10px] tracking-[0.35em] uppercase text-[#8a8978] mb-3" style={{ fontFamily: "var(--font-syne)" }}>
                     Permits &amp; fees
                   </p>
-                  <p className="text-[14px] leading-relaxed text-[rgba(240,236,227,0.72)]" style={{ fontFamily: "var(--font-syne)" }}>
+                  <p className="text-[13px] leading-relaxed text-[rgba(240,236,227,0.75)]" style={{ fontFamily: "var(--font-syne)" }}>
                     {dest.permits}
                   </p>
                 </div>
               )}
 
-              <div className="glass float-shadow rounded-2xl p-6">
-                <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a8978] mb-3" style={{ fontFamily: "var(--font-syne)" }}>
+              <div className="glass rounded-2xl p-6">
+                <p className="text-[10px] tracking-[0.35em] uppercase text-[#8a8978] mb-3" style={{ fontFamily: "var(--font-syne)" }}>
                   Best time to visit
                 </p>
-                <p className="text-[14px] leading-relaxed text-[rgba(240,236,227,0.72)]" style={{ fontFamily: "var(--font-syne)" }}>
+                <p className="text-[13px] leading-relaxed text-[rgba(240,236,227,0.75)]" style={{ fontFamily: "var(--font-syne)" }}>
                   {dest.bestTime}
                 </p>
               </div>
@@ -393,8 +417,8 @@ export default async function DestinationPage({
 
           {/* ── Related destinations ── */}
           {relatedDests.length > 0 && (
-            <section className="py-14">
-              <PrayerFlagDivider opacity={0.35} className="mb-10" />
+            <section className="py-16">
+              <PrayerFlagDivider opacity={0.3} className="mb-10" />
               <p
                 className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-3"
                 style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
@@ -402,59 +426,71 @@ export default async function DestinationPage({
                 Related Destinations
               </p>
               <h2
-                className="text-3xl md:text-4xl text-[#f0ece3] mb-8"
+                className="text-3xl md:text-4xl text-[#f0ece3] mb-3"
                 style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
               >
                 Explore more of Nepal
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <p
+                className="text-[13px] text-[rgba(240,236,227,0.6)] mb-8 max-w-lg"
+                style={{ fontFamily: "var(--font-syne)" }}
+              >
+                Destinations travellers pair with {dest.name}.
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {relatedDests.map((r) => {
                   const rt = TYPE_STYLE[r.type] ?? TYPE_STYLE.Trek;
                   return (
                     <Link
                       key={r.slug}
                       href={`/destinations/${r.slug}`}
-                      className="glass float-shadow card-lift rounded-2xl overflow-hidden group"
+                      className="glass card-lift rounded-2xl overflow-hidden group flex flex-col"
                     >
-                      <div className="relative h-44 overflow-hidden">
+                      <div className="relative aspect-[4/3] overflow-hidden">
                         <Image
                           src={r.image}
                           alt={r.name}
                           fill
-                          sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                          sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 50vw"
                           className="object-cover graded transition-transform duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                        <div className="absolute bottom-3 left-4">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+                        <div className="absolute top-3 left-3">
                           <span
-                            className="text-[9px] font-semibold tracking-wider px-2 py-1 rounded-full"
+                            className="text-[9px] font-semibold px-2 py-1 rounded-full"
                             style={{ background: rt.bg, color: rt.text, fontFamily: "var(--font-syne)" }}
                           >
                             {rt.icon} {r.type}
                           </span>
                         </div>
                       </div>
-                      <div className="px-5 py-4">
+                      <div className="p-5 flex flex-col flex-1">
                         <p
-                          className="text-[15px] font-semibold text-[#f0ece3] group-hover:text-[#d4a843] transition-colors mb-1"
+                          className="text-[15px] font-semibold text-[#f0ece3] group-hover:text-[#d4a843] transition-colors duration-200 mb-0.5 leading-tight"
                           style={{ fontFamily: "var(--font-display)" }}
                         >
                           {r.name}
                         </p>
                         {r.devanagari && (
                           <p
-                            className="text-[12px] text-[#d4a843] mb-2"
-                            style={{ fontFamily: "var(--font-devanagari)", opacity: 0.7 }}
+                            className="text-[12px] mb-2"
+                            style={{ fontFamily: "var(--font-devanagari)", color: "#d4a843", opacity: 0.72 }}
                           >
                             {r.devanagari}
                           </p>
                         )}
                         <p
-                          className="text-[12px] text-[#8a8978] line-clamp-2"
+                          className="text-[11px] text-[rgba(240,236,227,0.6)] flex-1 mb-4"
                           style={{ fontFamily: "var(--font-syne)" }}
                         >
-                          {r.description}
+                          {r.region} · {r.duration}
                         </p>
+                        <span
+                          className="self-start text-[10px] font-semibold text-[#d4a843] tracking-wide"
+                          style={{ fontFamily: "var(--font-syne)" }}
+                        >
+                          Explore →
+                        </span>
                       </div>
                     </Link>
                   );
@@ -465,7 +501,7 @@ export default async function DestinationPage({
 
           {/* ── Community stories ── */}
           {communityStories.length > 0 && (
-            <section className="py-10 pb-14">
+            <section className="py-10 pb-16">
               <p
                 className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-3"
                 style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
@@ -473,18 +509,24 @@ export default async function DestinationPage({
                 Community
               </p>
               <h2
-                className="text-3xl md:text-4xl text-[#f0ece3] mb-8"
+                className="text-3xl md:text-4xl text-[#f0ece3] mb-3"
                 style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
               >
                 Stories from the trail
               </h2>
+              <p
+                className="text-[13px] text-[rgba(240,236,227,0.6)] mb-8 max-w-lg"
+                style={{ fontFamily: "var(--font-syne)" }}
+              >
+                Real accounts from travellers who have been here.
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {communityStories.map((post) => (
                   <article
                     key={post.id}
-                    className="glass float-shadow rounded-2xl overflow-hidden group"
+                    className="glass rounded-2xl overflow-hidden"
                   >
-                    <div className="relative h-40">
+                    <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
                         src={post.image}
                         alt={post.title}
@@ -518,7 +560,7 @@ export default async function DestinationPage({
                         {post.title}
                       </h3>
                       <p
-                        className="text-[12px] text-[#8a8978] line-clamp-2"
+                        className="text-[12px] text-[rgba(240,236,227,0.6)] line-clamp-2"
                         style={{ fontFamily: "var(--font-syne)" }}
                       >
                         {post.excerpt}
