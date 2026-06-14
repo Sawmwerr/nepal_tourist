@@ -59,13 +59,13 @@ function DestCard({ d, tall, num }: { d: Destination; tall?: boolean; num: strin
               {d.name}
             </h3>
             <p
-              className="text-[11px] text-[rgba(240,236,227,0.5)] leading-relaxed mb-3 opacity-0 group-hover:opacity-100 max-h-0 group-hover:max-h-24 overflow-hidden transition-all duration-500"
+              className="text-[11px] text-[rgba(240,236,227,0.5)] leading-relaxed mb-3 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 max-h-0 group-hover:max-h-24 group-focus-within:max-h-24 overflow-hidden transition-all duration-500"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               {d.description}
             </p>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500">
                 <div className="h-px w-4 bg-[#d4a843]" />
                 <span
                   className="text-[10px] tracking-[0.25em] uppercase text-[#d4a843] font-semibold"

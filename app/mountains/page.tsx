@@ -78,12 +78,14 @@ export default function MountainsPage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {MOUNTAIN_PEAKS.map((peak) => (
-                <div
+                // Whole card is the link — works on touch and keyboard equally
+                <Link
                   key={peak.name}
-                  className="glass float-shadow rounded-2xl overflow-hidden group relative"
+                  href="/booking?cat=trekking"
+                  className="glass float-shadow card-lift rounded-2xl overflow-hidden group flex flex-col"
                 >
                   {/* Photo */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden shrink-0">
                     <Image
                       src={peak.photo}
                       alt={peak.name}
@@ -110,15 +112,15 @@ export default function MountainsPage() {
                     </div>
 
                     {/* Icon accent */}
-                    <div className="absolute top-3 right-3 text-lg opacity-70">
+                    <div className="absolute top-3 right-3 text-lg opacity-70" aria-hidden="true">
                       {peak.icon}
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-4">
+                  <div className="p-4 flex flex-col flex-1">
                     <p
-                      className="text-[15px] font-semibold text-[#f0ece3] mb-0.5"
+                      className="text-[15px] font-semibold text-[#f0ece3] mb-0.5 group-hover:text-[#d4a843] transition-colors"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {peak.name}
@@ -130,40 +132,26 @@ export default function MountainsPage() {
                       {peak.devanagari}
                     </p>
                     <p
-                      className="text-[11px] text-[rgba(240,236,227,0.55)] leading-snug mb-2"
+                      className="text-[11px] text-[rgba(240,236,227,0.55)] leading-snug mb-3 flex-1"
                       style={{ fontFamily: "var(--font-syne)" }}
                     >
                       {peak.description}
                     </p>
-                    <p
-                      className="text-[9px] tracking-wider uppercase text-[#8a8978]"
-                      style={{ fontFamily: "var(--font-syne)" }}
-                    >
-                      {peak.note}
-                    </p>
-                  </div>
 
-                  {/* Book trek hover CTA */}
-                  <Link
-                    href="/booking?cat=trekking"
-                    className="absolute inset-0 flex items-end justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    tabIndex={-1}
-                    aria-hidden="true"
-                  >
+                    {/* CTA pill — always visible; desktop hover scales it */}
                     <span
-                      className="px-3 py-1.5 rounded-full text-[10px] font-semibold"
+                      className="self-start px-3 py-1.5 rounded-full text-[10px] font-semibold transition-transform duration-200 group-hover:scale-105"
                       style={{
                         fontFamily: "var(--font-syne)",
-                        background: "rgba(212,168,67,0.15)",
-                        border: "1px solid rgba(212,168,67,0.4)",
+                        background: "rgba(212,168,67,0.12)",
+                        border: "1px solid rgba(212,168,67,0.32)",
                         color: "#d4a843",
-                        backdropFilter: "blur(8px)",
                       }}
                     >
                       Book trek →
                     </span>
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               ))}
             </div>
 
