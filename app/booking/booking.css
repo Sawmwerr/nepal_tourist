@@ -89,27 +89,51 @@
 
 /* ===== Hero ===== */
 .booking-root .hero {
-  background: var(--blue-900); position: relative; overflow: hidden; padding-bottom: 64px;
+  background: var(--blue-900); /* fallback while the photo loads */
+  position: relative; overflow: hidden; padding-bottom: 64px;
 }
-.booking-root .hero .mts { position: absolute; bottom: 0; left: 0; width: 100%; opacity: .18; }
+/* Background photo — desaturated, dimmed; sits at the base of the stack */
+.booking-root .hero-bg {
+  z-index: 0;
+  object-fit: cover;
+  filter: brightness(.9) saturate(.85);
+}
+/* Dark scrim — light touch; the multiply-blended grade below does most of the
+   contrast work, so this stays gentle enough to keep the photo visible. */
+.booking-root .hero-scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(0,8,20,.22) 0%, rgba(0,8,20,.34) 55%, rgba(0,8,20,.2) 100%);
+}
+/* Nepal-flag grade — diagonal blue → crimson, multiply-blended so it darkens
+   rather than washing out, keeping contrast solid across the whole photo. */
+.booking-root .hero-grade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, #003893 0%, #dc143c 100%);
+  opacity: .5;
+  mix-blend-mode: multiply;
+}
+.booking-root .hero .mts { position: absolute; bottom: 0; left: 0; width: 100%; opacity: .22; z-index: 2; }
 .booking-root .hero-inner {
-  max-width: var(--maxw); margin: 0 auto; padding: 6px 20px 0; position: relative; z-index: 2;
+  max-width: var(--maxw); margin: 0 auto; padding: 6px 20px 0; position: relative; z-index: 10;
 }
 .booking-root .tabs { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 0 22px; }
 .booking-root .tab {
   display: inline-flex; align-items: center; gap: 8px; color: #fff; font-weight: 600;
   font-size: .92rem; padding: 10px 16px; border-radius: 100px; border: 1px solid transparent;
   cursor: pointer; transition: .2s; background: transparent;
+  text-shadow: 0 1px 4px rgba(0,0,0,.45);
 }
-.booking-root .tab:hover { background: rgba(255,255,255,.1); }
-.booking-root .tab.on { border-color: #fff; background: rgba(255,255,255,.06); }
+.booking-root .tab:hover { background: rgba(255,255,255,.14); }
+.booking-root .tab.on { border-color: #fff; background: rgba(255,255,255,.14); }
 .booking-root .tab .e { font-size: 1.05rem; }
 .booking-root h1 {
   color: #fff; font-weight: 800; font-size: clamp(2rem,5vw,3rem);
   letter-spacing: -.02em; line-height: 1.05;
+  text-shadow: 0 2px 16px rgba(0,0,0,.4), 0 1px 3px rgba(0,0,0,.55);
 }
 .booking-root .hero-sub {
   color: #dce7f7; font-size: clamp(1rem,2vw,1.35rem); margin-top: 10px; font-weight: 500;
+  text-shadow: 0 1px 8px rgba(0,0,0,.45);
 }
 
 /* ===== Search bar ===== */

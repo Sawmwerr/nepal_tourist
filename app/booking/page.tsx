@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   CATEGORIES,
   type Category,
@@ -561,6 +562,18 @@ export default function BookingPage() {
 
       {/* ── Hero ── */}
       <div className="hero">
+        <Image
+          src="/Machhapuchhre BC.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="hero-bg"
+        />
+        {/* Dark scrim — guarantees text contrast regardless of photo brightness */}
+        <div className="hero-scrim" aria-hidden="true" />
+        {/* Nepal-flag grade — diagonal blue → crimson, multiply-blended over the scrim */}
+        <div className="hero-grade" aria-hidden="true" />
         <svg className="mts" viewBox="0 0 1440 240" preserveAspectRatio="none">
           <path d="M0,240 L0,150 L160,70 L300,130 L460,50 L620,120 L820,40 L1010,120 L1200,60 L1440,130 L1440,240 Z" fill="#ffffff" />
           <path d="M460,50 L500,95 L482,95 L462,78 L440,100 L418,92 Z" fill="#cfe0ff" />
