@@ -51,6 +51,8 @@ Then fill in these values inside `frontend/.env.local`:
 ```env
 SUPABASE_URL=https://your-project-ref.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 RESEND_API_KEY=your-resend-api-key
 FROM_EMAIL=booking@yourdomain.com
 ```
@@ -59,6 +61,7 @@ Important:
 
 - Never commit `frontend/.env.local`.
 - `SUPABASE_SERVICE_ROLE_KEY` is secret and server-only.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` is used for browser login and is safe to expose.
 - Do not expose the service-role key in browser code.
 - `SUPABASE_URL` should be the base project URL only, not `/rest/v1`.
 
@@ -66,7 +69,8 @@ Important:
 
 Supabase Dashboard → Project Settings → API:
 
-- Project URL → use for `SUPABASE_URL`
+- Project URL → use for `SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_URL`
+- anon/public key → use for `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - service_role key → use for `SUPABASE_SERVICE_ROLE_KEY`
 
 Do not paste real keys into chat or docs.
@@ -125,7 +129,21 @@ where email = 'your-admin-email@example.com';
 
 Expected: one row with `role = 'admin'`.
 
-## 7. Local verification
+## 7. Admin login verification
+
+After migration 002 and env setup, restart the dev server and open:
+
+```text
+http://localhost:3000/admin
+```
+
+Expected behavior:
+
+- Without a session, `/admin` redirects to `/admin/login`.
+- A non-admin Supabase user sees an access denied screen.
+- A promoted `profiles.role = 'admin'` user can access the protected admin dashboard.
+
+## 8. Local booking verification
 
 Run the app from the frontend folder:
 
@@ -161,13 +179,15 @@ limit 5;
 
 Expected: new bookings start with `status = 'pending'`.
 
-## 8. Production/Vercel env variables
+## 9. Production/Vercel env variables
 
 In Vercel, add these environment variables for Production and Preview:
 
 ```env
 SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 RESEND_API_KEY=
 FROM_EMAIL=
 ```
@@ -178,12 +198,11 @@ Security check:
 - Do not commit `.env.local`.
 - Do not put secrets in README files.
 
-## 9. Next backend phases
+## 10. Next backend phases
 
-After Phase 2 SQL runs successfully, continue with:
+After Phase 3 admin login works, continue with:
 
-1. Supabase Auth login for admins.
-2. Admin bookings dashboard.
-3. Booking status updates from the dashboard.
-4. Spam/rate-limit protection.
-5. Production deployment checklist.
+1. Admin bookings dashboard.
+2. Booking status updates from the dashboard.
+3. Spam/rate-limit protection.
+4. Production deployment checklist.
