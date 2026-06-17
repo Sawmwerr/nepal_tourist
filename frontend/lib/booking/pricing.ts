@@ -94,5 +94,7 @@ export const SYM  = { USD: "$", NPR: "Rs " } as const;
 export function fmt(usd: number, cur: keyof typeof RATE): string {
   const v = usd * RATE[cur];
   const r = cur === "NPR" ? Math.round(v / 10) * 10 : Math.round(v);
-  return SYM[cur] + r.toLocaleString();
+  // Pin the locale so SSR (Node) and client (browser) format identically and
+  // never produce a hydration mismatch from differing thousands separators.
+  return SYM[cur] + r.toLocaleString("en-US");
 }

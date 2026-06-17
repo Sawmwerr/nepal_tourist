@@ -63,12 +63,10 @@ export default function HeroAccordion() {
   const reduceMotion = useReducedMotion();
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Fire when IntroLoader finishes — same signal used by LenisProvider
-  const [introDone, setIntroDone] = useState(() => {
-    if (typeof window === "undefined") return false;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
-    return document.documentElement.dataset.introComplete === "1";
-  });
+  // Fire when IntroLoader finishes — same signal used by LenisProvider.
+  // Must start false to match the server render; the effect below promotes it
+  // to true on the client for reduced-motion / already-complete cases.
+  const [introDone, setIntroDone] = useState(false);
 
   useEffect(() => {
     if (reduceMotion || document.documentElement.dataset.introComplete === "1") {
