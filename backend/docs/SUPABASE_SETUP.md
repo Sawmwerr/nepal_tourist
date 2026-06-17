@@ -18,6 +18,7 @@ Run the migrations in this order:
 ```text
 backend/supabase/migrations/001_initial_booking_schema.sql
 backend/supabase/migrations/002_admin_profiles_and_booking_audit.sql
+backend/supabase/migrations/003_customer_accounts_and_own_bookings.sql
 ```
 
 Current tables created/updated:
@@ -28,15 +29,16 @@ bookings
 profiles
 ```
 
-Current admin-ready database objects:
+Current admin/customer-ready database objects:
 
 ```text
 public.is_admin(user_id uuid)
 public.admin_booking_summaries
+public.customer_booking_summaries
 public.handle_new_user_profile()
 ```
 
-The migrations enable Row Level Security. The public booking server action uses the server-only service-role key. Admin users will use Supabase Auth in a later phase.
+The migrations enable Row Level Security. The public booking server action uses the server-only service-role key. Admin and customer users authenticate with Supabase Auth.
 
 ## 3. Create local env file
 
@@ -143,7 +145,34 @@ Expected behavior:
 - A non-admin Supabase user sees an access denied screen.
 - A promoted `profiles.role = 'admin'` user can access the protected admin dashboard.
 
-## 8. Local booking verification
+## 8. Customer account database verification
+
+After migration 003, new Supabase Auth users become customer profiles by default.
+
+Create a test customer in Supabase Auth, then verify:
+
+```sql
+select id, email, role
+from public.profiles
+where email = 'test-customer@example.com';
+```
+
+Expected: one row with `role = 'customer'`.
+
+If a customer already submitted guest bookings with the same email before migration 003, the migration attempts to link the newest matching `customers` row to that auth user.
+
+Verify customer-owned booking visibility:
+
+```sql
+select reference, category_id, status, created_at
+from public.customer_booking_summaries
+order by created_at desc
+limit 5;
+```
+
+Expected: when run as an authenticated customer through the app/API, only that customer's bookings are visible.
+
+## 9. Local booking verification
 
 Run the app from the frontend folder:
 
@@ -179,7 +208,7 @@ limit 5;
 
 Expected: new bookings start with `status = 'pending'`.
 
-## 9. Production/Vercel env variables
+## 10. Production/Vercel env variables
 
 In Vercel, add these environment variables for Production and Preview:
 
@@ -198,7 +227,7 @@ Security check:
 - Do not commit `.env.local`.
 - Do not put secrets in README files.
 
-## 10. Next backend phases
+## 11. Next backend phases
 
 After Phase 3 admin login works, continue with:
 
