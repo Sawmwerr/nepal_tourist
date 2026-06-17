@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { useActiveSection } from "@/components/providers/ScrollStoryContext";
 
@@ -59,7 +60,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between px-6 md:px-10 py-3">
 
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2.5 shrink-0 group">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
             <Image
               src="/nepalflag.jpg"
               alt="Nepal Flag"
@@ -74,7 +75,7 @@ export default function Navbar() {
             >
               Nepal
             </span>
-          </a>
+          </Link>
 
           {/* Desktop nav — five section anchors */}
           <nav className="hidden lg:flex items-center gap-1">

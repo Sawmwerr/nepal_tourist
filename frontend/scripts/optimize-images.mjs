@@ -7,7 +7,7 @@
 
 import sharp from "sharp";
 import { readdir, copyFile, stat, mkdir } from "node:fs/promises";
-import { join, extname, basename } from "node:path";
+import { join, extname } from "node:path";
 
 const PUBLIC   = "public";
 const BACKUP   = join(PUBLIC, "_src");

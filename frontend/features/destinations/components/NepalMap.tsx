@@ -3,6 +3,7 @@
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
+import type * as Leaflet from "leaflet";
 
 type Attraction = {
   id: number;
@@ -61,6 +62,9 @@ const attractions: Attraction[] = [
   { id: 34, name: "Tilicho Lake",        region: "Gandaki Province", type: "Nature",    lat: 28.6833, lng: 83.8333, description: "One of the highest lakes in the world at 4,919 m — a gem on the Annapurna Circuit requiring a challenging side trek.", duration: "On circuit", elevation: "4,919 m", photo: "/Tilicho Lake.jpg",                 photoBk: "https://images.unsplash.com/photo-1586187168491-5d47a22e3a0c?w=800&h=420&fit=crop&q=80", gradient: "linear-gradient(135deg,#041510,#0c3820)" },
 ];
 
+type LeafletModule = typeof Leaflet;
+type AttractionMarker = Leaflet.Marker & { _attr: Attraction };
+
 const TYPE_META: Record<string, { color: string; icon: string }> = {
   Trek:      { color: "#60a5fa", icon: "⛰️" },
   Basecamp:  { color: "#f87171", icon: "⛺" },
@@ -85,9 +89,9 @@ const TILES = {
 
 export default function NepalMap() {
   const containerRef   = useRef<HTMLDivElement>(null);
-  const mapRef         = useRef<any>(null);
-  const markersRef     = useRef<any[]>([]);
-  const tileLayerRef   = useRef<{ current: any; dark: any; satellite: any }>({ current: null, dark: null, satellite: null });
+  const mapRef         = useRef<Leaflet.Map | null>(null);
+  const markersRef     = useRef<AttractionMarker[]>([]);
+  const tileLayerRef   = useRef<{ current: Leaflet.TileLayer | null; dark: Leaflet.TileLayer | null; satellite: Leaflet.TileLayer | null }>({ current: null, dark: null, satellite: null });
 
   const [selected,   setSelected]   = useState<Attraction>(attractions[0]);
   const [filter,     setFilter]     = useState<string | null>(null);
@@ -107,9 +111,9 @@ export default function NepalMap() {
   }, []);
 
   /* ── Update active marker size ── */
-  const updateMarkers = useCallback((selectedId: number, L: any) => {
+  const updateMarkers = useCallback((selectedId: number, L: LeafletModule) => {
     markersRef.current.forEach((m) => {
-      const a: Attraction = m._attr;
+      const a = m._attr;
       const { color } = TYPE_META[a.type] ?? TYPE_META.Culture;
       const active = a.id === selectedId;
       const s = active ? 26 : 18;
@@ -125,7 +129,7 @@ export default function NepalMap() {
 
     import("leaflet").then((mod) => {
       if (cancelled || !containerRef.current || mapRef.current) return;
-      const L = mod.default ?? mod;
+      const L = (mod.default ?? mod) as LeafletModule;
 
       const map = L.map(containerRef.current!, {
         center: [28.0, 84.1],
@@ -149,8 +153,8 @@ export default function NepalMap() {
         const s = active ? 26 : 18;
         const icon = L.divIcon({ className: "", html: markerHtml(color, active), iconSize: [s, s], iconAnchor: [s / 2, s / 2] });
 
-        const marker = L.marker([attr.lat, attr.lng], { icon, title: attr.name }).addTo(map);
-        (marker as any)._attr = attr;
+        const marker = L.marker([attr.lat, attr.lng], { icon, title: attr.name }).addTo(map) as AttractionMarker;
+        marker._attr = attr;
         marker.getElement()?.setAttribute("aria-label", `${attr.name} — ${attr.type}, ${attr.elevation}`);
 
         /* Tooltip on hover — name + short description + elevation */
@@ -206,16 +210,17 @@ export default function NepalMap() {
 
   /* ── Satellite toggle ── */
   const toggleSatellite = useCallback(() => {
-    const { current, dark, satellite: sat } = tileLayerRef.current;
-    if (!mapRef.current || !dark || !sat) return;
+    const { dark, satellite: sat } = tileLayerRef.current;
+    const map = mapRef.current;
+    if (!map || !dark || !sat) return;
     setSatellite((prev) => {
       if (prev) {
         sat.remove();
-        dark.addTo(mapRef.current);
+        dark.addTo(map);
         tileLayerRef.current.current = dark;
       } else {
         dark.remove();
-        sat.addTo(mapRef.current);
+        sat.addTo(map);
         tileLayerRef.current.current = sat;
       }
       return !prev;

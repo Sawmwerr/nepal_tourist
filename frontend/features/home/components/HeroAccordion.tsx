@@ -72,7 +72,7 @@ export default function HeroAccordion() {
 
   useEffect(() => {
     if (reduceMotion || document.documentElement.dataset.introComplete === "1") {
-      setIntroDone(true);
+      queueMicrotask(() => setIntroDone(true));
       return;
     }
     const handler = () => setIntroDone(true);

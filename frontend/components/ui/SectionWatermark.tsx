@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { useReducedMotion } from "motion/react";
 import { useActiveSection } from "@/components/providers/ScrollStoryContext";
 
 const SECTIONS = [
@@ -52,12 +53,7 @@ const PagodaMotif = ({ opacity }: { opacity: number }) => (
 
 export default function SectionWatermark() {
   const { activeSection, setActiveSection } = useActiveSection();
-
-  const reducedMotion = useRef(false);
-  useEffect(() => {
-    reducedMotion.current =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }, []);
+  const noMotion = useReducedMotion();
 
   useEffect(() => {
     const intersecting = new Set<string>();
@@ -83,7 +79,6 @@ export default function SectionWatermark() {
   }, [setActiveSection]);
 
   const isActive = !!activeSection;
-  const noMotion = reducedMotion.current;
 
   return (
     <div

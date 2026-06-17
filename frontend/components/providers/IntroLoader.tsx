@@ -24,7 +24,7 @@ export default function IntroLoader() {
 
   useEffect(() => {
     alive.current = true;
-    setHasMounted(true);
+    queueMicrotask(() => setHasMounted(true));
 
     // Skip for returning visitors or prefers-reduced-motion
     try {
@@ -35,7 +35,7 @@ export default function IntroLoader() {
         try { sessionStorage.setItem("introSeen", "1"); } catch { /* private */ }
         document.documentElement.dataset.introComplete = "1";
         window.dispatchEvent(new Event("intro:done"));
-        setPhase("done");
+        queueMicrotask(() => setPhase("done"));
         return;
       }
     } catch { /* private mode — treat as skip */ }

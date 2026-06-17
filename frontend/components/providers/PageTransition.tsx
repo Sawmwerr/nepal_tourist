@@ -31,7 +31,10 @@ export default function PageTransition() {
     const alreadyDone =
       typeof document !== "undefined" &&
       document.documentElement.dataset.introComplete === "1";
-    if (alreadyDone) { setEnabled(true); return; }
+    if (alreadyDone) {
+      queueMicrotask(() => setEnabled(true));
+      return;
+    }
 
     const handler = () => setEnabled(true);
     window.addEventListener("intro:done", handler, { once: true });

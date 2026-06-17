@@ -66,7 +66,7 @@ export default function LenisProvider() {
       lenisRef.current?.destroy();
       lenisRef.current = null;
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   // Route change → jump to top instantly so the new page starts at position 0.
   useEffect(() => {

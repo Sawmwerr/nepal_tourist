@@ -34,7 +34,6 @@ export default function Home() {
       rel="preload"
       as="image"
       href="/_next/image?url=%2Fposters%2Fhimilaya.jpg&w=750&q=75"
-      // @ts-ignore — fetchPriority is valid HTML5
       fetchPriority="high"
     />
     <ScrollStoryProvider>

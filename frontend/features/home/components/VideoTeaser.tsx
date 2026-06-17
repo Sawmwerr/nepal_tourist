@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import Reveal from "@/components/ui/Reveal";
 
 export default function VideoTeaser() {
@@ -103,13 +105,13 @@ export default function VideoTeaser() {
           </div>
 
           {/* View all link */}
-          <a
+          <Link
             href="/destinations"
             className="mt-8 inline-flex items-center gap-2 text-[10px] tracking-[0.28em] uppercase text-[#d4a843] hover:text-[#f0ece3] transition-colors duration-300 hover-line"
             style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
           >
             Explore all destinations →
-          </a>
+          </Link>
         </Reveal>
       </div>
     </section>
