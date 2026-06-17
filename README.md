@@ -31,6 +31,7 @@ Backend setup starts in `backend/`.
 Current backend pieces:
 
 - Supabase schema: `backend/supabase/migrations/001_initial_booking_schema.sql`
+- Admin/profile hardening migration: `backend/supabase/migrations/002_admin_profiles_and_booking_audit.sql`
 - Supabase setup guide: `backend/docs/SUPABASE_SETUP.md`
 - Booking server action: `frontend/app/actions/submitBooking.ts`
 - Booking validation/pricing/database helpers: `frontend/lib/booking/`
@@ -41,10 +42,11 @@ Why some backend code is inside `frontend/`: this is a Next.js app, so server ac
 ## Backend quick setup
 
 1. Create a Supabase project.
-2. Run the SQL migration:
+2. Run the SQL migrations in order:
 
 ```text
 backend/supabase/migrations/001_initial_booking_schema.sql
+backend/supabase/migrations/002_admin_profiles_and_booking_audit.sql
 ```
 
 3. Create local env file:

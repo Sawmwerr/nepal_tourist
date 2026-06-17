@@ -13,20 +13,30 @@ This project uses Supabase Postgres as the booking database. The public booking 
 
 Open Supabase Dashboard → SQL Editor → New query.
 
-Copy and run this SQL file:
+Run the migrations in this order:
 
 ```text
 backend/supabase/migrations/001_initial_booking_schema.sql
+backend/supabase/migrations/002_admin_profiles_and_booking_audit.sql
 ```
 
-Current tables created:
+Current tables created/updated:
 
 ```text
 customers
 bookings
+profiles
 ```
 
-The migration also enables Row Level Security. The current booking server action uses the server-only service-role key, so public browser users do not need direct table access.
+Current admin-ready database objects:
+
+```text
+public.is_admin(user_id uuid)
+public.admin_booking_summaries
+public.handle_new_user_profile()
+```
+
+The migrations enable Row Level Security. The public booking server action uses the server-only service-role key. Admin users will use Supabase Auth in a later phase.
 
 ## 3. Create local env file
 
@@ -76,7 +86,46 @@ For real delivery, `FROM_EMAIL` should use a verified Resend domain.
 
 If email is not configured in development, the booking action may still return a simulated reference when Supabase is also not configured.
 
-## 6. Local verification
+## 6. Admin user setup
+
+Phase 2 only prepares the database for admin users. The admin login UI is built in the next phase.
+
+After running migration 002, create an admin user in Supabase Auth:
+
+Supabase Dashboard → Authentication → Users → Add user
+
+Then promote the trusted account by email in SQL Editor:
+
+```sql
+update public.profiles
+set role = 'admin'
+where email = 'your-admin-email@example.com';
+```
+
+If the user existed before the trigger was created and no profile row exists, run this safer setup instead:
+
+```sql
+insert into public.profiles (id, email, full_name, role)
+select id, email, raw_user_meta_data ->> 'full_name', 'admin'
+from auth.users
+where email = 'your-admin-email@example.com'
+on conflict (id) do update
+set role = 'admin',
+    email = excluded.email,
+    updated_at = now();
+```
+
+Verify admin promotion:
+
+```sql
+select id, email, role
+from public.profiles
+where email = 'your-admin-email@example.com';
+```
+
+Expected: one row with `role = 'admin'`.
+
+## 7. Local verification
 
 Run the app from the frontend folder:
 
@@ -101,7 +150,18 @@ Expected result:
 - A row appears in Supabase `bookings`.
 - If Resend is configured, the customer receives a confirmation email.
 
-## 7. Production/Vercel env variables
+SQL verification after submitting a test booking:
+
+```sql
+select reference, category_id, status, created_at, updated_at
+from public.bookings
+order by created_at desc
+limit 5;
+```
+
+Expected: new bookings start with `status = 'pending'`.
+
+## 8. Production/Vercel env variables
 
 In Vercel, add these environment variables for Production and Preview:
 
@@ -118,12 +178,12 @@ Security check:
 - Do not commit `.env.local`.
 - Do not put secrets in README files.
 
-## 8. Next backend phases
+## 9. Next backend phases
 
-After this setup works, continue with:
+After Phase 2 SQL runs successfully, continue with:
 
-1. Admin profile/role schema.
-2. Supabase Auth login for admins.
-3. Admin bookings dashboard.
-4. Booking status updates.
-5. Spam/rate-limit protection.
+1. Supabase Auth login for admins.
+2. Admin bookings dashboard.
+3. Booking status updates from the dashboard.
+4. Spam/rate-limit protection.
+5. Production deployment checklist.

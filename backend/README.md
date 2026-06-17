@@ -17,10 +17,11 @@ frontend/lib/booking/
 frontend/lib/notifications/
 ```
 
-The Supabase database schema lives here:
+The Supabase database migrations live here:
 
 ```text
 backend/supabase/migrations/001_initial_booking_schema.sql
+backend/supabase/migrations/002_admin_profiles_and_booking_audit.sql
 ```
 
 The detailed Supabase setup guide lives here:
@@ -47,15 +48,24 @@ Current database tables:
 ```text
 customers
 bookings
+profiles
+```
+
+Admin-ready database helpers:
+
+```text
+public.is_admin(user_id uuid)
+public.admin_booking_summaries
 ```
 
 ## Quick setup
 
 1. Create a Supabase project.
-2. Run this SQL in Supabase Dashboard → SQL Editor:
+2. Run these SQL migrations in Supabase Dashboard → SQL Editor:
 
 ```text
 backend/supabase/migrations/001_initial_booking_schema.sql
+backend/supabase/migrations/002_admin_profiles_and_booking_audit.sql
 ```
 
 3. Copy the env template:
