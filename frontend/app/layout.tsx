@@ -3,9 +3,9 @@ import localFont from "next/font/local";
 import { Syne, Noto_Sans_Devanagari } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import IntroLoader from "@/components/IntroLoader";
-import LenisProvider from "@/components/LenisProvider";
-import PageTransition from "@/components/PageTransition";
+import IntroLoader from "@/components/providers/IntroLoader";
+import LenisProvider from "@/components/providers/LenisProvider";
+import PageTransition from "@/components/providers/PageTransition";
 
 // Clash Display — self-hosted from app/fonts/ (ITF Free Font License via Fontshare).
 // Variable font covers 200–700 in one file; Medium + Bold kept as explicit fallbacks.

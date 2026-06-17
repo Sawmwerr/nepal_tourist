@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import PrayerFlagDivider from "./PrayerFlagDivider";
+import PrayerFlagDivider from "@/components/ui/PrayerFlagDivider";
 
 const footerLinks: Record<string, { name: string; href: string }[]> = {
   Explore: [

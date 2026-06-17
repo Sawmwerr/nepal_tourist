@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { DESTINATION_LIST } from "@/lib/data";
 import type { Destination } from "@/lib/data";
-import Reveal from "./Reveal";
-import ParallaxImage from "./ParallaxImage";
-import ImageReveal from "./ImageReveal";
+import Reveal from "@/components/ui/Reveal";
+import ParallaxImage from "@/components/ui/ParallaxImage";
+import ImageReveal from "@/components/ui/ImageReveal";
 
 function DestCard({ d, tall, num }: { d: Destination; tall?: boolean; num: string }) {
   return (

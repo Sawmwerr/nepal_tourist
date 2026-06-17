@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CommunityPost, PostCategory } from "@/lib/data";
-import ParallaxImage from "./ParallaxImage";
-import ImageReveal from "./ImageReveal";
+import ParallaxImage from "@/components/ui/ParallaxImage";
+import ImageReveal from "@/components/ui/ImageReveal";
 
 const CATEGORY: Record<PostCategory, { label: string; bg: string; border: string; text: string; icon: string }> = {
   'trek-report':    { label: 'Trek Report',    bg: 'rgba(26,74,122,0.2)',    border: 'rgba(91,155,213,0.3)',  text: '#5b9bd5', icon: '🎒' },

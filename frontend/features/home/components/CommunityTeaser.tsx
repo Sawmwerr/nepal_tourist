@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { COMMUNITY_POSTS, COMMUNITY_STATS } from "@/lib/data";
-import PostCard from "./PostCard";
-import Reveal from "./Reveal";
+import PostCard from "@/features/community/components/PostCard";
+import Reveal from "@/components/ui/Reveal";
 
 export default function CommunityTeaser() {
   const featured = COMMUNITY_POSTS.filter(p => p.featured).slice(0, 3);

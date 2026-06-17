@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MOUNTAIN_PEAKS, TREK_ROUTES, VIEWPOINTS } from "@/lib/data";
-import Reveal from "./Reveal";
+import Reveal from "@/components/ui/Reveal";
 
 export default function MountainsTeaser() {
   return (

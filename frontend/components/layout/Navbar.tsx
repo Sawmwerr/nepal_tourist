@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useActiveSection } from "./ScrollStoryContext";
+import { useActiveSection } from "@/components/providers/ScrollStoryContext";
 
 const NAV = [
   { label: "Destinations",      scrollId: "destinations" },

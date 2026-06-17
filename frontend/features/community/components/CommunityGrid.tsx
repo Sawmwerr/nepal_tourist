@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { CommunityPost, PostCategory, TopContributor } from "@/lib/data";
-import PostCard from "./PostCard";
+import PostCard from "@/features/community/components/PostCard";
 
 type FilterType = PostCategory | 'all';
 

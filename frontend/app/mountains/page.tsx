@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import PrayerFlagDivider from "@/components/PrayerFlagDivider";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import PrayerFlagDivider from "@/components/ui/PrayerFlagDivider";
 import { MOUNTAIN_PEAKS, TREK_ROUTES, VIEWPOINTS } from "@/lib/data";
 
 export const metadata: Metadata = {

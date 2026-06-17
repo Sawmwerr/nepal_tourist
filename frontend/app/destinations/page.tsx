@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Reveal from "@/components/Reveal";
-import PrayerFlagDivider from "@/components/PrayerFlagDivider";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import Reveal from "@/components/ui/Reveal";
+import PrayerFlagDivider from "@/components/ui/PrayerFlagDivider";
 import { DESTINATION_LIST } from "@/lib/data";
 
 export const metadata: Metadata = {

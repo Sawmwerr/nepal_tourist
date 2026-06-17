@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useActiveSection } from "./ScrollStoryContext";
+import { useActiveSection } from "@/components/providers/ScrollStoryContext";
 
 const SECTIONS = [
   { id: "destinations", word: "Destinations" },
