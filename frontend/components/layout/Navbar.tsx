@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useActiveSection } from "@/components/providers/ScrollStoryContext";
+import { createSupabaseBrowserClient, isBrowserSupabaseConfigured } from "@/lib/supabase/client";
+import { CUSTOMER_BOOKINGS_PATH, CUSTOMER_LOGIN_PATH, CUSTOMER_SIGNUP_PATH } from "@/lib/customer/auth";
 
 const NAV = [
   { label: "Destinations",      scrollId: "destinations" },
@@ -17,6 +19,35 @@ export default function Navbar() {
   const { activeSection } = useActiveSection();
   const [scrolled,   setScrolled]   = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isCustomerLoggedIn, setIsCustomerLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (!isBrowserSupabaseConfigured()) return;
+
+    const supabase = createSupabaseBrowserClient();
+    let mounted = true;
+
+    supabase.auth.getUser().then(({ data }) => {
+      if (mounted) setIsCustomerLoggedIn(Boolean(data.user));
+    });
+
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsCustomerLoggedIn(Boolean(session?.user));
+    });
+
+    return () => {
+      mounted = false;
+      subscription.subscription.unsubscribe();
+    };
+  }, []);
+
+  async function handleCustomerLogout() {
+    if (!isBrowserSupabaseConfigured()) return;
+    const supabase = createSupabaseBrowserClient();
+    await supabase.auth.signOut();
+    setIsCustomerLoggedIn(false);
+    setMobileOpen(false);
+  }
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -99,22 +130,60 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Book CTA */}
-          <a
-            href="/booking"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] tracking-[0.12em] uppercase font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg shrink-0"
-            style={{
-              fontFamily: "var(--font-syne)",
-              background: "linear-gradient(135deg, #d4a843, #e8c547)",
-              color: "#07070d",
-              boxShadow: "0 4px 20px rgba(212,168,67,0.45)",
-            }}
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-            Book Now
-          </a>
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
+            {isCustomerLoggedIn ? (
+              <>
+                <Link
+                  href={CUSTOMER_BOOKINGS_PATH}
+                  className="px-4 py-2 rounded-full text-[11px] tracking-[0.14em] uppercase font-semibold text-[#f0ece3]/75 transition hover:text-[#d4a843]"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  My bookings
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleCustomerLogout}
+                  className="px-4 py-2 rounded-full text-[11px] tracking-[0.14em] uppercase font-semibold text-[#f0ece3]/60 transition hover:text-[#d4a843]"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href={CUSTOMER_LOGIN_PATH}
+                  className="px-4 py-2 rounded-full text-[11px] tracking-[0.14em] uppercase font-semibold text-[#f0ece3]/75 transition hover:text-[#d4a843]"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  Login
+                </Link>
+                <Link
+                  href={CUSTOMER_SIGNUP_PATH}
+                  className="px-4 py-2 rounded-full text-[11px] tracking-[0.14em] uppercase font-semibold text-[#f0ece3]/75 transition hover:text-[#d4a843]"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
+
+            <Link
+              href="/booking"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] tracking-[0.12em] uppercase font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg shrink-0"
+              style={{
+                fontFamily: "var(--font-syne)",
+                background: "linear-gradient(135deg, #d4a843, #e8c547)",
+                color: "#07070d",
+                boxShadow: "0 4px 20px rgba(212,168,67,0.45)",
+              }}
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+              Book Now
+            </Link>
+          </div>
 
           {/* Mobile burger */}
           <button
@@ -182,8 +251,48 @@ export default function Navbar() {
         </div>
 
         {/* Book CTA — mobile */}
-        <div className="px-6 mt-2">
-          <a
+        <div className="px-6 mt-2 flex flex-col gap-3">
+          {isCustomerLoggedIn ? (
+            <>
+              <Link
+                href={CUSTOMER_BOOKINGS_PATH}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center py-3 rounded-2xl font-semibold text-[13px] uppercase tracking-[0.15em] text-[#f0ece3]"
+                style={{ background: "rgba(255,255,255,0.06)", fontFamily: "var(--font-syne)" }}
+              >
+                My bookings
+              </Link>
+              <button
+                type="button"
+                onClick={handleCustomerLogout}
+                className="flex items-center justify-center py-3 rounded-2xl font-semibold text-[13px] uppercase tracking-[0.15em] text-[#f0ece3]/70"
+                style={{ background: "rgba(255,255,255,0.04)", fontFamily: "var(--font-syne)" }}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <div className="grid grid-cols-2 gap-3">
+              <Link
+                href={CUSTOMER_LOGIN_PATH}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center py-3 rounded-2xl font-semibold text-[13px] uppercase tracking-[0.15em] text-[#f0ece3]"
+                style={{ background: "rgba(255,255,255,0.06)", fontFamily: "var(--font-syne)" }}
+              >
+                Login
+              </Link>
+              <Link
+                href={CUSTOMER_SIGNUP_PATH}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center py-3 rounded-2xl font-semibold text-[13px] uppercase tracking-[0.15em] text-[#f0ece3]"
+                style={{ background: "rgba(255,255,255,0.06)", fontFamily: "var(--font-syne)" }}
+              >
+                Sign up
+              </Link>
+            </div>
+          )}
+
+          <Link
             href="/booking"
             onClick={() => setMobileOpen(false)}
             className="flex items-center justify-center gap-2 py-4 rounded-2xl font-semibold text-[14px]"
@@ -194,7 +303,7 @@ export default function Navbar() {
             }}
           >
             Book your stay in Nepal →
-          </a>
+          </Link>
         </div>
 
         {/* Social links */}

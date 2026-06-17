@@ -67,7 +67,9 @@ Stop condition:
 
 ---
 
-## Phase 2 — Customer login/signup pages
+## Phase 2 — Customer login/signup pages — DONE
+
+Status: DONE on 2026-06-17. Added `/login`, `/signup`, customer redirect sanitizer tests, Navbar auth links/logout, and verified pages return 200 locally. Verified `npm test`, `npm run lint`, and `npm run build` pass.
 
 Scope: Add customer authentication UI separate from admin login.
 
