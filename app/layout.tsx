@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Syne } from "next/font/google";
+import localFont from "next/font/local";
+import { Syne, Noto_Sans_Devanagari } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+import IntroLoader from "@/components/IntroLoader";
+import LenisProvider from "@/components/LenisProvider";
+import PageTransition from "@/components/PageTransition";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+// Clash Display — self-hosted from app/fonts/ (ITF Free Font License via Fontshare).
+// Variable font covers 200–700 in one file; Medium + Bold kept as explicit fallbacks.
+const clashDisplay = localFont({
+  src: [
+    { path: "./fonts/ClashDisplay-Variable.woff2", weight: "200 700", style: "normal" },
+  ],
+  variable: "--font-clash",
   display: "swap",
 });
 
@@ -14,20 +22,68 @@ const syne = Syne({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
+  preload: false,
 });
 
+const notoDevanagari = Noto_Sans_Devanagari({
+  variable: "--font-devanagari",
+  subsets: ["devanagari"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  preload: false,
+});
+
+const SITE_URL = "https://project-hlg8a.vercel.app";
+const DESCRIPTION =
+  "Experience the Himalayas, ancient culture, sacred traditions, and raw adventure. Nepal awaits.";
+
 export const metadata: Metadata = {
-  title: "Nepal — Discover the Roof of the World",
-  description:
-    "Experience the Himalayas, ancient culture, sacred traditions, and raw adventure. Nepal awaits.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Nepal — Discover the Roof of the World",
+    template: "%s · Nepal",
+  },
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: "Nepal",
+    locale: "en_US",
+    title: {
+      default: "Nepal — Discover the Roof of the World",
+      template: "%s · Nepal",
+    },
+    description: DESCRIPTION,
+    url: SITE_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${syne.variable} h-full antialiased`}>
+    <html lang="en" className={`${clashDisplay.variable} ${syne.variable} ${notoDevanagari.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#07070d] text-[#f0ece3]">
+        {/*
+          Runs before hydration — adds `intro-skip` to <html> for returning visitors
+          and reduced-motion users so CSS hides #intro-overlay with zero flash.
+          beforeInteractive injects this into the server-rendered HTML head.
+        */}
+        <Script
+          id="intro-skip-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html:
+            `try{if(sessionStorage.getItem('introSeen')||window.matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('intro-skip')}catch(e){}`
+          }}
+        />
+        <LenisProvider />
+        <IntroLoader />
+        <PageTransition />
 
         {/* ── Fixed ambient blobs — give glass something to blur against ── */}
         <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden>

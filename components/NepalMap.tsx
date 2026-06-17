@@ -1,6 +1,8 @@
 "use client";
 
+import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 
 type Attraction = {
   id: number;
@@ -119,15 +121,10 @@ export default function NepalMap() {
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
-    if (!document.getElementById("leaflet-css")) {
-      const link = document.createElement("link");
-      link.id = "leaflet-css";
-      link.rel = "stylesheet";
-      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-      document.head.appendChild(link);
-    }
+    let cancelled = false;
 
     import("leaflet").then((mod) => {
+      if (cancelled || !containerRef.current || mapRef.current) return;
       const L = mod.default ?? mod;
 
       const map = L.map(containerRef.current!, {
@@ -152,8 +149,9 @@ export default function NepalMap() {
         const s = active ? 26 : 18;
         const icon = L.divIcon({ className: "", html: markerHtml(color, active), iconSize: [s, s], iconAnchor: [s / 2, s / 2] });
 
-        const marker = L.marker([attr.lat, attr.lng], { icon }).addTo(map);
+        const marker = L.marker([attr.lat, attr.lng], { icon, title: attr.name }).addTo(map);
         (marker as any)._attr = attr;
+        marker.getElement()?.setAttribute("aria-label", `${attr.name} — ${attr.type}, ${attr.elevation}`);
 
         /* Tooltip on hover — name + short description + elevation */
         const shortDesc = attr.description.length > 72
@@ -190,6 +188,7 @@ export default function NepalMap() {
     });
 
     return () => {
+      cancelled = true;
       if (mapRef.current) { mapRef.current.remove(); mapRef.current = null; }
       markersRef.current = [];
     };
@@ -235,10 +234,10 @@ export default function NepalMap() {
             Interactive Map
           </p>
           <h2 className="text-4xl md:text-6xl text-[#f0ece3] leading-tight"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}>
+              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
             Discover <em className="text-gradient">Nepal</em>
           </h2>
-          <p className="text-sm text-[#6b6a5a] mt-3"
+          <p className="text-sm text-[#8a8978] mt-3"
              style={{ fontFamily: "var(--font-syne)" }}>
             {attractions.length} attractions · Click any marker to explore
           </p>
@@ -251,7 +250,7 @@ export default function NepalMap() {
             style={{ fontFamily: "var(--font-syne)",
               background: !filter ? "rgba(240,236,227,0.1)" : "rgba(255,255,255,0.04)",
               border: !filter ? "1px solid rgba(240,236,227,0.18)" : "1px solid rgba(255,255,255,0.06)",
-              color: !filter ? "#f0ece3" : "#6b6a5a" }}>
+              color: !filter ? "#f0ece3" : "#8a8978" }}>
             All
           </button>
           {TYPES.map((type) => {
@@ -263,7 +262,7 @@ export default function NepalMap() {
                 style={{ fontFamily: "var(--font-syne)",
                   background: active ? `${color}20` : "rgba(255,255,255,0.04)",
                   border: `1px solid ${active ? color + "50" : "rgba(255,255,255,0.06)"}`,
-                  color: active ? color : "#6b6a5a" }}>
+                  color: active ? color : "#8a8978" }}>
                 <span>{icon}</span>{type}
               </button>
             );
@@ -307,11 +306,13 @@ export default function NepalMap() {
           {/* Photo — local first → Unsplash fallback → gradient */}
           <div className="relative h-48 shrink-0 overflow-hidden" style={{ borderRadius: "24px 24px 0 0" }}>
             {!imgFailed ? (
-              <img
+              <Image
                 key={selected.id}
                 src={imgSrc}
                 alt={selected.name}
-                className="w-full h-full object-cover transition-all duration-500"
+                fill
+                sizes="340px"
+                className="object-cover transition-all duration-500 graded"
                 onError={() => {
                   if (imgSrc === selected.photo && selected.photoBk) {
                     setImgSrc(selected.photoBk); // try Unsplash
@@ -347,7 +348,7 @@ export default function NepalMap() {
                 {selected.region}
               </p>
               <h3 className="text-xl text-[#f0ece3] leading-tight"
-                  style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}>
+                  style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
                 {selected.name}
               </h3>
             </div>
@@ -367,7 +368,7 @@ export default function NepalMap() {
               {[{ label: "Duration", value: selected.duration },
                 { label: "Elevation", value: selected.elevation }].map((s) => (
                 <div key={s.label} className="glass-dark rounded-2xl p-3.5">
-                  <p className="text-[9px] tracking-[0.35em] uppercase text-[#6b6a5a] mb-1"
+                  <p className="text-[9px] tracking-[0.35em] uppercase text-[#8a8978] mb-1"
                      style={{ fontFamily: "var(--font-syne)" }}>
                     {s.label}
                   </p>
@@ -381,7 +382,7 @@ export default function NepalMap() {
 
             {/* Coordinates */}
             <div className="glass-dark rounded-2xl px-4 py-3 flex items-center justify-between">
-              <span className="text-[9px] tracking-[0.3em] uppercase text-[#6b6a5a]"
+              <span className="text-[9px] tracking-[0.3em] uppercase text-[#8a8978]"
                     style={{ fontFamily: "var(--font-syne)" }}>
                 Coordinates
               </span>
@@ -395,7 +396,7 @@ export default function NepalMap() {
           {/* ── Scrollable attraction list ── */}
           <div className="border-t px-3 py-3 overflow-y-auto shrink-0"
                style={{ borderColor: "rgba(255,255,255,0.05)", maxHeight: 200 }}>
-            <p className="text-[9px] tracking-[0.4em] uppercase text-[#6b6a5a] px-2 pb-2"
+            <p className="text-[9px] tracking-[0.4em] uppercase text-[#8a8978] px-2 pb-2"
                style={{ fontFamily: "var(--font-syne)" }}>
               All attractions
             </p>
@@ -433,7 +434,7 @@ export default function NepalMap() {
                       </span>
                       <span className="text-[10px] truncate"
                             style={{ fontFamily: "var(--font-syne)",
-                              color: "rgba(107,106,90,0.7)",
+                              color: "rgba(160,158,140,0.9)",
                               lineHeight: 1.4 }}>
                         {attr.elevation} · {attr.region}
                       </span>
@@ -445,6 +446,36 @@ export default function NepalMap() {
           </div>
         </div>
       </div>
+
+      {/* Screen-reader / keyboard fallback for the Leaflet map */}
+      <details className="mt-6" style={{ fontFamily: "var(--font-syne)" }}>
+        <summary
+          className="cursor-pointer text-[11px] tracking-[0.25em] uppercase text-[#8a8978] hover:text-[#d4a843] transition-colors duration-200 select-none"
+        >
+          View all {attractions.length} attractions as text list
+        </summary>
+        <ul
+          className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2"
+          style={{ listStyle: "none" }}
+        >
+          {attractions.map((a) => (
+            <li
+              key={a.id}
+              className="glass-dark rounded-xl px-4 py-3 flex flex-col gap-0.5"
+            >
+              <span className="text-[13px] font-semibold text-[#f0ece3]">
+                {TYPE_META[a.type]?.icon} {a.name}
+              </span>
+              <span className="text-[11px] text-[#8a8978]">
+                {a.type} · {a.region} · {a.elevation}
+              </span>
+              <span className="text-[11px] text-[rgba(240,236,227,0.5)] leading-relaxed mt-0.5">
+                {a.description}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </details>
     </section>
   );
 }

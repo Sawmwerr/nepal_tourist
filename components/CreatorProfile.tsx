@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /* ─────────────────────────────────────────────
    Edit the values below to update your profile
 ───────────────────────────────────────────── */
@@ -75,10 +77,12 @@ export default function CreatorProfile() {
                    style={{ background: "linear-gradient(135deg, #d4a843, #e8c547, #d4a843)" }} />
               <div className="absolute -inset-[5px] rounded-full opacity-30"
                    style={{ background: "linear-gradient(135deg, #d4a843, transparent)" }} />
-              <img
+              <Image
                 src={PROFILE.photo}
                 alt={PROFILE.name}
-                className="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover"
+                width={160}
+                height={160}
+                className="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover graded"
                 style={{ border: "3px solid #07070d" }}
               />
               {/* Online dot */}
@@ -100,7 +104,7 @@ export default function CreatorProfile() {
             {/* Email button */}
             <a href={`mailto:${PROFILE.email}`}
                className="flex items-center gap-2 px-7 py-2.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-medium transition-all duration-300 hover:border-[rgba(212,168,67,0.4)] hover:text-[#f0ece3]"
-               style={{ fontFamily: "var(--font-syne)", color: "#6b6a5a",
+               style={{ fontFamily: "var(--font-syne)", color: "#8a8978",
                  border: "1px solid rgba(255,255,255,0.07)" }}>
               <EmailIcon />
               Email me
@@ -112,7 +116,7 @@ export default function CreatorProfile() {
 
             {/* Name + handle */}
             <h2 className="text-3xl md:text-4xl text-[#f0ece3] leading-tight mb-1"
-                style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}>
+                style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
               {PROFILE.name}
             </h2>
             <p className="text-[13px] text-[#d4a843] mb-4 font-medium"
@@ -139,7 +143,7 @@ export default function CreatorProfile() {
                         style={{ fontFamily: "var(--font-syne)" }}>
                     {s.value}
                   </span>
-                  <span className="text-[10px] tracking-[0.3em] uppercase text-[#6b6a5a]"
+                  <span className="text-[10px] tracking-[0.3em] uppercase text-[#8a8978]"
                         style={{ fontFamily: "var(--font-syne)" }}>
                     {s.label}
                   </span>
@@ -156,7 +160,7 @@ export default function CreatorProfile() {
                  style={{ fontFamily: "var(--font-syne)",
                    background: "rgba(225,48,108,0.1)",
                    border: "1px solid rgba(225,48,108,0.2)",
-                   color: "#e1306c" }}>
+                   color: "#ff6b9d" }}>
                 <IgIcon />
                 Instagram
               </a>
@@ -200,7 +204,7 @@ export default function CreatorProfile() {
         {/* ── Bottom CTA banner ── */}
         <div className="border-t px-8 md:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-4"
              style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-          <p className="text-sm text-[rgba(240,236,227,0.45)] text-center md:text-left"
+          <p className="text-sm text-[rgba(240,236,227,0.65)] text-center md:text-left"
              style={{ fontFamily: "var(--font-syne)" }}>
             Follow for trekking routes, camp guides & hidden Nepal spots you won&apos;t find elsewhere.
           </p>

@@ -18,14 +18,14 @@ export default function QuoteBlock() {
         {/* Giant decorative quotes */}
         <div
           className="absolute -top-8 left-6 md:left-10 text-[12rem] md:text-[18rem] leading-none select-none pointer-events-none"
-          style={{ fontFamily: "var(--font-playfair)", color: "#d4a843", opacity: 0.04 }}
+          style={{ fontFamily: "var(--font-display)", color: "#d4a843", opacity: 0.04 }}
           aria-hidden
         >
           &ldquo;
         </div>
         <div
           className="absolute -bottom-14 right-6 md:right-10 text-[12rem] md:text-[18rem] leading-none select-none pointer-events-none"
-          style={{ fontFamily: "var(--font-playfair)", color: "#d4a843", opacity: 0.04 }}
+          style={{ fontFamily: "var(--font-display)", color: "#d4a843", opacity: 0.04 }}
           aria-hidden
         >
           &rdquo;
@@ -48,7 +48,7 @@ export default function QuoteBlock() {
           {/* Quote */}
           <blockquote
             className="text-3xl md:text-[2.8rem] text-[#f0ece3] leading-[1.3] mb-12"
-            style={{ fontFamily: "var(--font-playfair)", fontWeight: 500 }}
+            style={{ fontFamily: "var(--font-display)", fontWeight: 500 }}
           >
             &ldquo;Not all those who wander are lost —
             <br />
@@ -64,7 +64,7 @@ export default function QuoteBlock() {
             ].map((item) => (
               <span
                 key={item}
-                className="glass text-[10px] tracking-[0.22em] uppercase text-[#6b6a5a] px-5 py-2.5"
+                className="glass text-[10px] tracking-[0.22em] uppercase text-[#8a8978] px-5 py-2.5"
                 style={{ borderRadius: 100, fontFamily: "var(--font-syne)" }}
               >
                 {item}

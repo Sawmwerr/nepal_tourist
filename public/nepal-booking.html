@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nepal — Find your next adventure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-900:#002b63; --blue:#0a53c4; --blue-700:#0b46a8; --blue-600:#1466d8; --blue-50:#eaf1fc;
+    --amber:#ffb020; --amber-soft:#fff3d6;
+    --ink:#1a1d29; --body:#3d4255; --muted:#6b7280;
+    --bg:#ffffff; --bg-soft:#f4f7fb; --line:#e4e8ef;
+    --green:#2e8b57; --ok-bg:#e8f6ed;
+    --r:12px; --maxw:1140px; --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Plus Jakarta Sans",sans-serif;background:var(--bg);color:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--amber);color:var(--ink)}
+  a{color:inherit;text-decoration:none}
+  input,select,textarea,button{font-family:inherit}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+  /* ===== Top blue chrome ===== */
+  .topbar{background:var(--blue-900)}
+  .topbar-inner{max-width:var(--maxw);margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{color:#fff;font-weight:800;font-size:1.5rem;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+  .logo .m{font-size:1.2rem}
+  .top-right{display:flex;align-items:center;gap:6px}
+  .top-right .lnk{color:#fff;font-weight:600;font-size:.88rem;padding:9px 12px;border-radius:6px;transition:.2s;opacity:.95}
+  .top-right .lnk:hover{background:rgba(255,255,255,.12)}
+  .icon-btn{color:#fff;background:transparent;border:0;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.95rem;transition:.2s;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+  .icon-btn:hover{background:rgba(255,255,255,.12)}
+  .cur{display:inline-flex;border:1px solid rgba(255,255,255,.3);border-radius:6px;overflow:hidden;margin-right:4px}
+  .cur button{background:transparent;border:0;color:#fff;font-weight:700;font-size:.8rem;padding:8px 11px;cursor:pointer;opacity:.7;transition:.2s}
+  .cur button.on{background:#fff;color:var(--blue);opacity:1}
+  .btn-outline-w{border:1px solid #fff;color:#fff;background:transparent;font-weight:700;font-size:.88rem;padding:9px 16px;border-radius:6px;cursor:pointer;transition:.2s}
+  .btn-outline-w:hover{background:rgba(255,255,255,.12)}
+
+  /* ===== Hero ===== */
+  .hero{background:var(--blue-900);position:relative;overflow:hidden;padding-bottom:64px}
+  .hero .mts{position:absolute;bottom:0;left:0;width:100%;opacity:.18}
+  .hero-inner{max-width:var(--maxw);margin:0 auto;padding:6px 20px 0;position:relative;z-index:2}
+  /* tabs */
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0 22px}
+  .tab{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:600;font-size:.92rem;padding:10px 16px;border-radius:100px;border:1px solid transparent;cursor:pointer;transition:.2s;background:transparent}
+  .tab:hover{background:rgba(255,255,255,.1)}
+  .tab.on{border-color:#fff;background:rgba(255,255,255,.06)}
+  .tab .e{font-size:1.05rem}
+  h1{color:#fff;font-weight:800;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.02em;line-height:1.05}
+  .hero-sub{color:#dce7f7;font-size:clamp(1rem,2vw,1.35rem);margin-top:10px;font-weight:500}
+
+  /* ===== Search bar (the star) ===== */
+  .searchbar{margin-top:26px;margin-bottom:-46px;position:relative;z-index:6;
+    background:#fff;border:3px solid var(--amber);border-radius:10px;display:flex;align-items:stretch;box-shadow:0 12px 30px -10px rgba(0,0,0,.35)}
+  .sf{flex:1;display:flex;align-items:center;gap:11px;padding:0 14px;border-right:1px solid var(--line);min-height:60px;position:relative;cursor:text}
+  .sf:last-of-type{border-right:0}
+  .sf .si{color:var(--blue);font-size:1.15rem;flex-shrink:0}
+  .sf input,.sf select{border:0;outline:0;width:100%;font-size:.98rem;color:var(--ink);font-weight:600;background:transparent;cursor:pointer}
+  .sf input::placeholder{color:#8a93a3;font-weight:600}
+  .sf .lbl{position:absolute;top:9px;left:40px;font-size:.68rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em;pointer-events:none}
+  .sf.stacked{flex-direction:column;align-items:stretch;justify-content:center;gap:0;padding-top:24px}
+  .sf.stacked .si{position:absolute;left:14px;top:50%;transform:translateY(-25%)}
+  .sf.stacked input{padding-left:26px}
+  .sf select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right center;padding-right:20px}
+  .occ-field{cursor:pointer;justify-content:flex-start}
+  .occ-val{font-weight:600;color:var(--ink);font-size:.98rem}
+  .btn-search{background:var(--blue);color:#fff;border:0;font-weight:700;font-size:1.05rem;padding:0 34px;margin:5px;border-radius:8px;cursor:pointer;transition:.2s;white-space:nowrap}
+  .btn-search:hover{background:var(--blue-600)}
+  /* occupancy popover */
+  .occ-pop{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 18px 40px -12px rgba(0,0,0,.25);padding:16px;width:260px;display:none;z-index:20}
+  .occ-pop.open{display:block}
+  .occ-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0}
+  .occ-row .name{font-weight:600;color:var(--ink)}
+  .stepper{display:inline-flex;align-items:center;gap:12px}
+  .stepper button{width:34px;height:34px;border-radius:8px;border:1px solid var(--blue);color:var(--blue);background:#fff;font-size:1.2rem;font-weight:700;cursor:pointer;transition:.15s;line-height:1}
+  .stepper button:hover:not(:disabled){background:var(--blue-50)}
+  .stepper button:disabled{opacity:.35;cursor:not-allowed;border-color:var(--line);color:var(--muted)}
+  .stepper .n{min-width:18px;text-align:center;font-weight:700;color:var(--ink)}
+
+  /* ===== Sections ===== */
+  section{padding:40px 0}
+  .sec-first{padding-top:84px}
+  h2{color:var(--ink);font-weight:800;font-size:1.6rem;letter-spacing:-.01em}
+  .sec-sub{color:var(--muted);margin-top:4px;margin-bottom:22px}
+
+  /* offers promo */
+  .promo{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;align-items:stretch;background:#fff}
+  .promo .txt{padding:26px 28px;flex:1}
+  .promo .eyebrow{font-size:.82rem;color:var(--muted);font-weight:600}
+  .promo h3{color:var(--ink);font-weight:800;font-size:1.5rem;margin:6px 0 8px;letter-spacing:-.01em}
+  .promo p{color:var(--body);margin-bottom:18px}
+  .btn-primary{background:var(--blue);color:#fff;border:0;font-weight:700;font-size:.95rem;padding:12px 22px;border-radius:8px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+  .btn-primary:hover{background:var(--blue-600);transform:translateY(-1px)}
+  .promo .pic{width:230px;flex-shrink:0;background:linear-gradient(135deg,#2f9e8f,#1466d8);display:flex;align-items:center;justify-content:center;font-size:3.4rem;position:relative;overflow:hidden}
+  .promo .pic svg{position:absolute;bottom:0;width:100%;opacity:.35}
+
+  /* card grids */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+  .card:hover{transform:translateY(-5px);box-shadow:0 22px 44px -22px rgba(10,40,80,.4)}
+  .card .top{height:140px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .card .top .e{font-size:3rem;position:relative;z-index:2;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));transition:.4s var(--ease)}
+  .card:hover .top .e{transform:scale(1.12)}
+  .card .top svg{position:absolute;bottom:0;width:100%;height:50%;opacity:.6}
+  .card .info{padding:15px 16px}
+  .card .info h3{color:var(--ink);font-weight:700;font-size:1.05rem;letter-spacing:-.01em}
+  .card .info .row{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+  .card .info .from{font-size:.86rem;color:var(--muted)}
+  .card .info .from b{color:var(--ink);font-weight:800}
+  .card .info .go{font-size:.85rem;font-weight:700;color:var(--blue)}
+
+  /* destinations (image-led, label overlay like Booking) */
+  .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .dcard{position:relative;border-radius:14px;overflow:hidden;min-height:200px;cursor:pointer;display:flex;align-items:flex-end;isolation:isolate;transition:transform .25s var(--ease)}
+  .dcard:hover{transform:translateY(-5px)}
+  .dcard .bg{position:absolute;inset:0;z-index:-2;transition:transform .5s var(--ease)}
+  .dcard:hover .bg{transform:scale(1.07)}
+  .dcard .bg svg{position:absolute;bottom:0;width:100%;height:55%;opacity:.5}
+  .dcard::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 40%,rgba(0,15,40,.7))}
+  .dcard .dlbl{padding:16px;color:#fff}
+  .dcard .dlbl h3{font-weight:800;font-size:1.15rem;letter-spacing:-.01em}
+  .dcard .dlbl span{font-size:.82rem;opacity:.9}
+  .dcard .e{position:absolute;top:14px;right:16px;font-size:1.6rem;z-index:1;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
+
+  /* trust row */
+  .trust-sec{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .tr{display:flex;gap:14px;align-items:flex-start}
+  .tr .ti{width:44px;height:44px;border-radius:10px;background:var(--blue-50);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+  .tr h4{color:var(--ink);font-weight:700;font-size:1rem}
+  .tr p{color:var(--muted);font-size:.88rem;margin-top:2px}
+
+  /* footer */
+  footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:36px 0;margin-top:10px}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+  .foot-brand .logo{color:var(--ink);font-size:1.3rem;margin-bottom:10px}
+  .foot-brand p{color:var(--muted);font-size:.9rem;max-width:280px}
+  .foot-col h5{color:var(--ink);font-weight:700;font-size:.92rem;margin-bottom:12px}
+  .foot-col a{display:block;color:var(--muted);font-size:.88rem;padding:4px 0;transition:.2s}
+  .foot-col a:hover{color:var(--blue)}
+  .foot-bottom{max-width:var(--maxw);margin:26px auto 0;padding:18px 20px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:.84rem}
+
+  /* WhatsApp float */
+  .wa{position:fixed;right:22px;bottom:22px;z-index:40;display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#04361b;font-weight:700;
+    padding:13px 18px;border-radius:100px;box-shadow:0 14px 34px -12px rgba(37,211,102,.6);transition:.3s var(--ease);font-size:.92rem}
+  .wa:hover{transform:translateY(-3px) scale(1.03)}
+  .wa svg{width:20px;height:20px}
+
+  /* ===== Wizard (light) ===== */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(15,30,55,.55);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
+  .overlay.open{display:flex;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .sheet{width:100%;max-width:600px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 40px 90px -30px rgba(0,0,0,.5);animation:rise .35s var(--ease)}
+  @keyframes rise{from{transform:translateY(26px);opacity:0}to{transform:none;opacity:1}}
+  .sheet-head{padding:20px 22px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .sheet-head .cat{display:flex;align-items:center;gap:12px}
+  .sheet-head .cat .e{font-size:1.8rem}
+  .sheet-head .cat h2{color:var(--ink);font-weight:800;font-size:1.3rem;letter-spacing:-.01em;line-height:1.1}
+  .sheet-head .cat small{color:var(--muted);font-size:.85rem}
+  .x{background:var(--bg-soft);border:1px solid var(--line);color:var(--body);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;flex-shrink:0;transition:.2s}
+  .x:hover{background:#e8edf4;transform:rotate(90deg)}
+  .progress{padding:16px 22px 4px}
+  .progress .bar{height:6px;background:#eef1f6;border-radius:100px;overflow:hidden}
+  .progress .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-600));border-radius:100px;transition:width .4s var(--ease)}
+  .progress .steplbl{display:flex;justify-content:space-between;margin-top:7px;font-size:.76rem;color:var(--muted);font-weight:600}
+  .progress .steplbl .cur-step{color:var(--blue)}
+  .sheet-body{padding:14px 22px 4px;min-height:210px}
+  .field{margin-bottom:15px}
+  .field>label{display:block;font-size:.82rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+  .field input[type=text],.field input[type=email],.field input[type=tel],.field input[type=number],.field input[type=date],.field select,.field textarea{
+    width:100%;background:#fff;border:1.5px solid var(--line);color:var(--ink);padding:12px 13px;border-radius:9px;font-size:.95rem;font-weight:500;transition:.2s}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-50)}
+  .field textarea{resize:vertical;min-height:78px}
+  .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:36px}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;background:var(--bg-soft);border:1px solid var(--line);padding:11px 13px;border-radius:9px}
+  .toggle-row span{font-size:.92rem;color:var(--ink);font-weight:600}
+  .sw{position:relative;width:46px;height:26px;flex-shrink:0}
+  .sw input{opacity:0;width:0;height:0}
+  .sw .track{position:absolute;inset:0;background:#cfd6e0;border-radius:100px;transition:.25s;cursor:pointer}
+  .sw .track::before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+  .sw input:checked + .track{background:var(--blue)}
+  .sw input:checked + .track::before{transform:translateX(20px)}
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{background:#fff;border:1.5px solid var(--line);color:var(--body);font-size:.86rem;font-weight:600;padding:8px 14px;border-radius:100px;cursor:pointer;transition:.2s}
+  .chip:hover{border-color:var(--blue)}
+  .chip.sel{background:var(--blue-50);border-color:var(--blue);color:var(--blue)}
+  .pm{display:grid;gap:10px}
+  .pm label{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--line);padding:13px;border-radius:9px;cursor:pointer;transition:.2s}
+  .pm label:hover{border-color:var(--blue)}
+  .pm input{accent-color:var(--blue);width:18px;height:18px}
+  .pm .pm-name{font-weight:700;color:var(--ink)}
+  .pm .pm-sub{font-size:.8rem;color:var(--muted)}
+  .demo-note{margin-top:14px;background:var(--amber-soft);border:1px solid #f0d28a;border-radius:9px;padding:12px 14px;font-size:.84rem;color:#7a5a10}
+  .demo-note b{color:#946a00}
+  .included{background:var(--bg-soft);border:1px solid var(--line);border-radius:11px;padding:15px;margin-top:4px}
+  .included .h{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:9px;font-weight:700}
+  .included .it{display:flex;gap:9px;align-items:flex-start;font-size:.88rem;color:var(--body);margin-bottom:6px}
+  .included .it .c{color:var(--green);flex-shrink:0;font-weight:700}
+  .sumrow{display:flex;justify-content:space-between;gap:14px;padding:9px 0;font-size:.92rem;border-bottom:1px solid var(--line)}
+  .sumrow .k{color:var(--muted)}
+  .sumrow .v{font-weight:700;text-align:right;color:var(--ink)}
+  .price-rows{margin-top:14px;background:var(--bg-soft);border:1px solid var(--line);border-radius:11px;padding:15px}
+  .price-rows .pr{display:flex;justify-content:space-between;font-size:.9rem;padding:5px 0;color:var(--body)}
+  .price-rows .pr.tot{border-top:1px solid var(--line);margin-top:8px;padding-top:11px;font-weight:800;font-size:1.2rem;color:var(--ink)}
+  .price-rows .pr.tot b{color:var(--blue)}
+  .done{text-align:center;padding:22px 8px 6px}
+  .done .check{width:72px;height:72px;border-radius:50%;background:var(--ok-bg);color:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2.1rem;animation:pop .5s var(--ease)}
+  @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+  .done h3{color:var(--ink);font-weight:800;font-size:1.6rem;letter-spacing:-.01em}
+  .done p{color:var(--muted);margin-top:9px;font-size:.95rem;max-width:34ch;margin-inline:auto}
+  .done .ref{display:inline-block;margin-top:16px;background:var(--bg-soft);border:1px dashed var(--line);border-radius:10px;padding:11px 20px;font-weight:800;letter-spacing:.04em;color:var(--ink)}
+  .done .ref small{display:block;font-weight:600;font-size:.7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+  .sheet-foot{padding:16px 22px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--line);margin-top:10px}
+  .sheet-foot .liveprice{font-size:.78rem;color:var(--muted);font-weight:600}
+  .sheet-foot .liveprice b{display:block;font-weight:800;font-size:1.45rem;color:var(--blue);line-height:1.1}
+  .btns{display:flex;gap:10px}
+  .btn{font-weight:700;font-size:.95rem;padding:12px 22px;border-radius:8px;cursor:pointer;border:0;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+  .btn-blue{background:var(--blue);color:#fff}
+  .btn-blue:hover{background:var(--blue-600)}
+  .btn-ghost{background:#fff;color:var(--body);border:1.5px solid var(--line)}
+  .btn-ghost:hover{background:var(--bg-soft)}
+  .err{color:#d12f43;font-size:.8rem;margin-top:5px;display:none}
+  .field.invalid .err{display:block}
+  .field.invalid input,.field.invalid select{border-color:#d12f43}
+
+  @media(max-width:900px){
+    .grid,.dgrid,.trust-grid{grid-template-columns:repeat(2,1fr)}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .top-right .lnk{display:none}
+  }
+  @media(max-width:680px){
+    .searchbar{flex-direction:column;border-width:2px}
+    .sf{border-right:0;border-bottom:1px solid var(--line)}
+    .btn-search{margin:8px;padding:13px}
+    .occ-pop{width:100%;left:0;right:0}
+    .promo{flex-direction:column}
+    .promo .pic{width:100%;height:140px}
+  }
+  @media(max-width:520px){
+    .grid,.dgrid{grid-template-columns:1fr}
+    .trust-grid{grid-template-columns:1fr}
+    .overlay{padding:0;align-items:flex-end}
+    .sheet{max-width:100%;border-radius:16px 16px 0 0}
+    .foot-grid{grid-template-columns:1fr}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.15s!important}}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar"><div class="topbar-inner">
+  <a href="/" class="logo"><span class="m">▲</span>Nepal</a>
+  <div class="top-right">
+    <div class="cur" id="cur"><button data-cur="USD" class="on">USD</button><button data-cur="NPR">NPR</button></div>
+    <button class="icon-btn" title="Help">?</button>
+    <a href="#" class="lnk">List your business</a>
+    <button class="btn-outline-w">Sign in</button>
+  </div>
+</div></div>
+
+<!-- HERO -->
+<div class="hero">
+  <svg class="mts" viewBox="0 0 1440 240" preserveAspectRatio="none"><path d="M0,240 L0,150 L160,70 L300,130 L460,50 L620,120 L820,40 L1010,120 L1200,60 L1440,130 L1440,240 Z" fill="#ffffff"/><path d="M460,50 L500,95 L482,95 L462,78 L440,100 L418,92 Z" fill="#cfe0ff"/><path d="M820,40 L862,90 L842,90 L824,72 L800,96 L778,86 Z" fill="#cfe0ff"/></svg>
+  <div class="hero-inner">
+    <div class="tabs" id="tabs"></div>
+    <h1>Find your next adventure in Nepal</h1>
+    <p class="hero-sub">Stays, treks, adrenaline and everything between — book it all in one place.</p>
+    <div class="searchbar" id="searchbar"></div>
+  </div>
+</div>
+
+<!-- OFFERS -->
+<section class="sec-first"><div class="wrap">
+  <h2>Offers</h2>
+  <p class="sec-sub">Promotions, deals and special offers for your trip</p>
+  <div class="promo">
+    <div class="txt">
+      <div class="eyebrow">Escape to the mountains with our Himalaya Deals</div>
+      <h3>No catch. Just adventures.</h3>
+      <p>At least 15% off selected stays and treks across Nepal — just book and go.</p>
+      <button class="btn-primary" onclick="document.getElementById('searchbar').scrollIntoView({behavior:'smooth'})">Save with a Himalaya Deal</button>
+    </div>
+    <div class="pic">🏔️
+      <svg viewBox="0 0 240 120" preserveAspectRatio="none"><path d="M0,120 L0,80 L60,40 L110,80 L160,30 L210,75 L240,45 L240,120 Z" fill="rgba(255,255,255,.5)"/></svg>
+    </div>
+  </div>
+</div></section>
+
+<!-- BROWSE BY EXPERIENCE -->
+<section><div class="wrap">
+  <h2>Browse by experience</h2>
+  <p class="sec-sub">Pick what kind of trip you're after</p>
+  <div class="grid" id="catalog"></div>
+</div></section>
+
+<!-- DESTINATIONS -->
+<section><div class="wrap">
+  <h2>Explore Nepal</h2>
+  <p class="sec-sub">These places should be on your list</p>
+  <div class="dgrid" id="destinations"></div>
+</div></section>
+
+<!-- TRUST -->
+<section class="trust-sec"><div class="wrap"><div class="trust-grid">
+  <div class="tr"><div class="ti">🛡️</div><div><h4>Govt-registered operator</h4><p>Licensed &amp; insured for every activity</p></div></div>
+  <div class="tr"><div class="ti">💸</div><div><h4>Best-price guarantee</h4><p>Found it cheaper? We'll match it</p></div></div>
+  <div class="tr"><div class="ti">🧭</div><div><h4>Local experts</h4><p>Trips built by people who live here</p></div></div>
+  <div class="tr"><div class="ti">💬</div><div><h4>24/7 WhatsApp support</h4><p>Real humans, anytime you need</p></div></div>
+</div></div></section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap"><div class="foot-grid">
+    <div class="foot-brand">
+      <div class="logo"><span class="m" style="color:var(--blue)">▲</span>Nepal</div>
+      <p>Your one stop to book stays, treks, adventures and transport across Nepal.</p>
+    </div>
+    <div class="foot-col"><h5>Explore</h5><a href="#">Stays</a><a href="#">Treks</a><a href="#">Adventure</a><a href="#">Transport</a></div>
+    <div class="foot-col"><h5>Destinations</h5><a href="#">Kathmandu</a><a href="#">Pokhara</a><a href="#">Chitwan</a><a href="#">Everest region</a></div>
+    <div class="foot-col"><h5>Support</h5><a href="#">Help center</a><a href="#">Cancellation</a><a href="#">Contact us</a><a href="#">List your business</a></div>
+  </div></div>
+  <div class="foot-bottom"><span>© 2026 · Nepal — booking demo</span><span>नमस्ते · Namaste</span></div>
+</footer>
+
+<a class="wa" href="https://wa.me/9779800000000" target="_blank" rel="noopener" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.06 24l1.68-6.16A11.9 11.9 0 010 11.93C0 5.35 5.4 0 12.05 0a11.9 11.9 0 018.46 3.5 11.8 11.8 0 013.5 8.43c0 6.58-5.4 11.93-12.05 11.93a12.1 12.1 0 01-5.76-1.46L.06 24zM6.6 20.2c1.66.98 3.25 1.57 5.43 1.57 5.52 0 10.02-4.44 10.02-9.9 0-5.45-4.5-9.9-10-9.9-5.55 0-10.04 4.45-10.04 9.9 0 2.24.66 3.92 1.76 5.68l-1 3.64 3.83-1zm11.4-5.46c-.07-.12-.27-.2-.57-.35-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.36.45-.53.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42z"/></svg>
+  Need help?
+</a>
+
+<!-- WIZARD -->
+<div class="overlay" id="overlay"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+
+<script>
+/* ===== currency ===== */
+const RATE={USD:1,NPR:133},SYM={USD:"$",NPR:"Rs "};
+let currency="USD";
+function money(usd){const v=usd*RATE[currency];const r=currency==="NPR"?Math.round(v/10)*10:Math.round(v);return SYM[currency]+r.toLocaleString();}
+
+/* ===== category data ===== */
+const durationDays={"4-5 days":5,"7-10 days":10,"14-18 days":18,"20+ days":21,"Half Day":0.5,"Full Day":1,"2 Days + Camping":2,"2 Days + Lodge":2,"3 Days":3,"3 Days Package":3};
+const categories=[
+ {id:"hotels",group:"stays",icon:"🏨",label:"Hotels & Stays",desc:"Hotels, lodges & homestays",
+  fields:[{label:"Destination",type:"select",options:["Kathmandu","Pokhara","Chitwan","Bhaktapur","Lumbini"],req:true},{label:"Check-in Date",type:"date",req:true},{label:"Check-out Date",type:"date",req:true},{label:"Room Type",type:"select",options:["Standard","Deluxe","Mountain View Suite","Luxury"],req:true},{label:"Guests",type:"number",min:1}],
+  included:["Free cancellation up to 48h","Breakfast included","Best-price guarantee"],
+  pricing:{base:45,unitLabel:"per night",durUnit:"nights",dateRange:["Check-in Date","Check-out Date"],packageField:"Room Type",packagePrices:{Standard:45,Deluxe:70,"Mountain View Suite":110,Luxury:160}}},
+ {id:"trekking",group:"adventure",icon:"🎒",label:"Trekking",desc:"Poon Hill to Everest Base Camp",
+  fields:[{label:"Trek Route",type:"select",options:["Poon Hill","Langtang","Annapurna Base Camp","Everest Base Camp","Annapurna Circuit","Manaslu Circuit"],req:true},{label:"Start Date",type:"date",req:true},{label:"Duration",type:"select",options:["4-5 days","7-10 days","14-18 days","20+ days"],req:true},{label:"Group Size",type:"number",min:1},{label:"Guide Required",type:"toggle"},{label:"Porter Required",type:"toggle"}],
+  included:["Certified guide & permits","Teahouse accommodation","Day-by-day itinerary"],
+  pricing:{base:75,unitLabel:"per person / day",durUnit:"days",durationField:"Duration",durationDays,qtyFields:["Group Size"],addons:[{field:"Guide Required",label:"Licensed guide",amount:25,perDay:true},{field:"Porter Required",label:"Porter",amount:18,perDay:true}]}},
+ {id:"paragliding",group:"adventure",icon:"🪂",label:"Paragliding",desc:"Tandem flights over Pokhara",
+  fields:[{label:"Location",type:"select",options:["Pokhara (Sarangkot)","Pokhara (Lakeside)"],req:true},{label:"Package",type:"select",options:["30 min Standard","45 min Premium","60 min Sunrise Special","Video + Photo Package"],req:true},{label:"Date",type:"date",req:true},{label:"Time Slot",type:"select",options:["6:00 AM","7:00 AM","8:00 AM","10:00 AM","12:00 PM","2:00 PM"]},{label:"Number of Flyers",type:"number",min:1}],
+  included:["Certified pilot","All safety gear","Free pickup from lakeside"],
+  pricing:{base:80,unitLabel:"per flight",qtyFields:["Number of Flyers"],packageField:"Package",packagePrices:{"30 min Standard":80,"45 min Premium":110,"60 min Sunrise Special":150,"Video + Photo Package":175}}},
+ {id:"zipline",group:"adventure",icon:"🎢",label:"Zip-lining",desc:"World's steepest, above Pokhara",
+  fields:[{label:"Zipline",type:"select",options:["Zipflyer Pokhara (World's Steepest)","Hemja Zipline","Sarangkot Line"],req:true},{label:"Date",type:"date",req:true},{label:"Time Slot",type:"select",options:["8:00 AM","10:00 AM","12:00 PM","2:00 PM","4:00 PM"]},{label:"Number of Riders",type:"number",min:1}],
+  included:["Full harness & briefing","100 km/h, 600m drop","Photos available"],
+  pricing:{base:65,unitLabel:"per ride",qtyFields:["Number of Riders"]}},
+ {id:"rafting",group:"adventure",icon:"🚣",label:"White Water Rafting",desc:"Grade 3–5 rapids",
+  fields:[{label:"River",type:"select",options:["Trishuli (Grade 3-4)","Seti River (Grade 3)","Bhote Koshi (Grade 4-5)","Kali Gandaki (Grade 4-5)"],req:true},{label:"Duration",type:"select",options:["Half Day","Full Day","2 Days + Camping","3 Days"],req:true},{label:"Date",type:"date",req:true},{label:"Group Size",type:"number",min:1},{label:"Experience Level",type:"select",options:["Beginner","Intermediate","Advanced"]}],
+  included:["Certified guide","All gear + safety kayak","Riverside lunch"],
+  pricing:{base:50,unitLabel:"per person / day",durUnit:"days",durationField:"Duration",durationDays,qtyFields:["Group Size"]}},
+ {id:"bungee",group:"adventure",icon:"🎯",label:"Bungee Jumping",desc:"160m freefall at Bhote Koshi",
+  fields:[{label:"Location",type:"select",options:["Bhote Koshi (160m)","The Last Resort","Pokhara Bungee"],req:true},{label:"Date",type:"date",req:true},{label:"Time Slot",type:"select",options:["9:00 AM","11:00 AM","1:00 PM","3:00 PM"]},{label:"Number of Jumpers",type:"number",min:1}],
+  included:["Pro jump masters","Digital jump certificate","Transport from KTM option"],
+  pricing:{base:90,unitLabel:"per jump",qtyFields:["Number of Jumpers"]}},
+ {id:"safari",group:"adventure",icon:"🐅",label:"Jungle Safari",desc:"Jeep & elephant safaris",
+  fields:[{label:"National Park",type:"select",options:["Chitwan National Park","Bardia National Park","Shivapuri NP"],req:true},{label:"Safari Type",type:"select",options:["Jeep Safari","Walking Safari","Bird Watching","Canoe Safari"],req:true},{label:"Duration",type:"select",options:["Half Day","Full Day","2 Days + Lodge","3 Days Package"],req:true},{label:"Date",type:"date",req:true},{label:"Group Size",type:"number",min:1}],
+  included:["Naturalist guide","Park entry permits","Wildlife spotting log"],
+  pricing:{base:70,unitLabel:"per person / day",durUnit:"days",durationField:"Duration",durationDays,qtyFields:["Group Size"]}},
+ {id:"bus",group:"transport",icon:"🚌",label:"Bus Booking",desc:"Tourist & local buses",
+  fields:[{label:"From",type:"select",options:["Kathmandu","Pokhara","Chitwan","Lumbini","Bhaktapur"],req:true},{label:"To",type:"select",options:["Pokhara","Chitwan (Sauraha)","Lumbini","Kathmandu","Sunauli Border"],req:true},{label:"Travel Date",type:"date",req:true},{label:"Bus Class",type:"select",options:["Local Bus (Budget)","Tourist Bus (AC)","Deluxe AC Coach","Night Bus (Sleeper)","Micro / Hiace Van"],req:true},{label:"Passengers",type:"number",min:1},{label:"Return Trip?",type:"toggle"}],
+  included:["Reserved seats","Hotel pickup option","Live departure updates"],
+  pricing:{base:15,unitLabel:"per seat",qtyFields:["Passengers"],packageField:"Bus Class",packagePrices:{"Local Bus (Budget)":8,"Tourist Bus (AC)":15,"Deluxe AC Coach":22,"Night Bus (Sleeper)":25,"Micro / Hiace Van":18}}},
+ {id:"taxi",group:"transport",icon:"🚕",label:"Taxi & Private Car",desc:"Airport transfers & drivers",
+  fields:[{label:"Ride Type",type:"select",options:["Airport Transfer","City Transfer","Full Day Hire","Intercity Trip"],req:true},{label:"Pickup Location",type:"text",req:true},{label:"Drop Location",type:"text",req:true},{label:"Date",type:"date",req:true},{label:"Vehicle Type",type:"select",options:["Sedan (1–4 pax)","SUV / Jeep (1–6 pax)","Microvan (5–8 pax)","Minibus (8–15 pax)","Luxury Car"],req:true}],
+  included:["Fixed fare, no surprises","English-speaking driver option","Flight tracking on transfers"],
+  pricing:{base:18,unitLabel:"per trip",packageField:"Vehicle Type",packagePrices:{"Sedan (1–4 pax)":18,"SUV / Jeep (1–6 pax)":30,"Microvan (5–8 pax)":40,"Minibus (8–15 pax)":70,"Luxury Car":90}}},
+ {id:"motorbike",group:"transport",icon:"🏍️",label:"Motorbike Rental",desc:"Scooters, sports & dirt bikes",
+  fields:[{label:"Pickup City",type:"select",options:["Kathmandu","Pokhara","Chitwan","Bhaktapur","Nagarkot"],req:true},{label:"Bike Type",type:"select",options:["Scooter / Scooty (125cc)","Semi-Sport (150–200cc)","Sports Bike (250cc+)","Dirt Bike / Off-road (200–450cc)","Royal Enfield (350–500cc)","Electric Scooter"],req:true},{label:"Rental Start",type:"date",req:true},{label:"Rental End",type:"date",req:true},{label:"Helmet & Gear",type:"toggle"},{label:"With GPS Device?",type:"toggle"}],
+  included:["Well-maintained bikes","Roadside assistance","Route suggestions"],
+  pricing:{base:18,unitLabel:"per day",durUnit:"days",dateRange:["Rental Start","Rental End"],packageField:"Bike Type",packagePrices:{"Scooter / Scooty (125cc)":15,"Semi-Sport (150–200cc)":22,"Sports Bike (250cc+)":35,"Dirt Bike / Off-road (200–450cc)":45,"Royal Enfield (350–500cc)":40,"Electric Scooter":18},addons:[{field:"Helmet & Gear",label:"Helmet & gear",amount:5,perDay:true},{field:"With GPS Device?",label:"GPS device",amount:3,perDay:true}]}},
+ {id:"custom",group:"custom",icon:"🗓️",label:"Custom Itinerary",desc:"A trip planned just for you",
+  fields:[{label:"Trip Duration",type:"select",options:["3-5 days","1 week","2 weeks","3+ weeks"],req:true},{label:"Budget per person",type:"select",options:["Budget (<$50/day)","Mid-range ($50-150)","Luxury ($150+)"],req:true},{label:"Interests",type:"multi",options:["Trekking","Culture","Wildlife","Adventure Sports","Spiritual","Photography","Food"]},{label:"Travel Style",type:"select",options:["Solo","Couple","Family","Group","Honeymoon"]},{label:"Anything else?",type:"textarea"}],
+  included:["Built by a local expert","Reply within 24 hours","No obligation quote"],
+  pricing:null}
+];
+const gradients={hotels:"linear-gradient(135deg,#f6b73c,#e0792d)",trekking:"linear-gradient(135deg,#3fc47e,#1a7a4d)",paragliding:"linear-gradient(135deg,#39d2c0,#1466d8)",zipline:"linear-gradient(135deg,#ff9a44,#e0532a)",rafting:"linear-gradient(135deg,#36cfd6,#1a8c9e)",bungee:"linear-gradient(135deg,#ff6fae,#9b2d7a)",safari:"linear-gradient(135deg,#a9ca4d,#5a7a2e)",bus:"linear-gradient(135deg,#ffb24d,#d45c00)",taxi:"linear-gradient(135deg,#ffd34d,#c4a000)",motorbike:"linear-gradient(135deg,#ff7a7a,#b02020)",custom:"linear-gradient(135deg,#b89bff,#6b4fa0)"};
+const mtSvg=`<svg viewBox="0 0 400 120" preserveAspectRatio="none"><path d="M0,120 L0,75 L70,40 L130,75 L200,30 L270,72 L340,42 L400,72 L400,120 Z" fill="rgba(255,255,255,.55)"/></svg>`;
+function firstField(cat,type){const f=cat.fields.find(x=>x.type===type);return f?f.label:null;}
+function fromPrice(c){if(!c.pricing)return null;const p=c.pricing;return p.packagePrices?Math.min(...Object.values(p.packagePrices)):p.base;}
+
+/* ===== catalog ===== */
+const catalogEl=document.getElementById("catalog");
+function renderCatalog(){
+  catalogEl.innerHTML=categories.map(c=>{
+    const fp=fromPrice(c);
+    const tag=fp!=null?`from <b>${money(fp)}</b>`:`<b>Free quote</b>`;
+    return `<div class="card" data-id="${c.id}">
+      <div class="top" style="background:${gradients[c.id]}"><span class="e">${c.icon}</span>${mtSvg}</div>
+      <div class="info"><h3>${c.label}</h3>
+        <div class="row"><span class="from">${tag}</span><span class="go">${c.pricing?"Book →":"Enquire →"}</span></div>
+      </div></div>`;
+  }).join("");
+}
+renderCatalog();
+catalogEl.addEventListener("click",e=>{const card=e.target.closest(".card");if(card)openWizard(card.dataset.id);});
+
+/* ===== destinations ===== */
+const destinations=[
+  {name:"Kathmandu",sub:"Temples & old-town energy",e:"🛕",grad:"linear-gradient(150deg,#f6a93c,#b14a6e)",opt:"Kathmandu"},
+  {name:"Pokhara",sub:"Lakeside adventure hub",e:"🪂",grad:"linear-gradient(150deg,#39d2c0,#1466d8)",opt:"Pokhara"},
+  {name:"Chitwan",sub:"Jungle safaris & rhinos",e:"🦏",grad:"linear-gradient(150deg,#5fbf7e,#1a7a4d)",opt:"Chitwan"},
+  {name:"Everest Region",sub:"The ultimate trek",e:"🏔️",grad:"linear-gradient(150deg,#9fd0ff,#3a6fb0)",opt:null},
+  {name:"Bhaktapur",sub:"A living medieval city",e:"🏺",grad:"linear-gradient(150deg,#ffcf6b,#c97b2d)",opt:"Bhaktapur"},
+  {name:"Lumbini",sub:"Birthplace of Buddha",e:"☸️",grad:"linear-gradient(150deg,#b69bff,#5a3a9e)",opt:"Lumbini"},
+  {name:"Upper Mustang",sub:"The forbidden kingdom",e:"🏜️",grad:"linear-gradient(150deg,#ffb86b,#b1582d)",opt:null},
+  {name:"Nagarkot",sub:"Sunrise over the Himalayas",e:"🌅",grad:"linear-gradient(150deg,#ffb3c8,#d4763a)",opt:null}
+];
+const destEl=document.getElementById("destinations");
+destEl.innerHTML=destinations.map((d,i)=>`<div class="dcard" data-i="${i}">
+  <div class="bg" style="background:${d.grad}">${mtSvg}</div><span class="e">${d.e}</span>
+  <div class="dlbl"><h3>${d.name}</h3><span>${d.sub}</span></div></div>`).join("");
+destEl.addEventListener("click",e=>{const c=e.target.closest(".dcard");if(!c)return;const d=destinations[c.dataset.i];openWizard("hotels",d.opt?{"Destination":d.opt}:{});});
+
+/* ===== currency ===== */
+document.getElementById("cur").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;currency=b.dataset.cur;document.querySelectorAll("#cur button").forEach(x=>x.classList.toggle("on",x===b));renderCatalog();renderSearch();if(state.cat)renderStep();});
+
+/* ===== Tabs + search bar ===== */
+const tabs=[{id:"stays",label:"Stays",e:"🛏️"},{id:"treks",label:"Treks",e:"🥾"},{id:"adventure",label:"Adventure",e:"🪂"},{id:"transport",label:"Transport",e:"🚌"},{id:"custom",label:"Custom trip",e:"🗓️"}];
+let activeTab="stays";
+let occ={adults:2,children:0,rooms:1};
+
+const tabsEl=document.getElementById("tabs");
+function renderTabs(){tabsEl.innerHTML=tabs.map(t=>`<button class="tab ${t.id===activeTab?'on':''}" data-tab="${t.id}"><span class="e">${t.e}</span>${t.label}</button>`).join("");}
+tabsEl.addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;activeTab=b.dataset.tab;renderTabs();renderSearch();});
+
+const sbEl=document.getElementById("searchbar");
+function field(icon,inner){return `<div class="sf">${icon?`<span class="si">${icon}</span>`:""}${inner}</div>`;}
+function dateField(name){const today=new Date().toISOString().slice(0,10);return `<input type="date" id="sf-${name}" min="${today}">`;}
+function selField(id,opts,ph){return `<select id="sf-${id}"><option value="" selected disabled>${ph}</option>${opts.map(o=>`<option>${o}</option>`).join("")}</select>`;}
+
+function renderSearch(){
+  let html="";
+  if(activeTab==="stays"){
+    html=field("📍",selField("dest",["Kathmandu","Pokhara","Chitwan","Bhaktapur","Lumbini"],"Where in Nepal?"))
+      +field("📅",dateField("in"))
+      +field("📅",dateField("out"))
+      +`<div class="sf occ-field" id="occField"><span class="si">👤</span><span class="occ-val" id="occVal"></span>
+          <div class="occ-pop" id="occPop">
+            ${occRow("Adults","adults",1)}${occRow("Children","children",0)}${occRow("Rooms","rooms",1)}
+          </div></div>`
+      +`<button class="btn-search" data-cat="hotels">Search</button>`;
+  } else if(activeTab==="treks"){
+    html=field("🎒",selField("route",["Poon Hill","Langtang","Annapurna Base Camp","Everest Base Camp","Annapurna Circuit","Manaslu Circuit"],"Which trek?"))
+      +field("📅",dateField("date"))
+      +field("👥",`<input type="number" id="sf-group" min="1" value="2" style="font-weight:600">`)
+      +`<button class="btn-search" data-cat="trekking">Search</button>`;
+  } else if(activeTab==="adventure"){
+    html=field("🪂",selField("act",["Paragliding","Zip-lining","White Water Rafting","Bungee Jumping","Jungle Safari"],"Pick an activity"))
+      +field("📅",dateField("date"))
+      +field("👥",`<input type="number" id="sf-group" min="1" value="1" style="font-weight:600">`)
+      +`<button class="btn-search" data-cat="__act">Search</button>`;
+  } else if(activeTab==="transport"){
+    html=field("🚌",selField("ttype",["Bus","Taxi / Private Car","Motorbike Rental"],"How will you travel?"))
+      +field("📅",dateField("date"))
+      +`<button class="btn-search" data-cat="__transport">Search</button>`;
+  } else {
+    html=field("✨",`<input type="text" id="sf-dream" placeholder="Tell us your dream Nepal trip…" style="font-weight:600">`)
+      +`<button class="btn-search" data-cat="custom">Plan my trip</button>`;
+  }
+  sbEl.innerHTML=html;
+  if(activeTab==="stays") updateOcc();
+}
+function occRow(label,key,min){return `<div class="occ-row"><span class="name">${label}</span>
+  <span class="stepper"><button data-occ="${key}" data-d="-1">−</button><span class="n" id="occ-${key}">${occ[key]}</span><button data-occ="${key}" data-d="1">+</button></span></div>`;}
+function updateOcc(){
+  const v=document.getElementById("occVal");if(v)v.textContent=`${occ.adults} adults · ${occ.children} children · ${occ.rooms} room${occ.rooms>1?'s':''}`;
+  ["adults","children","rooms"].forEach(k=>{const el=document.getElementById("occ-"+k);if(el)el.textContent=occ[k];});
+}
+
+renderTabs();renderSearch();
+
+/* search interactions */
+document.addEventListener("click",e=>{
+  const occF=e.target.closest("#occField");
+  const pop=document.getElementById("occPop");
+  if(pop){
+    if(occF&&!e.target.closest(".occ-pop"))pop.classList.toggle("open");
+    else if(!e.target.closest("#occField"))pop.classList.remove("open");
+  }
+  const sb=e.target.closest("[data-occ]");
+  if(sb){e.stopPropagation();const k=sb.dataset.occ;const d=+sb.dataset.d;const mins={adults:1,children:0,rooms:1};occ[k]=Math.max(mins[k],occ[k]+d);updateOcc();}
+  const btn=e.target.closest(".btn-search");
+  if(btn)doSearch(btn.dataset.cat);
+});
+
+function val(id){const el=document.getElementById("sf-"+id);return el?el.value:"";}
+function doSearch(catKey){
+  let catId=catKey,prefill={};
+  if(catKey==="__act"){const map={"Paragliding":"paragliding","Zip-lining":"zipline","White Water Rafting":"rafting","Bungee Jumping":"bungee","Jungle Safari":"safari"};catId=map[val("act")]||"paragliding";}
+  if(catKey==="__transport"){const map={"Bus":"bus","Taxi / Private Car":"taxi","Motorbike Rental":"motorbike"};catId=map[val("ttype")]||"bus";}
+  const cat=categories.find(c=>c.id===catId);
+  if(activeTab==="stays"){if(val("dest"))prefill["Destination"]=val("dest");if(val("in"))prefill["Check-in Date"]=val("in");if(val("out"))prefill["Check-out Date"]=val("out");prefill["Guests"]=occ.adults+occ.children;}
+  else if(activeTab==="treks"){if(val("route"))prefill["Trek Route"]=val("route");if(val("date"))prefill["Start Date"]=val("date");if(val("group"))prefill["Group Size"]=val("group");}
+  else if(activeTab==="adventure"){const df=firstField(cat,"date");if(df&&val("date"))prefill[df]=val("date");const nf=cat.fields.find(f=>f.type==="number");if(nf&&val("group"))prefill[nf.label]=val("group");}
+  else if(activeTab==="transport"){const df=firstField(cat,"date");if(df&&val("date"))prefill[df]=val("date");}
+  openWizard(catId,prefill);
+}
+
+/* ===== Pricing ===== */
+function computePrice(cat,v){
+  const p=cat.pricing;if(!p)return null;
+  let base=p.base;
+  if(p.packageField&&v[p.packageField]&&p.packagePrices[v[p.packageField]]!=null)base=p.packagePrices[v[p.packageField]];
+  let qty=1;if(p.qtyFields)for(const f of p.qtyFields){if(v[f]){qty=Math.max(1,parseInt(v[f])||1);break;}}
+  let dur=1;
+  if(p.dateRange){const[a,b]=p.dateRange;if(v[a]&&v[b]){const d=(new Date(v[b])-new Date(v[a]))/864e5;dur=d>0?Math.round(d):1;}}
+  else if(p.durationField&&v[p.durationField]&&durationDays[v[p.durationField]]!=null)dur=durationDays[v[p.durationField]];
+  const items=[];const core=base*qty*dur;
+  let lbl=`${cat.label} (${p.unitLabel})`;const m=[];if(qty>1)m.push(`${qty} pax`);if(dur!==1)m.push(`${dur} ${p.durUnit||"days"}`);if(m.length)lbl+=` · ${m.join(" × ")}`;
+  items.push({label:lbl,amount:core});
+  if(p.addons)for(const a of p.addons){if(v[a.field]){const amt=a.perDay?a.amount*dur:a.amount;items.push({label:a.label,amount:amt});}}
+  const subtotal=items.reduce((s,i)=>s+i.amount,0);const vat=subtotal*0.13;
+  return{items,subtotal,vat,total:subtotal+vat};
+}
+
+/* ===== Price rows helper ===== */
+function priceRows(price){
+  if(!price)return"";
+  return`<div class="price-rows">${price.items.map(i=>`<div class="pr"><span>${i.label}</span><span>${money(i.amount)}</span></div>`).join("")}<div class="pr"><span>VAT (13%)</span><span>${money(price.vat)}</span></div><div class="pr tot"><span>Total</span><b>${money(price.total)}</b></div></div>`;
+}
+
+/* ===== Done screen helper ===== */
+function doneScreen(isCustom){
+  return`<div class="done"><div class="check">✓</div><h3>${isCustom?"Request submitted!":"Booking confirmed!"}</h3><p>${isCustom?"Our local experts will reply within 24 hours with your custom itinerary and pricing.":"Your booking is confirmed. Check your email for the full itinerary and details."}</p><div class="ref"><small>Reference</small>${state.ref}</div></div>`;
+}
+
+/* ===== Detail fields helper ===== */
+function detailFields(v){
+  return fieldHTML({label:"Full name",type:"text",req:true},v)
+    +fieldHTML({label:"Email",type:"text",req:true},v)
+    +fieldHTML({label:"Phone / WhatsApp",type:"text",req:true},v)
+    +fieldHTML({label:"Passport number",type:"text"},v);
+}
+
+/* ===== Field HTML builder ===== */
+function fieldHTML(f,v){
+  const val=v[f.label];
+  if(f.type==="select")return`<div class="field"><label>${f.label}${f.req?' *':''}</label><select data-label="${f.label}"><option value="" ${!val?'selected':''} disabled>Select…</option>${f.options.map(o=>`<option ${val===o?'selected':''}>${o}</option>`).join("")}</select><div class="err">Please choose an option</div></div>`;
+  if(f.type==="date")return`<div class="field"><label>${f.label}${f.req?' *':''}</label><input type="date" data-label="${f.label}" value="${val||''}"><div class="err">Required</div></div>`;
+  if(f.type==="number")return`<div class="field"><label>${f.label}</label><input type="number" min="${f.min||1}" data-label="${f.label}" value="${val||f.min||1}"></div>`;
+  if(f.type==="toggle")return`<div class="field"><div class="toggle-row"><span>${f.label}</span><label class="sw"><input type="checkbox" data-label="${f.label}" ${val?'checked':''}><span class="track"></span></label></div></div>`;
+  if(f.type==="textarea")return`<div class="field"><label>${f.label}</label><textarea data-label="${f.label}" placeholder="Optional…">${val||''}</textarea></div>`;
+  if(f.type==="multi"){const arr=Array.isArray(val)?val:[];return`<div class="field"><label>${f.label}</label><div class="chips" data-multi="${f.label}">${f.options.map(o=>`<span class="chip ${arr.includes(o)?'sel':''}" data-val="${o}">${o}</span>`).join("")}</div></div>`;}
+  return`<div class="field"><label>${f.label}${f.req?' *':''}</label><input type="text" data-label="${f.label}" value="${val||''}" placeholder="Type here…"><div class="err">Required</div></div>`;
+}
+
+/* ===== Wizard state ===== */
+const overlay=document.getElementById("overlay"),sheet=document.getElementById("sheet");
+let state={cat:null,step:0,steps:[],values:{},ref:null};
+
+function openWizard(id,prefill={}){
+  const cat=categories.find(c=>c.id===id);if(!cat)return;
+  state={cat,step:0,values:{},ref:null,steps:cat.pricing?["Configure","Review","Your details","Payment","Confirmed"]:["Your trip","Your details","Submitted"]};
+  cat.fields.forEach(f=>{if(f.type==="number")state.values[f.label]=f.min||1;});
+  Object.assign(state.values,prefill);
+  overlay.classList.add("open");document.body.style.overflow="hidden";renderStep();
+}
+function closeWizard(){overlay.classList.remove("open");document.body.style.overflow="";state.cat=null;}
+overlay.addEventListener("click",e=>{if(e.target===overlay)closeWizard();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&state.cat)closeWizard();});
+
+/* ===== Render step ===== */
+function renderStep(){
+  const{cat,step,steps,values}=state;const stepName=steps[step];
+  if((stepName==="Confirmed"||stepName==="Submitted")&&!state.ref)state.ref="NPL-"+Math.random().toString(36).slice(2,8).toUpperCase();
+  const price=computePrice(cat,values);let body="";
+  if(stepName==="Configure"||stepName==="Your trip"){
+    body=cat.fields.map(f=>fieldHTML(f,values)).join("")+`<div class="included"><div class="h">What's included</div>${cat.included.map(i=>`<div class="it"><span class="c">✓</span><span>${i}</span></div>`).join("")}</div>`;
+  } else if(stepName==="Review"){
+    const rows=cat.fields.filter(f=>{const val=values[f.label];return val!==undefined&&val!==""&&!(Array.isArray(val)&&!val.length)&&!(f.type==="toggle"&&!val);}).map(f=>{let val=values[f.label];if(f.type==="toggle")val="Yes";if(Array.isArray(val))val=val.join(", ");return`<div class="sumrow"><span class="k">${f.label}</span><span class="v">${val}</span></div>`;}).join("");
+    body=rows+priceRows(price);
+  } else if(stepName==="Your details"){
+    body=`<p style="color:var(--muted);font-size:.9rem;margin-bottom:13px">We'll send your confirmation here.</p>`+detailFields(values);
+  } else if(stepName==="Payment"){
+    body=priceRows(price)+`<div style="font-size:.82rem;font-weight:700;color:var(--ink);margin:18px 0 9px">Payment method</div><div class="pm">
+      <label><input type="radio" name="pm" checked><div><div class="pm-name">💳 International card</div><div class="pm-sub">Visa / Mastercard — for travellers abroad</div></div></label>
+      <label><input type="radio" name="pm"><div><div class="pm-name">📱 eSewa</div><div class="pm-sub">Pay with your eSewa wallet (Nepal)</div></div></label>
+      <label><input type="radio" name="pm"><div><div class="pm-name">📱 Khalti</div><div class="pm-sub">Pay with Khalti (Nepal)</div></div></label></div>
+      <div class="demo-note"><b>Demo mode.</b> No real payment is taken — this is where your live gateway (card + eSewa/Khalti) connects once the backend is added.</div>`;
+  } else if(stepName==="Submitted"){body=doneScreen(true);}
+  else if(stepName==="Confirmed"){body=doneScreen(false);}
+
+  const isDone=stepName==="Confirmed"||stepName==="Submitted";
+  let foot="";
+  if(!isDone){
+    const lp=price?`<div class="liveprice">Estimated total<b>${money(price.total)}</b></div>`:`<div class="liveprice">No payment now<b>Free quote</b></div>`;
+    const nextLabel=stepName==="Payment"?"Confirm booking":(stepName==="Your details"&&!cat.pricing?"Submit request":"Continue");
+    foot=`<div class="sheet-foot">${lp}<div class="btns">${step>0?`<button class="btn btn-ghost" id="back">Back</button>`:""}<button class="btn btn-blue" id="next">${nextLabel} →</button></div></div>`;
+  } else {
+    foot=`<div class="sheet-foot" style="justify-content:center"><button class="btn btn-blue" id="closeDone">Done</button></div>`;
+  }
+
+  sheet.innerHTML=`<div class="sheet-head"><div class="cat"><span class="e">${cat.icon}</span><div><h2>${cat.label}</h2><small>${cat.desc}</small></div></div><button class="x" id="x">✕</button></div>
+    ${!isDone?`<div class="progress"><div class="bar"><i style="width:${((step+1)/steps.length)*100}%"></i></div><div class="steplbl"><span class="cur-step">Step ${step+1} of ${steps.length} — ${stepName}</span><span>${steps[steps.length-1]==="Confirmed"?"Booking":"Request"}</span></div></div>`:""}
+    <div class="sheet-body">${body}</div>${foot}`;
+}
+
+/* ===== Sheet interactions ===== */
+sheet.addEventListener("click",e=>{
+  if(e.target.id==="x"||e.target.id==="closeDone"){closeWizard();return;}
+  if(e.target.id==="back"){state.step--;renderStep();return;}
+  if(e.target.id==="next"){
+    let ok=true;
+    const detailReqs=["Full name","Email","Phone / WhatsApp"];
+    sheet.querySelectorAll("[data-label]").forEach(el=>{
+      const lbl=el.dataset.label;
+      const catField=state.cat.fields.find(f=>f.label===lbl);
+      const isReq=(catField&&catField.req)||detailReqs.includes(lbl);
+      if(!isReq)return;
+      const fEl=el.closest(".field");
+      const v=(el.type==="checkbox"?"X":el.value||"").toString().trim();
+      if(!v){if(fEl)fEl.classList.add("invalid");ok=false;}
+      else if(fEl)fEl.classList.remove("invalid");
+    });
+    if(!ok)return;
+    state.step++;renderStep();return;
+  }
+  const chip=e.target.closest(".chip");
+  if(chip){
+    const ml=chip.closest("[data-multi]");if(!ml)return;
+    const lbl=ml.dataset.multi;
+    const arr=Array.isArray(state.values[lbl])?[...state.values[lbl]]:[];
+    const v=chip.dataset.val;const idx=arr.indexOf(v);
+    if(idx>-1)arr.splice(idx,1);else arr.push(v);
+    state.values[lbl]=arr;chip.classList.toggle("sel");
+  }
+});
+
+sheet.addEventListener("change",e=>{
+  const el=e.target.closest("[data-label]");if(!el)return;
+  state.values[el.dataset.label]=el.type==="checkbox"?el.checked:el.value;
+  const price=computePrice(state.cat,state.values);
+  const lb=document.querySelector(".liveprice b");
+  if(lb)lb.textContent=price?money(price.total):"Free quote";
+  el.closest(".field")&&el.closest(".field").classList.remove("invalid");
+});
+
+sheet.addEventListener("input",e=>{
+  const el=e.target.closest("[data-label]");if(!el)return;
+  state.values[el.dataset.label]=el.type==="checkbox"?el.checked:el.value;
+  const price=computePrice(state.cat,state.values);
+  const lb=document.querySelector(".liveprice b");
+  if(lb&&price)lb.textContent=money(price.total);
+});
+</script>
+</body>
+</html>

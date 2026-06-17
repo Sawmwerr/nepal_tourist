@@ -1,9 +1,28 @@
 "use client";
 
-const footerLinks = {
-  Explore:     ["Himalayas", "Kathmandu", "Pokhara", "Chitwan"],
-  Experiences: ["Trekking", "Culture Tours", "Food Trails", "Adventure Sports"],
-  Plan:        ["Best Time to Visit", "Getting There", "Travel Tips", "Contact"],
+import Link from "next/link";
+import Image from "next/image";
+import PrayerFlagDivider from "./PrayerFlagDivider";
+
+const footerLinks: Record<string, { name: string; href: string }[]> = {
+  Explore: [
+    { name: "Himalayas",    href: "/mountains" },
+    { name: "Kathmandu",   href: "/destinations/kathmandu" },
+    { name: "Pokhara",     href: "/destinations/pokhara" },
+    { name: "Chitwan",     href: "/destinations/chitwan" },
+  ],
+  Experiences: [
+    { name: "Trekking",         href: "/mountains" },
+    { name: "Culture Tours",    href: "/community" },
+    { name: "Food Trails",      href: "/community" },
+    { name: "Adventure Sports", href: "/destinations" },
+  ],
+  Plan: [
+    { name: "Best Time to Visit", href: "/community" },
+    { name: "Getting There",      href: "/community" },
+    { name: "Travel Tips",        href: "/community" },
+    { name: "Contact",            href: "#" },
+  ],
 };
 
 export default function Footer() {
@@ -23,14 +42,14 @@ export default function Footer() {
               >
                 Newsletter
               </p>
-              <h3
+              <h2
                 className="text-3xl text-[#f0ece3] leading-tight mb-2"
-                style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+                style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
               >
                 Stay in the journey
-              </h3>
+              </h2>
               <p
-                className="text-sm text-[#6b6a5a] leading-relaxed"
+                className="text-sm text-[#8a8978] leading-relaxed"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 Travel stories, seasonal guides, and insider routes — monthly.
@@ -45,7 +64,7 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-1 bg-transparent px-6 py-4 text-sm text-[#f0ece3] placeholder:text-[#5a5848] focus:outline-none"
+                className="flex-1 bg-transparent px-6 py-4 text-sm text-[#f0ece3] placeholder:text-[#8a8978] focus:outline-none"
                 style={{ fontFamily: "var(--font-syne)" }}
               />
               <button
@@ -68,9 +87,11 @@ export default function Footer() {
             {/* Brand */}
             <div>
               <div className="flex items-center gap-2.5 mb-5">
-                <img
+                <Image
                   src="/nepalflag.jpg"
                   alt="Nepal Flag"
+                  width={36}
+                  height={28}
                   className="object-contain"
                   style={{ height: 28, width: "auto" }}
                 />
@@ -82,7 +103,7 @@ export default function Footer() {
                 </span>
               </div>
               <p
-                className="text-sm text-[#6b6a5a] leading-relaxed max-w-[180px] mb-7"
+                className="text-sm text-[#8a8978] leading-relaxed max-w-[180px] mb-7"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 The roof of the world, and the warmth at its heart.
@@ -93,7 +114,7 @@ export default function Footer() {
                   <a
                     key={s}
                     href="#"
-                    className="w-8 h-8 rounded-xl glass flex items-center justify-center text-[10px] font-semibold text-[#6b6a5a] hover:text-[#d4a843] hover:border-[rgba(212,168,67,0.3)] transition-all duration-300"
+                    className="w-8 h-8 rounded-xl glass flex items-center justify-center text-[10px] font-semibold text-[#8a8978] hover:text-[#d4a843] hover:border-[rgba(212,168,67,0.3)] transition-all duration-300"
                     style={{ fontFamily: "var(--font-syne)" }}
                   >
                     {s}
@@ -113,14 +134,14 @@ export default function Footer() {
                 </p>
                 <ul className="flex flex-col gap-3.5">
                   {links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
-                        className="text-sm text-[#5a5848] hover:text-[#f0ece3] transition-colors duration-300 hover-line"
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-[#8a8978] hover:text-[#f0ece3] transition-colors duration-300 hover-line"
                         style={{ fontFamily: "var(--font-syne)" }}
                       >
-                        {link}
-                      </a>
+                        {link.name}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -128,22 +149,22 @@ export default function Footer() {
             ))}
           </div>
 
+          {/* Prayer-flag accent */}
+          <PrayerFlagDivider className="mb-6" opacity={0.4} />
+
           {/* Bottom bar */}
-          <div
-            className="flex flex-col md:flex-row items-center justify-between pt-8 gap-4"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
-          >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p
-              className="text-[10px] tracking-[0.25em] text-[#5a5848] uppercase"
+              className="text-[10px] tracking-[0.25em] text-[#8a8978] uppercase"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               © 2025 Nepal Tourism. All rights reserved.
             </p>
             <p
-              className="text-[10px] tracking-[0.2em] text-[#3a3830] uppercase"
+              className="text-[10px] tracking-[0.2em] text-[#8a8978] uppercase"
               style={{ fontFamily: "var(--font-syne)" }}
             >
-              Crafted with care for Nepal
+              नेपाल — Crafted with care
             </p>
           </div>
         </div>

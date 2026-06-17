@@ -1,5 +1,9 @@
 "use client";
 
+import { useState, useEffect, forwardRef } from "react";
+import Image from "next/image";
+import { useReducedMotion } from "motion/react";
+
 export interface Panel {
   id: string;
   title: string;
@@ -8,51 +12,105 @@ export interface Panel {
   gradient: string;
   number: string;
   videoSrc?: string;
+  poster?: string;
   imageSrc?: string;
 }
 
 interface PanelItemProps {
   panel: Panel;
   isActive: boolean;
+  isPriority?: boolean;
   onActivate: () => void;
   onDeactivate: () => void;
 }
 
-export default function PanelItem({ panel, isActive, onActivate, onDeactivate }: PanelItemProps) {
+const PanelItem = forwardRef<HTMLDivElement, PanelItemProps>(function PanelItem(
+  { panel, isActive, isPriority, onActivate, onDeactivate },
+  ref,
+) {
+  const [videoReady, setVideoReady] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  // Reset so the fade-in replays each time the panel is re-activated
+  useEffect(() => {
+    if (!isActive) setVideoReady(false);
+  }, [isActive]);
+
+  const imgSizes = isActive
+    ? "(max-width: 768px) 100vw, 55vw"
+    : "(max-width: 768px) 50vw, 12vw";
+
+  const imgStyle: React.CSSProperties = {
+    transform: isActive ? "scale(1.06)" : "scale(1)",
+    transition: "transform 700ms",
+  };
+
   return (
     <div
+      ref={ref}
       className="panel-item relative overflow-hidden cursor-pointer min-w-0"
       style={{ flex: isActive ? "5 1 0%" : "1 1 0%" }}
+      /* Interaction: mouse + keyboard */
+      tabIndex={0}
+      role="button"
+      aria-expanded={isActive}
+      aria-label={`${panel.number} ${panel.title} — ${panel.category}: ${panel.tagline}. Explore →`}
       onMouseEnter={onActivate}
       onMouseLeave={onDeactivate}
+      onFocus={onActivate}
       onClick={onActivate}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onActivate(); }
+      }}
     >
-      {/* ── Background: video / image / gradient ── */}
-      {panel.videoSrc ? (
-        <video
-          src={panel.videoSrc}
-          autoPlay muted loop playsInline
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-          style={{ transform: isActive ? "scale(1.06)" : "scale(1)" }}
+      {/* ── Static background: poster image (LCP element) or fallback gradient ── */}
+      {panel.poster ? (
+        <Image
+          src={panel.poster}
+          alt={panel.title}
+          fill
+          sizes={imgSizes}
+          priority={isPriority}
+          className="object-cover graded"
+          style={imgStyle}
         />
       ) : panel.imageSrc ? (
-        <img
+        <Image
           src={panel.imageSrc}
           alt={panel.title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-          style={{ transform: isActive ? "scale(1.06)" : "scale(1)" }}
+          fill
+          sizes={imgSizes}
+          priority={isPriority}
+          className="object-cover graded"
+          style={imgStyle}
         />
       ) : (
         <div
           className="absolute inset-0 transition-transform duration-700"
-          style={{
-            background: panel.gradient,
-            transform: isActive ? "scale(1.06)" : "scale(1)",
-          }}
+          style={{ background: panel.gradient, transform: imgStyle.transform }}
         />
       )}
 
-      {/* Dark vignette */}
+      {/* ── Video — only mounted for active panel; respects prefers-reduced-motion ── */}
+      {panel.videoSrc && isActive && !reduceMotion && (
+        <video
+          src={panel.videoSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover graded"
+          style={{
+            transform: "scale(1.06)",
+            opacity: videoReady ? 1 : 0,
+            transition: "opacity 600ms ease",
+          }}
+          onCanPlay={() => setVideoReady(true)}
+        />
+      )}
+
+      {/* ── Dark vignette ── */}
       <div
         className="absolute inset-0 transition-all duration-700"
         style={{
@@ -62,13 +120,14 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
         }}
       />
 
-      {/* ── Collapsed: number + rotated label ── */}
+      {/* ── Collapsed: number + rotated label (hidden from AT when active) ── */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center gap-5 pointer-events-none transition-opacity duration-400"
-        style={{ opacity: isActive ? 0 : 1 }}
+        style={{ opacity: isActive ? 0 : 1, visibility: isActive ? "hidden" : "visible" }}
+        aria-hidden="true"
       >
         <span
-          className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.3)]"
+          className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.5)]"
           style={{ fontFamily: "var(--font-syne)" }}
         >
           {panel.number}
@@ -87,7 +146,9 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
         style={{
           opacity: isActive ? 1 : 0,
           transform: isActive ? "translateY(0)" : "translateY(20px)",
+          visibility: isActive ? "visible" : "hidden",
         }}
+        aria-hidden="true"
       >
         <div
           className="glass-dark float-shadow p-5 md:p-6"
@@ -96,7 +157,7 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
           {/* Number + category row */}
           <div className="flex items-center gap-2 mb-3">
             <span
-              className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.35)]"
+              className="text-[9px] tracking-[0.45em] text-[rgba(212,168,67,0.5)]"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               {panel.number}
@@ -110,13 +171,13 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
             </span>
           </div>
 
-          {/* Title */}
-          <h3
+          {/* Title — p not h3: lives inside role=button, aria-label already names it */}
+          <p
             className="text-2xl md:text-3xl text-[#f0ece3] leading-tight mb-1.5"
-            style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+            style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
           >
             {panel.title}
-          </h3>
+          </p>
 
           {/* Tagline */}
           <p
@@ -127,7 +188,7 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
           </p>
 
           {/* CTA */}
-          <div className="inline-flex items-center gap-2 group">
+          <div className="inline-flex items-center gap-2">
             <div className="h-px w-5 bg-[#d4a843]" />
             <span
               className="text-[10px] tracking-[0.3em] uppercase text-[#d4a843] font-semibold"
@@ -140,4 +201,6 @@ export default function PanelItem({ panel, isActive, onActivate, onDeactivate }:
       </div>
     </div>
   );
-}
+});
+
+export default PanelItem;
