@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nepal Tourist
 
-## Getting Started
+Monorepo-style project split into frontend and backend ownership.
 
-First, run the development server:
+## Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+nepal_tourist/
+  frontend/   # Next.js tourism website and booking UI
+  backend/    # Database schema, backend notes, and future API/admin work
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Frontend
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The current app is inside `frontend/`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cd frontend
+npm install
+npm run dev
+npm run lint
+npm run build
+```
 
-## Learn More
+Local URL: http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+## Backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Backend setup starts in `backend/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Current backend pieces:
+- Supabase schema: `backend/supabase/migrations/001_initial_booking_schema.sql`
+- Booking server action still lives in `frontend/app/actions/submitBooking.ts` because this is currently a Next.js app.
+- Shared booking validation/pricing lives in `frontend/lib/booking/`.
 
-## Deploy on Vercel
+## Team workflow
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `main` = stable integration branch
+- `al-amin` = backend / structure branch
+- Friend can keep frontend work on a separate frontend branch
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Do not commit real `.env.local` files. Use `frontend/.env.local.example` as the template.
