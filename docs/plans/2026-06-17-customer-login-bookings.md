@@ -201,7 +201,9 @@ Stop condition:
 
 ---
 
-## Phase 5 — Customer “My bookings” page
+## Phase 5 — Customer “My bookings” page — DONE
+
+Status: DONE on 2026-06-18. Added protected `/account/bookings` account area, customer booking summary helpers with tests, empty state, booking cards, stats, logout button, and proxy protection for `/account/*`. Verified logged-out `/account/bookings` redirects to `/login?next=%2Faccount%2Fbookings`. Verified `npm test`, `npm run lint`, and `npm run build` pass.
 
 Scope: Let customers see their own booking history.
 
