@@ -92,11 +92,32 @@ For real delivery, `FROM_EMAIL` should use a verified Resend domain.
 
 If email is not configured in development, the booking action may still return a simulated reference when Supabase is also not configured.
 
-## 6. Admin user setup
+## 6. Supabase Auth URL settings
 
-Phase 2 only prepares the database for admin users. The admin login UI is built in the next phase.
+Open Supabase Dashboard → Authentication → URL Configuration.
 
-After running migration 002, create an admin user in Supabase Auth:
+For local development:
+
+```text
+Site URL: http://localhost:3000
+Redirect URLs: http://localhost:3000/**
+```
+
+For production/preview deployments, add the deployed domains too, for example:
+
+```text
+https://your-production-domain.com/**
+https://your-preview-domain.vercel.app/**
+```
+
+Email confirmation decision:
+
+- Local development: disable email confirmation temporarily, or manually confirm test users in Supabase Dashboard → Authentication → Users.
+- Production: enable email confirmation if customers must verify email ownership before booking.
+
+## 7. Admin user setup
+
+After running migrations 002 and 003, create an admin user in Supabase Auth:
 
 Supabase Dashboard → Authentication → Users → Add user
 
@@ -131,7 +152,7 @@ where email = 'your-admin-email@example.com';
 
 Expected: one row with `role = 'admin'`.
 
-## 7. Admin login verification
+## 8. Admin login verification
 
 After migration 002 and env setup, restart the dev server and open:
 
@@ -145,7 +166,7 @@ Expected behavior:
 - A non-admin Supabase user sees an access denied screen.
 - A promoted `profiles.role = 'admin'` user can access the protected admin dashboard.
 
-## 8. Customer account database verification
+## 9. Customer account database verification
 
 After migration 003, new Supabase Auth users become customer profiles by default.
 
@@ -172,7 +193,7 @@ limit 5;
 
 Expected: when run as an authenticated customer through the app/API, only that customer's bookings are visible.
 
-## 9. Local booking verification
+## 10. Local customer booking verification
 
 Run the app from the frontend folder:
 
@@ -182,33 +203,51 @@ npm install
 npm run dev
 ```
 
-Open:
+Open the customer auth and booking pages:
 
 ```text
+http://localhost:3000/signup
+http://localhost:3000/login
 http://localhost:3000/booking
+http://localhost:3000/account/bookings
 ```
 
-Submit one test booking.
+Expected customer behavior:
 
-Expected result:
+- Logged-out `/booking` redirects to `/login?next=%2Fbooking`.
+- Logged-out `/account/bookings` redirects to `/login?next=%2Faccount%2Fbookings`.
+- A customer can sign up or log in.
+- A logged-in customer can submit a booking and receive a reference like `NPL-XXXXXXXX`.
+- `/account/bookings` shows that customer's booking.
+- Another customer account does not see the first customer's booking.
 
-- The form returns a booking reference like `NPL-XXXXXXXX`.
+Expected database result:
+
 - A row appears in Supabase `customers`.
+- `customers.user_id` is filled with the logged-in `auth.users.id`.
 - A row appears in Supabase `bookings`.
+- `bookings.customer_id` points to that customer row.
 - If Resend is configured, the customer receives a confirmation email.
 
 SQL verification after submitting a test booking:
 
 ```sql
-select reference, category_id, status, created_at, updated_at
-from public.bookings
-order by created_at desc
+select
+  b.reference,
+  b.category_id,
+  b.status,
+  c.email,
+  c.user_id,
+  b.created_at
+from public.bookings b
+join public.customers c on c.id = b.customer_id
+order by b.created_at desc
 limit 5;
 ```
 
 Expected: new bookings start with `status = 'pending'`.
 
-## 10. Production/Vercel env variables
+## 11. Production/Vercel env variables
 
 In Vercel, add these environment variables for Production and Preview:
 
@@ -227,11 +266,11 @@ Security check:
 - Do not commit `.env.local`.
 - Do not put secrets in README files.
 
-## 11. Next backend phases
+## 12. Next backend priorities
 
-After Phase 3 admin login works, continue with:
+This customer login/booking MVP is ready for PR review after local verification passes. Future backend work:
 
-1. Admin bookings dashboard.
-2. Booking status updates from the dashboard.
-3. Spam/rate-limit protection.
-4. Production deployment checklist.
+1. Apply migrations in a real Supabase project and test end-to-end with customer/admin accounts.
+2. Add spam/rate-limit protection.
+3. Add production deployment checklist and monitoring.
+4. Add customer cancellation/request-change workflow if needed.

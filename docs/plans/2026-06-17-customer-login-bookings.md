@@ -238,7 +238,9 @@ Stop condition:
 
 ---
 
-## Phase 6 — Final docs, tests, and PR cleanup
+## Phase 6 — Final docs, tests, and PR cleanup — DONE
+
+Status: DONE on 2026-06-18. Updated root/frontend/backend/Supabase docs, refreshed `.env.local.example`, verified final quality gates (`npm test`, `npm run lint`, `npm run build`), and prepared the `backend` branch for PR review.
 
 Scope: Make it ready for review/merge.
 
