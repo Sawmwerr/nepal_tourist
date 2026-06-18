@@ -38,6 +38,9 @@ yarn-error.log*
 # claude code
 .claude
 
+# local Hermes agent workspace
+.hermes/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

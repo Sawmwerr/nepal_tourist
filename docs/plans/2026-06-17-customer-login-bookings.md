@@ -154,7 +154,9 @@ Stop condition:
 
 ---
 
-## Phase 4 — Attach bookings to logged-in customer
+## Phase 4 — Attach bookings to logged-in customer — DONE
+
+Status: DONE on 2026-06-18. Added authenticated customer upsert helper with tests, made `submitBooking` require current Supabase auth user before service-role database writes, stores `customers.user_id = auth.users.id`, and keeps booking inserts tied to that customer row. Verified `npm test`, `npm run lint`, and `npm run build` pass.
 
 Scope: Update booking submission so the logged-in customer owns the booking.
 
