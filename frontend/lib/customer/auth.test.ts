@@ -4,6 +4,7 @@ import {
   CUSTOMER_BOOKINGS_PATH,
   CUSTOMER_LOGIN_PATH,
   CUSTOMER_SIGNUP_PATH,
+  buildCustomerLoginRedirectPath,
   sanitizeCustomerRedirectPath,
 } from "./auth";
 
@@ -22,5 +23,12 @@ describe("sanitizeCustomerRedirectPath", () => {
     expect(sanitizeCustomerRedirectPath(CUSTOMER_SIGNUP_PATH)).toBe(CUSTOMER_BOOKINGS_PATH);
     expect(sanitizeCustomerRedirectPath("https://evil.example/booking")).toBe(CUSTOMER_BOOKINGS_PATH);
     expect(sanitizeCustomerRedirectPath("//evil.example/booking")).toBe(CUSTOMER_BOOKINGS_PATH);
+  });
+});
+
+describe("buildCustomerLoginRedirectPath", () => {
+  it("builds login URLs that preserve booking path and query params", () => {
+    expect(buildCustomerLoginRedirectPath("/booking", "")).toBe("/login?next=%2Fbooking");
+    expect(buildCustomerLoginRedirectPath("/booking", "?cat=hotels&step=1")).toBe("/login?next=%2Fbooking%3Fcat%3Dhotels%26step%3D1");
   });
 });

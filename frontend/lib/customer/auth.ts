@@ -29,3 +29,8 @@ export function sanitizeCustomerRedirectPath(rawPath: string | null | undefined)
 
   return decodedPath;
 }
+
+export function buildCustomerLoginRedirectPath(pathname: string, search = ""): string {
+  const nextPath = `${pathname}${search}`;
+  return `${CUSTOMER_LOGIN_PATH}?next=${encodeURIComponent(nextPath)}`;
+}

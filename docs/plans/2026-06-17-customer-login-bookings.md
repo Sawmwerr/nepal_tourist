@@ -114,7 +114,9 @@ Stop condition:
 
 ---
 
-## Phase 3 — Protect booking route
+## Phase 3 — Protect booking route — DONE
+
+Status: DONE on 2026-06-18. Added Next proxy auth gate for `/booking`, preserved query params in `/login?next=...`, added redirect helper test, and verified logged-out `/booking` redirects while `/login` stays public. Verified `npm test`, `npm run lint`, and `npm run build` pass.
 
 Scope: Require customer login before using booking page.
 
