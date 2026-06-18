@@ -1,10 +1,12 @@
 "use server";
 
 import { CATEGORIES } from "@/lib/booking/catalog";
+import { buildAuthenticatedCustomerUpsert } from "@/lib/booking/customer";
 import { computePrice } from "@/lib/booking/pricing";
 import { BookingPayloadSchema } from "@/lib/booking/schema";
 import { createServerClient } from "@/lib/booking/db";
 import { notifyBookingConfirmed, type BookingNotification } from "@/lib/notifications";
+import { createSupabaseServerClient, isServerSupabaseAuthConfigured } from "@/lib/supabase/server";
 
 export type SubmitResult =
   | { ok: true;  reference: string }
@@ -89,6 +91,22 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
     return { ok: false, errors: fieldErrors };
   }
 
+  if (!isServerSupabaseAuthConfigured()) {
+    console.error("[submitBooking] Supabase auth is not configured");
+    return { ok: false, errors: { _form: "Please log in before submitting your booking." } };
+  }
+
+  const authClient = await createSupabaseServerClient();
+  const { data: authResult, error: authError } = await authClient.auth.getUser();
+  const authenticatedCustomer = authResult.user
+    ? buildAuthenticatedCustomerUpsert(contact, authResult.user)
+    : null;
+
+  if (authError || !authenticatedCustomer) {
+    if (authError) console.error("[submitBooking] Auth lookup error:", authError);
+    return { ok: false, errors: { _form: "Please log in before submitting your booking." } };
+  }
+
   // ── 3. Server-side price computation (never trust client price) ───────────
   const priceResult = computePrice(categoryId, selections);
 
@@ -143,11 +161,11 @@ export async function submitBooking(rawPayload: unknown): Promise<SubmitResult> 
       return { ok: true, reference: existing.reference };
     }
 
-    // Upsert customer — idempotent on email so repeat bookings reuse the same row
+    // Upsert customer — canonical account email links legacy guest rows to this auth user.
     const { data: customer, error: custErr } = await db
       .from("customers")
       .upsert(
-        { name: contact.name, email: contact.email, phone: contact.phone },
+        authenticatedCustomer,
         { onConflict: "email", ignoreDuplicates: false },
       )
       .select("id")

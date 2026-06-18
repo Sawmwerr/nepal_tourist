@@ -3,9 +3,9 @@ import localFont from "next/font/local";
 import { Syne, Noto_Sans_Devanagari } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import IntroLoader from "@/components/IntroLoader";
-import LenisProvider from "@/components/LenisProvider";
-import PageTransition from "@/components/PageTransition";
+import IntroLoader from "@/components/providers/IntroLoader";
+import LenisProvider from "@/components/providers/LenisProvider";
+import PageTransition from "@/components/providers/PageTransition";
 
 // Clash Display — self-hosted from app/fonts/ (ITF Free Font License via Fontshare).
 // Variable font covers 200–700 in one file; Medium + Bold kept as explicit fallbacks.
@@ -67,7 +67,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${clashDisplay.variable} ${syne.variable} ${notoDevanagari.variable} h-full antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${clashDisplay.variable} ${syne.variable} ${notoDevanagari.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#07070d] text-[#f0ece3]">
         {/*
           Runs before hydration — adds `intro-skip` to <html> for returning visitors

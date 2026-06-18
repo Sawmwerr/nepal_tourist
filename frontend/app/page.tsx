@@ -1,19 +1,19 @@
-import Navbar from "@/components/Navbar";
-import HeroAccordion from "@/components/HeroAccordion";
-import MarqueeStrip from "@/components/MarqueeStrip";
-import StatsSection from "@/components/StatsSection";
-import DestinationsTeaser from "@/components/DestinationsTeaser";
-import NepalMapClient from "@/components/NepalMapClient";
-import MountainsTeaser from "@/components/MountainsTeaser";
-import VideoTeaser from "@/components/VideoTeaser";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import PlanTeaser from "@/components/PlanTeaser";
-import CommunityTeaser from "@/components/CommunityTeaser";
-import CreatorProfile from "@/components/CreatorProfile";
-import QuoteBlock from "@/components/QuoteBlock";
-import Footer from "@/components/Footer";
-import { ScrollStoryProvider } from "@/components/ScrollStoryContext";
-import SectionWatermark from "@/components/SectionWatermark";
+import Navbar from "@/components/layout/Navbar";
+import HeroAccordion from "@/features/home/components/HeroAccordion";
+import MarqueeStrip from "@/features/home/components/MarqueeStrip";
+import StatsSection from "@/features/home/components/StatsSection";
+import DestinationsTeaser from "@/features/home/components/DestinationsTeaser";
+import NepalMapClient from "@/features/destinations/components/NepalMapClient";
+import MountainsTeaser from "@/features/home/components/MountainsTeaser";
+import VideoTeaser from "@/features/home/components/VideoTeaser";
+import TestimonialsSection from "@/features/home/components/TestimonialsSection";
+import PlanTeaser from "@/features/home/components/PlanTeaser";
+import CommunityTeaser from "@/features/home/components/CommunityTeaser";
+import CreatorProfile from "@/features/home/components/CreatorProfile";
+import QuoteBlock from "@/components/ui/QuoteBlock";
+import Footer from "@/components/layout/Footer";
+import { ScrollStoryProvider } from "@/components/providers/ScrollStoryContext";
+import SectionWatermark from "@/components/ui/SectionWatermark";
 
 const SECTION_STYLE: React.CSSProperties = {
   scrollMarginTop: "80px",
@@ -34,7 +34,6 @@ export default function Home() {
       rel="preload"
       as="image"
       href="/_next/image?url=%2Fposters%2Fhimilaya.jpg&w=750&q=75"
-      // @ts-ignore — fetchPriority is valid HTML5
       fetchPriority="high"
     />
     <ScrollStoryProvider>

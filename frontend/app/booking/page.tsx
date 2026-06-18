@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   CATEGORIES,
   type Category,
@@ -204,8 +205,6 @@ export default function BookingPage() {
   }, []);
 
   // Auto-open wizard if ?cat= is set in the URL (linked from destination/mountains pages).
-  // openWizard is intentionally omitted from deps — we only want this to run once on mount.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const catId = new URLSearchParams(window.location.search).get("cat");
     if (catId) openWizard(catId);
@@ -544,7 +543,7 @@ export default function BookingPage() {
       {/* ── Top bar ── */}
       <div className="topbar">
         <div className="topbar-inner">
-          <a href="/" className="logo"><span className="m">▲</span>Nepal</a>
+          <Link href="/" className="logo"><span className="m">▲</span>Nepal</Link>
           <div className="top-right">
             <div className="cur">
               {(["USD","NPR"] as Currency[]).map(c => (

@@ -2,11 +2,11 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import ImageReveal from "@/components/ImageReveal";
-import NepalMapClient from "@/components/NepalMapClient";
-import PrayerFlagDivider from "@/components/PrayerFlagDivider";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import ImageReveal from "@/components/ui/ImageReveal";
+import NepalMapClient from "@/features/destinations/components/NepalMapClient";
+import PrayerFlagDivider from "@/components/ui/PrayerFlagDivider";
 import { DESTINATION_LIST, COMMUNITY_POSTS } from "@/lib/data";
 
 export function generateStaticParams() {

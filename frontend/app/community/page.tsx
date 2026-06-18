@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import CommunityGrid from "@/components/CommunityGrid";
-import Reveal from "@/components/Reveal";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import CommunityGrid from "@/features/community/components/CommunityGrid";
+import Reveal from "@/components/ui/Reveal";
 import { COMMUNITY_POSTS, COMMUNITY_STATS, TOP_CONTRIBUTORS } from "@/lib/data";
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/layout/Navbar";
 
 export default function NotFound() {
   return (
@@ -28,7 +28,7 @@ export default function NotFound() {
           className="text-sm max-w-xs leading-relaxed mb-10"
           style={{ fontFamily: "var(--font-syne)", color: "#8a8978" }}
         >
-          This page doesn't exist — or has been moved. Nepal awaits, but not here.
+          This page doesn&apos;t exist — or has been moved. Nepal awaits, but not here.
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
