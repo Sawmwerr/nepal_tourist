@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { CUSTOMER_BOOKINGS_PATH, sanitizeCustomerRedirectPath } from "@/lib/customer/auth";
@@ -23,26 +25,70 @@ export default async function CustomerSignupPage({ searchParams }: CustomerSignu
   if (isConfigured) {
     const supabase = await createSupabaseServerClient();
     const { data: userResult } = await supabase.auth.getUser();
-
-    if (userResult.user) {
-      redirect(nextPath || CUSTOMER_BOOKINGS_PATH);
-    }
+    if (userResult.user) redirect(nextPath || CUSTOMER_BOOKINGS_PATH);
   }
 
   return (
-    <main className="min-h-screen px-6 py-16">
-      <div className="mx-auto flex w-full max-w-md flex-col gap-8 rounded-[2rem] border border-white/10 bg-[#0b1020]/85 p-8 shadow-2xl shadow-black/30 backdrop-blur-xl">
-        <div className="space-y-3 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#d4a843]">
-            Nepal Traveller
-          </p>
-          <h1 className="text-3xl font-bold text-white">Create account</h1>
-          <p className="text-sm leading-6 text-white/65">
-            Create a customer account before booking so every trip request belongs to you.
-          </p>
+    <main className="min-h-screen flex bg-[#07070d]">
+      {/* ── Left: Nepal scenery panel ── */}
+      <div className="hidden lg:flex lg:w-[45%] relative flex-col overflow-hidden rounded-r-[2rem]">
+        <div className="absolute inset-0">
+          <Image
+            src="/Annapurna Base Camp.jpg"
+            alt="Annapurna Base Camp, Nepal"
+            fill
+            className="object-cover graded"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07070d] via-[#07070d]/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#07070d]/40" />
         </div>
 
-        <CustomerSignupForm isConfigured={isConfigured} nextPath={nextPath} />
+        {/* Top bar */}
+        <div className="relative z-10 flex items-center justify-between p-8">
+          <Link href="/" className="font-display text-xl font-bold text-[#d4a843] tracking-tight">
+            नेपाल
+          </Link>
+          <Link
+            href="/"
+            className="flex items-center gap-2 rounded-full border border-white/20 bg-black/20 backdrop-blur-sm px-4 py-2 text-xs text-white/70 hover:border-white/40 hover:text-white transition-all duration-200"
+          >
+            Back to website <span aria-hidden>→</span>
+          </Link>
+        </div>
+
+        {/* Bottom quote */}
+        <div className="relative z-10 mt-auto p-8 pb-10">
+          <p className="font-display text-2xl font-semibold text-white leading-snug">
+            Capturing Moments,<br />Creating Memories
+          </p>
+          <p className="mt-2 text-sm text-white/40">Annapurna Base Camp, Nepal</p>
+          <div className="mt-5 flex gap-2">
+            <span className="h-[3px] w-6 rounded-full bg-white/25" />
+            <span className="h-[3px] w-6 rounded-full bg-white/25" />
+            <span className="h-[3px] w-10 rounded-full bg-[#d4a843]" />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Right: form panel ── */}
+      <div className="flex flex-1 items-center justify-center px-6 py-12">
+        <div className="w-full max-w-md">
+          {/* Mobile logo */}
+          <Link href="/" className="mb-8 block font-display text-xl font-bold text-[#d4a843] lg:hidden">
+            नेपाल
+          </Link>
+
+          <h1 className="font-display text-4xl font-bold text-white">Create an account</h1>
+          <p className="mt-2 mb-8 text-sm text-white/45">
+            Already have an account?{" "}
+            <Link href="/login" className="text-[#d4a843] hover:text-[#e8c547] underline underline-offset-2 transition-colors">
+              Log in
+            </Link>
+          </p>
+
+          <CustomerSignupForm isConfigured={isConfigured} nextPath={nextPath} />
+        </div>
       </div>
     </main>
   );
