@@ -105,43 +105,72 @@ export default function MountainsPage() {
               className="object-cover graded"
               style={{ objectPosition: "center 20%" }}
             />
-            {/* Strong top band — clear navbar contrast */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#07070d]/80 via-[#07070d]/20 to-[#07070d]" />
-            {/* Left vignette — text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#07070d]/50 to-transparent" />
+            {/* 3-stop gradient: dark top (navbar) → image breathes → dark bottom (stats) */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(7,7,13,0.78) 0%, rgba(7,7,13,0.25) 42%, rgba(7,7,13,0.88) 100%)",
+              }}
+            />
           </div>
 
-          <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-20">
-            <p className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-4 fade-up"
-               style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}>
+          {/* Centred content block */}
+          <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pt-28 pb-24 flex flex-col items-center text-center">
+            <p
+              className="text-[10px] tracking-[0.5em] uppercase text-[#d4a843] mb-4 fade-up"
+              style={{ fontFamily: "var(--font-syne)", fontWeight: 500 }}
+            >
               Mountains &amp; Treks · पर्वत र ट्रेकिङ
             </p>
-            <h1 className="text-5xl md:text-7xl leading-none mb-6 fade-up"
-                style={{ fontFamily: "var(--font-display)", fontWeight: 600, animationDelay: "80ms" }}>
+
+            <h1
+              className="text-5xl md:text-7xl leading-none mb-5 fade-up max-w-5xl"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                animationDelay: "80ms",
+                textShadow: "0 2px 28px rgba(0,0,0,0.65)",
+              }}
+            >
               Eight peaks above{" "}
               <em className="text-gradient-gold not-italic">8,000 m</em>
             </h1>
-            <p className="text-[14px] text-[rgba(240,236,227,0.55)] max-w-xl leading-relaxed mb-12 fade-up"
-               style={{ fontFamily: "var(--font-syne)", animationDelay: "160ms" }}>
+
+            <p
+              className="text-[15px] text-[rgba(240,236,227,0.72)] max-w-2xl leading-relaxed mb-12 fade-up"
+              style={{
+                fontFamily: "var(--font-syne)",
+                animationDelay: "160ms",
+                textShadow: "0 1px 12px rgba(0,0,0,0.5)",
+              }}
+            >
               Nepal holds eight of the planet&apos;s fourteen highest mountains and over 1,400 trekking
               routes — from half-day walks to month-long high-altitude expeditions.
             </p>
 
-            {/* ── Stat strip ── */}
-            <div className="flex flex-wrap gap-x-10 gap-y-5 fade-up" style={{ animationDelay: "240ms" }}>
+            {/* ── Stat strip — centred ── */}
+            <div
+              className="flex flex-wrap justify-center gap-x-10 gap-y-6 fade-up"
+              style={{ animationDelay: "240ms" }}
+            >
               {[
-                { n: "8", sub: "Peaks above 8,000 m" },
+                { n: "8",       sub: "Peaks above 8,000 m"    },
                 { n: "8 of 14", sub: "World's highest summits" },
-                { n: "1,400+", sub: "Trekking routes" },
-                { n: "8,848 m", sub: "Highest point on Earth" },
+                { n: "1,400+",  sub: "Trekking routes"         },
+                { n: "8,848 m", sub: "Highest point on Earth"  },
               ].map(({ n, sub }) => (
-                <div key={sub}>
-                  <p className="text-2xl md:text-3xl font-bold leading-none text-gradient-gold"
-                     style={{ fontFamily: "var(--font-display)" }}>
+                <div key={sub} className="flex flex-col items-center">
+                  <p
+                    className="text-2xl md:text-3xl font-bold leading-none text-gradient-gold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
                     {n}
                   </p>
-                  <p className="text-[9px] uppercase tracking-widest text-white/30 mt-1"
-                     style={{ fontFamily: "var(--font-syne)" }}>
+                  <p
+                    className="text-[9px] uppercase tracking-widest text-white/40 mt-1.5"
+                    style={{ fontFamily: "var(--font-syne)" }}
+                  >
                     {sub}
                   </p>
                 </div>
