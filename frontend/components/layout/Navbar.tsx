@@ -82,10 +82,11 @@ export default function Navbar() {
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={{
-          background: scrolled ? "rgba(7,7,13,0.96)" : "rgba(7,7,13,0.60)",
-          backdropFilter: "blur(28px)",
-          WebkitBackdropFilter: "blur(28px)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          background: scrolled ? "rgba(7,7,13,0.97)" : "rgba(7,7,13,0.82)",
+          backdropFilter: "blur(32px)",
+          WebkitBackdropFilter: "blur(32px)",
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(255,255,255,0.08)",
+          boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.45)" : "0 2px 16px rgba(0,0,0,0.30)",
         }}
       >
         <div className="flex items-center justify-between px-6 md:px-10 py-3">

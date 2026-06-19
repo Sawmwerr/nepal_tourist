@@ -102,10 +102,13 @@ export default function MountainsPage() {
               alt=""
               fill
               priority
-              className="object-cover object-center graded"
+              className="object-cover graded"
+              style={{ objectPosition: "center 20%" }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#07070d]/10 via-[#07070d]/60 to-[#07070d]" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#07070d]/40 to-transparent" />
+            {/* Strong top band — clear navbar contrast */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#07070d]/80 via-[#07070d]/20 to-[#07070d]" />
+            {/* Left vignette — text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#07070d]/50 to-transparent" />
           </div>
 
           <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-20">
