@@ -5,9 +5,9 @@ import { CATEGORY_IDS } from "./catalog";
 // No passport / biometric PII — encryption + retention policy TBD in a later step.
 
 export const ContactSchema = z.object({
-  name:  z.string().min(2,  "Full name is required"),
-  email: z.string().email(  "Valid email address required"),
-  phone: z.string().min(5,  "Phone or WhatsApp number required"),
+  name:  z.string().min(2,  "Full name is required").max(100, "Name must be 100 characters or fewer"),
+  email: z.string().email(  "Valid email address required").max(200, "Email must be 200 characters or fewer"),
+  phone: z.string().min(5,  "Phone or WhatsApp number required").max(30, "Phone must be 30 characters or fewer"),
 });
 
 // ── Booking payload ───────────────────────────────────────────────────────────
