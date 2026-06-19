@@ -143,45 +143,32 @@ export default function RotatingSpotlight({ entries, intervalMs = 5500 }: Props)
         </div>
       </div>
 
-      {/* ══ RIGHT — transform-based fan cluster ══════════════════════════════
-          Three cards share the same bounding box (left 0 → right 0 of the
-          container). Side cards are shifted by ±translateX so they peek out
-          symmetrically from behind the main card — no absolute left/right
-          trickery that can be clipped by the grid cell.
+      {/* ══ RIGHT — contained fan cluster (overflow: hidden keeps cards ════
+          strictly inside the right column — no bleed into text area)
       ══════════════════════════════════════════════════════════════════════ */}
-      <div className="relative h-[360px] sm:h-[440px] lg:h-[500px]" style={{ overflow: "visible" }}>
+      <div className="relative h-[360px] sm:h-[440px] lg:h-[500px] overflow-hidden">
 
-        {/* Left peek card */}
+        {/* Left peek — occupies left 58%, behind main card, shows ~12% on the left edge */}
         <FanCard
           entries={entries}
           active={imgActive}
           imageKey="secondary"
-          targetOpacity={0.38}
+          targetOpacity={0.42}
           fadeDuration={IMG_FADE}
-          style={{
-            position:  "absolute",
-            inset:     "8% 0",
-            transform: "translateX(-46%)",
-            zIndex:    1,
-          }}
+          style={{ position: "absolute", left: 0, right: "42%", top: "8%", bottom: "8%", zIndex: 1 }}
         />
 
-        {/* Right peek card */}
+        {/* Right peek — occupies right 58%, behind main card, shows ~12% on the right edge */}
         <FanCard
           entries={entries}
           active={imgActive}
           imageKey="secondary"
-          targetOpacity={0.38}
+          targetOpacity={0.42}
           fadeDuration={IMG_FADE}
-          style={{
-            position:  "absolute",
-            inset:     "8% 0",
-            transform: "translateX(46%)",
-            zIndex:    1,
-          }}
+          style={{ position: "absolute", left: "42%", right: 0, top: "8%", bottom: "8%", zIndex: 2 }}
         />
 
-        {/* Main card — no shift, full height, deep shadow */}
+        {/* Main card — centre 76%, highest z-index, deep shadow */}
         <FanCard
           entries={entries}
           active={imgActive}
@@ -191,8 +178,10 @@ export default function RotatingSpotlight({ entries, intervalMs = 5500 }: Props)
           isPrimary
           style={{
             position:  "absolute",
-            inset:     "0",
-            transform: "translateX(0)",
+            left:      "12%",
+            right:     "12%",
+            top:       0,
+            bottom:    0,
             zIndex:    3,
             boxShadow: "0 28px 64px rgba(0,0,0,0.60), 0 8px 24px rgba(0,0,0,0.38)",
           }}
