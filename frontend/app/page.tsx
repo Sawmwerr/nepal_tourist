@@ -59,19 +59,21 @@ export default function Home() {
         {/* ── Beat 3: Experiences ── */}
         <section id="experiences" style={SECTION_STYLE}>
           {/* Rotating destination spotlight */}
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20">
-            <p
-              className="mb-2 text-[10px] font-semibold uppercase text-[#d4a843]"
-              style={{ fontFamily: "var(--font-syne)", letterSpacing: "3px" }}
-            >
-              Featured destinations
-            </p>
-            <h2
-              className="mb-12 text-3xl md:text-4xl font-bold text-[#f0ece3]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Where will you go?
-            </h2>
+          <div className="mx-auto max-w-[1080px] px-6 md:px-10 py-20">
+            <div className="mb-12 text-center">
+              <p
+                className="mb-2 text-[10px] font-semibold uppercase text-[#d4a843]"
+                style={{ fontFamily: "var(--font-syne)", letterSpacing: "3px" }}
+              >
+                Featured destinations
+              </p>
+              <h2
+                className="text-3xl md:text-4xl font-bold text-[#f0ece3]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Where will you go?
+              </h2>
+            </div>
             <RotatingSpotlight entries={SPOTLIGHT_ENTRIES} />
           </div>
           <VideoTeaser />
