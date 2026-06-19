@@ -184,6 +184,12 @@ html, body {
 }
 .fade-up { animation: fadeUp 1s ease-out forwards; }
 
+/* Rotating spotlight — progress bar fill */
+@keyframes spotlightProgress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
 /* Gold shimmer */
 @keyframes shimmer {
   0%, 100% { opacity: 0.55; }

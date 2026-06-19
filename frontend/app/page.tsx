@@ -14,6 +14,8 @@ import QuoteBlock from "@/components/ui/QuoteBlock";
 import Footer from "@/components/layout/Footer";
 import { ScrollStoryProvider } from "@/components/providers/ScrollStoryContext";
 import SectionWatermark from "@/components/ui/SectionWatermark";
+import RotatingSpotlight from "@/components/ui/RotatingSpotlight";
+import { SPOTLIGHT_ENTRIES } from "@/lib/spotlight-entries";
 
 const SECTION_STYLE: React.CSSProperties = {
   scrollMarginTop: "80px",
@@ -56,6 +58,22 @@ export default function Home() {
 
         {/* ── Beat 3: Experiences ── */}
         <section id="experiences" style={SECTION_STYLE}>
+          {/* Rotating destination spotlight */}
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20">
+            <p
+              className="mb-2 text-[10px] font-semibold uppercase text-[#d4a843]"
+              style={{ fontFamily: "var(--font-syne)", letterSpacing: "3px" }}
+            >
+              Featured destinations
+            </p>
+            <h2
+              className="mb-12 text-3xl md:text-4xl font-bold text-[#f0ece3]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Where will you go?
+            </h2>
+            <RotatingSpotlight entries={SPOTLIGHT_ENTRIES} />
+          </div>
           <VideoTeaser />
           <TestimonialsSection />
         </section>
